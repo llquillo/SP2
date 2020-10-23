@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
             new FlatButton(
               child: new Text(
                 'Logout',
-                style: new TextStyle(fontSize: 17.0, color: Colors.white),
+                style: new TextStyle(fontSize: 17.0, color: Colors.black),
               ),
               onPressed: _signOut,
             )
@@ -87,7 +87,7 @@ class HomePage extends StatelessWidget {
                   style: GoogleFonts.montserrat(
                     textStyle: TextStyle(
                       color: Colors.black,
-                      fontSize: 30.0,
+                      fontSize: 24.0,
                       fontWeight: FontWeight.w300,
                     ),
                   ),
@@ -111,7 +111,7 @@ class HomePage extends StatelessWidget {
                         child: Container(
                           width: 10,
                           margin: const EdgeInsets.all(20.0),
-                          padding: EdgeInsets.all(3.0),
+                          padding: EdgeInsets.fromLTRB(10, 4, 2, 2),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
                             color: Colors.black87,
@@ -134,7 +134,7 @@ class HomePage extends StatelessWidget {
                                   i.last,
                                   style: GoogleFonts.playfairDisplay(
                                     textStyle: TextStyle(
-                                      fontSize: 26,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.w200,
                                       color: Colors.white,
                                     ),
