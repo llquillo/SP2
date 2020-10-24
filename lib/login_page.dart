@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Flutter Login Demo'),
+        title: new Text('App Name'),
       ),
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
