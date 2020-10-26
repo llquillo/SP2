@@ -79,7 +79,7 @@ class HomePage extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: new Column(
             children: [
-              SizedBox(height: 40),
+              SizedBox(height: 20),
               new Container(
                 alignment: Alignment(-0.6, 1.0),
                 child: Text(
