@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import './common_widgets/page_title.dart';
-import 'package:google_fonts/google_fonts.dart';
 import './sub_pages/level_content.dart';
 
 class Drills extends StatefulWidget {
@@ -9,14 +8,16 @@ class Drills extends StatefulWidget {
 }
 
 class _DrillsState extends State<Drills> {
-  final buttonsInfo = [
-    "Level 1",
-    "Level 2",
-    "Level 3",
-    "Level 4",
-    "Level 5",
-    "Level 6",
+  List buttonsInfo = [
+    ["images/basic.png", "u"],
+    ["images/basic.png", "l"],
+    ["images/family.png", "l"],
+    ["images/school.png", "l"],
+    ["images/shopping.png", "l"],
+    ["images/travel.png", "l"],
   ];
+
+  String locked = "images/lock.png";
 
   void _openLevel(context) async {
     Navigator.push(
@@ -32,6 +33,35 @@ class _DrillsState extends State<Drills> {
       pageGreeting: 'Let\'s Practice!',
       pageChild: _pageContent(context),
     );
+  }
+
+  Widget _lockedLevel(i) {
+    return Center(
+        child: Stack(
+      children: [
+        Positioned(
+          child: Opacity(
+            opacity: 0.7,
+            child: Image.asset(i),
+          ),
+        ),
+        Positioned(
+          // right: 0.2,
+          child: Opacity(
+            opacity: .9,
+            child: Image.asset(
+              locked,
+              height: 50,
+              width: 50,
+            ),
+          ),
+        ),
+      ],
+    ));
+  }
+
+  Widget _unlockedLevel(i) {
+    return Image.asset(i);
   }
 
   Widget _pageContent(context) {
@@ -52,7 +82,9 @@ class _DrillsState extends State<Drills> {
             ...buttonsInfo.map(
               (i) => GestureDetector(
                 onTap: () {
-                  _openLevel(context);
+                  if (i.last == "u") {
+                    _openLevel(context);
+                  }
                 },
                 child: Container(
                   width: 10,
@@ -76,16 +108,9 @@ class _DrillsState extends State<Drills> {
                     children: [
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: new Text(
-                          i,
-                          style: GoogleFonts.playfairDisplay(
-                            textStyle: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w200,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        child: i.last == 'u'
+                            ? _unlockedLevel(i.first)
+                            : _lockedLevel(i.first),
                       ),
                     ],
                   ),
