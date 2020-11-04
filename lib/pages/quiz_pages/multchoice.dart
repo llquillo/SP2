@@ -6,8 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 class MultipleChoice extends StatefulWidget {
   final int i;
   final BuildContext currentContext;
+  final int score;
   MultipleChoice(
-      {@required this.i, @required this.currentContext, this.levelContent});
+      {@required this.i,
+      @required this.currentContext,
+      this.levelContent,
+      this.score});
   final LevelContent levelContent;
 
   @override
@@ -56,7 +60,8 @@ class _MultipleChoiceState extends State<MultipleChoice> {
       actions: [
         MaterialButton(
           onPressed: () {
-            levelContent.initiateQuiz(widget.currentContext, widget.i);
+            levelContent.initiateQuiz(
+                widget.currentContext, widget.i, 1, widget.score);
           },
           child: Text("Next"),
         )
@@ -86,7 +91,8 @@ class _MultipleChoiceState extends State<MultipleChoice> {
       actions: [
         MaterialButton(
           onPressed: () {
-            levelContent.initiateQuiz(widget.currentContext, widget.i);
+            levelContent.initiateQuiz(
+                widget.currentContext, widget.i, 0, widget.score);
           },
           child: Text("Next"),
         )

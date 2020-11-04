@@ -21,34 +21,39 @@ class LevelContent extends StatelessWidget {
     '10',
   ];
 
-  final int score = 0;
   final int iteration = 0;
   final int total = 10;
 
-  void initiateQuiz(context, iteration) async {
-    // int currentIteration = i;
+  void initiateQuiz(context, iteration, addScore, score) async {
     if (iteration < 10) {
       if (iteration % 2 == 0) {
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  Identification(i: iteration, currentContext: context)),
+              builder: (context) => Identification(
+                  i: iteration, currentContext: context, score: score)),
+          (Route<dynamic> route) => false,
         );
         iteration += 1;
+        score += addScore;
       } else {
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  MultipleChoice(i: iteration, currentContext: context)),
+              builder: (context) => MultipleChoice(
+                  i: iteration, currentContext: context, score: score)),
+          (Route<dynamic> route) => false,
         );
         iteration += 1;
+        score += addScore;
       }
     } else {
-      print('score: $score');
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ScorePage()));
+      // ScorePage(score: score);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => ScorePage(score: score)),
+        (Route<dynamic> route) => false,
+      );
     }
   }
 
@@ -75,7 +80,7 @@ class LevelContent extends StatelessWidget {
           ...levels.map(
             (i) => GestureDetector(
               onTap: () {
-                initiateQuiz(context, iteration);
+                initiateQuiz(context, iteration, 0, 0);
               },
               child: Container(
                 decoration: BoxDecoration(

@@ -6,8 +6,12 @@ import '../sub_pages/level_content.dart';
 class Identification extends StatefulWidget {
   final int i;
   final BuildContext currentContext;
+  final int score;
   Identification(
-      {@required this.i, @required this.currentContext, this.levelContent});
+      {@required this.i,
+      @required this.currentContext,
+      this.levelContent,
+      this.score});
   final LevelContent levelContent;
 
   @override
@@ -58,7 +62,8 @@ class _IdentificationState extends State<Identification> {
       actions: [
         MaterialButton(
           onPressed: () {
-            levelContent.initiateQuiz(widget.currentContext, widget.i);
+            levelContent.initiateQuiz(
+                widget.currentContext, widget.i, 1, widget.score);
           },
           child: Text("Next"),
         )
@@ -88,7 +93,8 @@ class _IdentificationState extends State<Identification> {
       actions: [
         MaterialButton(
           onPressed: () {
-            levelContent.initiateQuiz(widget.currentContext, widget.i);
+            levelContent.initiateQuiz(
+                widget.currentContext, widget.i, 0, widget.score);
           },
           child: Text("Next"),
         )
