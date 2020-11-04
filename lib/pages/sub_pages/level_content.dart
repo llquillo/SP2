@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../quiz_pages/multchoice.dart';
 import '../quiz_pages/identification.dart';
+import '../quiz_pages/score_page.dart';
 
 class LevelContent extends StatelessWidget {
   final levels = [
@@ -20,11 +21,35 @@ class LevelContent extends StatelessWidget {
     '10',
   ];
 
-  void initiateQuiz(context) async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Identification()),
-    );
+  final int score = 0;
+  final int iteration = 0;
+  final int total = 10;
+
+  void initiateQuiz(context, iteration) async {
+    // int currentIteration = i;
+    if (iteration < 10) {
+      if (iteration % 2 == 0) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  Identification(i: iteration, currentContext: context)),
+        );
+        iteration += 1;
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  MultipleChoice(i: iteration, currentContext: context)),
+        );
+        iteration += 1;
+      }
+    } else {
+      print('score: $score');
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ScorePage()));
+    }
   }
 
   @override
@@ -50,7 +75,7 @@ class LevelContent extends StatelessWidget {
           ...levels.map(
             (i) => GestureDetector(
               onTap: () {
-                initiateQuiz(context);
+                initiateQuiz(context, iteration);
               },
               child: Container(
                 decoration: BoxDecoration(
