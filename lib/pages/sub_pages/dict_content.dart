@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 class DictContent extends StatefulWidget {
   @override
@@ -7,99 +8,146 @@ class DictContent extends StatefulWidget {
 }
 
 class _DictContentState extends State<DictContent> {
-  final sampleDict = [
+  final List<List<String>> finalDict = [
     [
-      "Word",
+      "Word1",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation",
+      "Translation1",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
     ],
     [
-      "Word",
+      "Word2",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation",
+      "Translation2",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
     ],
     [
-      "Word",
+      "Word3",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation",
+      "Translation3",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
     ],
     [
-      "Word",
+      "Word4",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation",
+      "Translation4",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
     ],
     [
-      "Word",
+      "Word5",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation",
+      "Translation5",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
     ],
     [
-      "Word",
+      "Word6",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation",
+      "Translation6",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
     ],
     [
-      "Word",
+      "Word7",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation",
+      "Translation7",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
     ],
     [
-      "Word",
+      "Word8",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation",
+      "Translation8",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
     ],
     [
-      "Word",
+      "Word9",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation",
+      "Translation9",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
     ],
     [
-      "Word",
+      "Word10",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation",
+      "Translation10",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
     ],
     [
-      "Word",
+      "Word11",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation",
+      "Translation11",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
     ],
     [
-      "Word",
+      "Word12",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation",
+      "Translation12",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
     ],
     [
-      "Word",
+      "Word13",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation",
+      "Translation13",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
     ],
     [
-      "Word",
+      "Word14",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation",
+      "Translation14",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
     ],
   ];
+  List<List<String>> sampleDict;
+
+  SearchBar searchBar;
+  _DictContentState() {
+    sampleDict = List<List<String>>.from(finalDict);
+    searchBar = new SearchBar(
+      inBar: true,
+      setState: setState,
+      onSubmitted: _testFunc,
+      buildDefaultAppBar: buildAppBar,
+    );
+  }
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+      title: new Text('Dictionary'),
+      actions: [
+        searchBar.getSearchAction(context),
+      ],
+    );
+  }
+
+  void _testFunc(String input) {
+    List<List<String>> tempWord;
+    List<List<String>> tempTranslation;
+    tempWord = findWord(input);
+    tempTranslation = findTranslation(input);
+
+    print('word: $tempWord');
+    print('translation: $tempTranslation');
+
+    setState(() {
+      sampleDict = tempWord + tempTranslation;
+    });
+  }
+
+  findWord(String input) {
+    return finalDict
+        .where((f) => f[0].toLowerCase().contains(input.toLowerCase()))
+        .toList();
+  }
+
+  findTranslation(String input) {
+    return finalDict
+        .where((f) => f[2].toLowerCase().contains(input.toLowerCase()))
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: new Text('App Name'),
-      ),
+      appBar: searchBar.build(context),
+      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: false,
       body: new Container(
         color: Colors.white,
         child: new Column(
