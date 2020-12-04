@@ -66,6 +66,8 @@ flutter:
     - images/lock.png
     - images/like.png
     - images/sad.png
+    - images/unlock.png
+    - images/unlocked.png
 
   
 
