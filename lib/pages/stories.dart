@@ -10,7 +10,7 @@ class Stories extends StatefulWidget {
 
 class _StoriesState extends State<Stories> {
   final List<List<String>> storyList = [
-    ['Story1', 'u'],
+    ['Story1', 'l'],
     ['Story2', 'l'],
     ['Story3', 'l'],
     ['Story4', 'l'],

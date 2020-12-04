@@ -3,6 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 class DictContent extends StatefulWidget {
+  final String category;
+
+  DictContent({@required this.category});
   @override
   _DictContentState createState() => _DictContentState();
 }
@@ -156,7 +159,7 @@ class _DictContentState extends State<DictContent> {
             Container(
               alignment: Alignment(-0.8, 1.0),
               child: Text(
-                '{Category}',
+                widget.category,
                 style: GoogleFonts.montserrat(
                   textStyle: TextStyle(
                     color: Colors.black,

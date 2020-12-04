@@ -5,11 +5,15 @@ class DictButton extends StatelessWidget {
   DictButton({
     @required this.buttonName,
     @required this.buttonImage,
+    this.imgH,
+    this.imgW,
     this.onPressed,
   });
 
   final String buttonName;
   final String buttonImage;
+  final double imgH;
+  final double imgW;
   final VoidCallback onPressed;
 
   @override
@@ -44,7 +48,11 @@ class DictButton extends StatelessWidget {
                 ),
               ),
             ),
-            Image.asset(buttonImage),
+            Image.asset(
+              buttonImage,
+              height: imgH,
+              width: imgW,
+            ),
           ],
         ),
         onPressed: onPressed,

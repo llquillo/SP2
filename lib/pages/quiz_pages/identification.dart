@@ -36,7 +36,8 @@ class _IdentificationState extends State<Identification> {
       pageTitle: "Drills",
       pageGreeting: "Question ${(widget.i)}",
       pageChild: _pageContent(context),
-      bgColor: Color(0xffb0c4b1),
+      bgColor: Color(0xff727764),
+      titleColor: Colors.white,
     );
   }
 

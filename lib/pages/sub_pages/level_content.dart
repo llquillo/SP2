@@ -9,16 +9,16 @@ import '../quiz_pages/score_page.dart';
 
 class LevelContent extends StatelessWidget {
   final levels = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
+    ['1', 'u'],
+    ['2', 'l'],
+    ['3', 'l'],
+    ['4', 'l'],
+    ['5', 'l'],
+    ['6', 'l'],
+    ['7', 'l'],
+    ['8', 'l'],
+    ['9', 'l'],
+    ['10', 'l'],
   ];
 
   final int iteration = 0;
@@ -63,7 +63,7 @@ class LevelContent extends StatelessWidget {
       pageTitle: "Levels",
       pageGreeting: "Level N",
       pageChild: pageContent(context),
-      bgColor: Color(0xffb0c4b1),
+      bgColor: Color(0xff727764),
       titleColor: Colors.white,
     );
   }
@@ -80,7 +80,9 @@ class LevelContent extends StatelessWidget {
           ...levels.map(
             (i) => GestureDetector(
               onTap: () {
-                initiateQuiz(context, iteration, 0, 0);
+                if (i.last == 'u') {
+                  initiateQuiz(context, iteration, 0, 0);
+                }
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -102,7 +104,7 @@ class LevelContent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      i,
+                      i.first,
                       style: GoogleFonts.montserrat(
                         textStyle: new TextStyle(
                           fontSize: 24,
@@ -132,7 +134,9 @@ class LevelContent extends StatelessWidget {
                           ),
                         ]),
                     Image.asset(
-                      'images/locked.png',
+                      i.last == 'l'
+                          ? 'images/locked.png'
+                          : 'images/unlocked.png',
                       height: 30,
                       width: 30,
                     ),
