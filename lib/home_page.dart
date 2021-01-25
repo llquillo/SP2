@@ -5,11 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 import './pages/drills.dart';
 import './pages/stories.dart';
 import './pages/dictionary.dart';
+import './pages/progress.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({this.auth, this.onSignedOut});
   final BaseAuth auth;
   final VoidCallback onSignedOut;
+  bool isLoading = false;
 
   final buttonsInfo = [
     ['images/drills.png', 'Drills'],
@@ -18,6 +21,47 @@ class HomePage extends StatelessWidget {
     ['images/progress.png', 'Progress'],
     ['images/settings.png', 'Settings']
   ];
+
+  void _setloading(context, pagePicked) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+            insetPadding: EdgeInsets.all(50),
+            backgroundColor: Colors.transparent,
+            child: Container(
+              height: MediaQuery.of(context).size.height / 5 - 20,
+              width: MediaQuery.of(context).size.width / 2 - 90,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SpinKitChasingDots(
+                    size: 40,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'Loading',
+                    style: GoogleFonts.montserrat(
+                      color: Colors.white,
+                      fontSize: 23,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                ],
+              ),
+            ));
+      },
+    );
+    new Future.delayed(new Duration(seconds: 2), () {
+      Navigator.pop(context);
+      _switchPages(pagePicked, context);
+    });
+  }
 
   void _signOut() async {
     try {
@@ -51,6 +95,14 @@ class HomePage extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => Dictionary()),
+          );
+          break;
+        }
+      case "Progress":
+        {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Progress()),
           );
           break;
         }
@@ -106,7 +158,7 @@ class HomePage extends StatelessWidget {
                     ...buttonsInfo.map(
                       (i) => GestureDetector(
                         onTap: () {
-                          _switchPages(i.last, context);
+                          _setloading(context, i.last);
                         },
                         child: Container(
                           width: 10,
