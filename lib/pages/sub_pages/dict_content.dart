@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class DictContent extends StatefulWidget {
   final String category;
@@ -11,97 +12,39 @@ class DictContent extends StatefulWidget {
 }
 
 class _DictContentState extends State<DictContent> {
-  final List<List<String>> finalDict = [
-    [
-      "Word1",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation1",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
-    ],
-    [
-      "Word2",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation2",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
-    ],
-    [
-      "Word3",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation3",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
-    ],
-    [
-      "Word4",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation4",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
-    ],
-    [
-      "Word5",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation5",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
-    ],
-    [
-      "Word6",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation6",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
-    ],
-    [
-      "Word7",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation7",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
-    ],
-    [
-      "Word8",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation8",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
-    ],
-    [
-      "Word9",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation9",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
-    ],
-    [
-      "Word10",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation10",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
-    ],
-    [
-      "Word11",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation11",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
-    ],
-    [
-      "Word12",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation12",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
-    ],
-    [
-      "Word13",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation13",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
-    ],
-    [
-      "Word14",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla.",
-      "Translation14",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae nunc nulla."
-    ],
-  ];
-  List<List<String>> sampleDict;
-
+  final databaseReference = FirebaseDatabase.instance.reference();
+  List<Map> finalDict;
+  List<Map> sampleDict;
   SearchBar searchBar;
+
+  @override
+  void initState() {
+    super.initState();
+    databaseReference.once().then((DataSnapshot snapshot) {
+      setState(() {
+        _initDatabase(snapshot);
+      });
+    });
+  }
+
+  Future<void> _initDatabase(snapshot) async {
+    finalDict = List<Map>.from(snapshot.value);
+    sampleDict = List<Map>.from(finalDict);
+  }
+
+  // Future<void> _initDatabase() async {
+  //   await databaseReference.once().then((DataSnapshot snapshot) {
+  //     finalDict = List<Map>.from(snapshot.value);
+  //     print(snapshot.value);
+  //     print('data!!!!!!!!!!!!!!');
+  //   });
+  //   print(finalDict);
+  //   sampleDict = List<Map>.from(finalDict);
+  // }
+
   _DictContentState() {
-    sampleDict = List<List<String>>.from(finalDict);
+    // _initDatabase();
+    // sampleDict = List<Map>.from(finalDict);
     searchBar = new SearchBar(
       inBar: true,
       setState: setState,
@@ -120,8 +63,8 @@ class _DictContentState extends State<DictContent> {
   }
 
   void _testFunc(String input) {
-    List<List<String>> tempWord;
-    List<List<String>> tempTranslation;
+    List<Map> tempWord;
+    List<Map> tempTranslation;
     tempWord = findWord(input);
     tempTranslation = findTranslation(input);
 
@@ -135,13 +78,14 @@ class _DictContentState extends State<DictContent> {
 
   findWord(String input) {
     return finalDict
-        .where((f) => f[0].toLowerCase().contains(input.toLowerCase()))
+        .where((f) => f['Word'].toLowerCase().contains(input.toLowerCase()))
         .toList();
   }
 
   findTranslation(String input) {
     return finalDict
-        .where((f) => f[2].toLowerCase().contains(input.toLowerCase()))
+        .where(
+            (f) => f['Translation'].toLowerCase().contains(input.toLowerCase()))
         .toList();
   }
 
@@ -181,7 +125,7 @@ class _DictContentState extends State<DictContent> {
                   ...sampleDict.map(
                     (i) => Container(
                       margin: EdgeInsets.fromLTRB(10, 5, 10, 0),
-                      padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
+                      padding: EdgeInsets.fromLTRB(10, 0, 8, 0),
                       decoration: new BoxDecoration(
                         border: Border.all(width: 1),
                       ),
@@ -195,11 +139,11 @@ class _DictContentState extends State<DictContent> {
                             children: [
                               Flexible(
                                 child: Text(
-                                  i[0],
+                                  i['Word'],
                                   style: GoogleFonts.playfairDisplay(
                                     textStyle: new TextStyle(
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 16,
+                                      fontSize: 14,
                                       letterSpacing: 1.2,
                                     ),
                                   ),
@@ -214,7 +158,7 @@ class _DictContentState extends State<DictContent> {
                                   height:
                                       MediaQuery.of(context).size.height / 6,
                                   child: Text(
-                                    i[1],
+                                    i['Word'],
                                     style: GoogleFonts.montserrat(
                                       textStyle: new TextStyle(
                                         fontSize: 11,
@@ -226,43 +170,51 @@ class _DictContentState extends State<DictContent> {
                               ),
                             ],
                           ),
-                          // SizedBox(width: 5),
+                          SizedBox(width: 5, height: 20),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Flexible(
-                                child: Text(
-                                  i[2],
-                                  style: GoogleFonts.playfairDisplay(
-                                    fontWeight: FontWeight.w700,
-                                    textStyle: new TextStyle(
-                                      fontSize: 16,
-                                      letterSpacing: 1.2,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Flexible(
+                              Expanded(
                                 child: Container(
-                                  margin: EdgeInsets.zero,
-                                  padding: EdgeInsets.zero,
+                                  padding: EdgeInsets.all(10),
                                   width: MediaQuery.of(context).size.width / 2 -
-                                      20,
+                                      30,
                                   height:
                                       MediaQuery.of(context).size.height / 6,
                                   child: Text(
-                                    i[1],
+                                    i['Translation'],
                                     textAlign: TextAlign.right,
-                                    style: GoogleFonts.montserrat(
+                                    style: GoogleFonts.playfairDisplay(
                                       textStyle: new TextStyle(
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w500,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        letterSpacing: 1.2,
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
+                              // Flexible(
+                              //   child: Container(
+                              //     margin: EdgeInsets.zero,
+                              //     padding: EdgeInsets.zero,
+                              //     width: MediaQuery.of(context).size.width / 2 -
+                              //         20,
+                              //     height:
+                              //         MediaQuery.of(context).size.height / 6,
+                              //     child: Text(
+                              //       i['Word'],
+                              //       textAlign: TextAlign.right,
+                              //       style: GoogleFonts.montserrat(
+                              //         textStyle: new TextStyle(
+                              //           fontSize: 11,
+                              //           fontWeight: FontWeight.w500,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ],
