@@ -2,16 +2,23 @@ import 'package:flutter/material.dart';
 import '../common_widgets/page_title.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../sub_pages/level_content.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class Identification extends StatefulWidget {
   final int i;
   final BuildContext currentContext;
   final int score;
+  final List<Map> wordList;
+  final String level;
+  final String category;
   Identification(
       {@required this.i,
       @required this.currentContext,
       this.levelContent,
-      this.score});
+      this.score,
+      this.wordList,
+      this.level,
+      this.category});
   final LevelContent levelContent;
 
   @override
@@ -21,27 +28,49 @@ class Identification extends StatefulWidget {
 class _IdentificationState extends State<Identification> {
   TextEditingController answerController = new TextEditingController();
   LevelContent levelContent;
-  String correctAnswer = "hello";
+  String correctAnswer;
   String userAnswer;
+
+  final databaseReference = FirebaseDatabase.instance.reference();
 
   @override
   void initState() {
     super.initState();
-    levelContent = new LevelContent();
+    print(widget.wordList);
+    levelContent = new LevelContent(
+        databaseTemp: null,
+        wordList: widget.wordList,
+        category: widget.category);
   }
 
   @override
   Widget build(BuildContext context) {
+    // levelContent = new LevelContent(wordList: widget.wordList);
+    print("IDENTIFCATION");
+    print(widget.wordList);
+    var answerSet = widget.wordList[widget.i - 1];
+    correctAnswer = answerSet['Translation'];
     return PageTitle(
       pageTitle: "Drills",
       pageGreeting: "Question ${(widget.i)}",
-      pageChild: _pageContent(context),
+      pageChild: _pageContent(context, correctAnswer, answerSet),
       bgColor: Color(0xff727764),
       titleColor: Colors.white,
     );
   }
 
   Widget correctAnswerValidation(BuildContext context, String correctAnswer) {
+    print("category ${widget.category}");
+    print("level ${widget.level}");
+    print(widget.i.toString());
+    print(databaseReference
+        .reference()
+        .child(widget.category)
+        .child(widget.level)
+        .child("Words")
+        .child(widget.i.toString())
+        .child("Deck")
+        .set(2));
     return AlertDialog(
       backgroundColor: Color(0xffdef2c8),
       title: Text(
@@ -63,8 +92,9 @@ class _IdentificationState extends State<Identification> {
       actions: [
         MaterialButton(
           onPressed: () {
-            levelContent.initiateQuiz(
-                widget.currentContext, widget.i, 1, widget.score);
+            print("category ${widget.category}");
+            levelContent.initiateQuiz(widget.currentContext, widget.i, 1,
+                widget.score, widget.level, widget.category);
           },
           child: Text("Next"),
         )
@@ -94,8 +124,8 @@ class _IdentificationState extends State<Identification> {
       actions: [
         MaterialButton(
           onPressed: () {
-            levelContent.initiateQuiz(
-                widget.currentContext, widget.i, 0, widget.score);
+            levelContent.initiateQuiz(widget.currentContext, widget.i, 0,
+                widget.score, widget.level, widget.category);
           },
           child: Text("Next"),
         )
@@ -111,13 +141,14 @@ class _IdentificationState extends State<Identification> {
               alignment: Alignment(0, -1),
               child: Opacity(
                   opacity: 0.85,
-                  child: answerController.text == correctAnswer
+                  child: answerController.text.toLowerCase() ==
+                          correctAnswer.toLowerCase()
                       ? correctAnswerValidation(context, correctAnswer)
                       : incorrectAnswerValidation(context, correctAnswer)));
         });
   }
 
-  Widget _pageContent(context) {
+  Widget _pageContent(context, correctAnswer, answerSet) {
     return Container(
       width: MediaQuery.of(context).size.width - 60,
       height: MediaQuery.of(context).size.height - 180,
@@ -125,9 +156,19 @@ class _IdentificationState extends State<Identification> {
         scrollDirection: Axis.vertical,
         children: [
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 10),
               Container(
+                child: Center(
+                  child: Text(
+                    answerSet['Word'],
+                    style: GoogleFonts.montserrat(
+                      textStyle: TextStyle(color: Colors.black, fontSize: 30),
+                    ),
+                  ),
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(7)),
                   color: Colors.white,
@@ -148,7 +189,8 @@ class _IdentificationState extends State<Identification> {
                 width: MediaQuery.of(context).size.width / 2,
                 child: TextField(
                   controller: answerController,
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
               Container(

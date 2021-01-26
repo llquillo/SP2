@@ -2,16 +2,26 @@ import 'package:flutter/material.dart';
 import '../common_widgets/page_title.dart';
 import '../sub_pages/level_content.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:math';
+import 'package:firebase_database/firebase_database.dart';
 
 class MultipleChoice extends StatefulWidget {
   final int i;
   final BuildContext currentContext;
   final int score;
+  final List<Map> wordList;
+  final String level;
+  final String category;
+  var rng = new Random();
+
   MultipleChoice(
       {@required this.i,
       @required this.currentContext,
       this.levelContent,
-      this.score});
+      this.score,
+      this.wordList,
+      this.level,
+      this.category});
   final LevelContent levelContent;
 
   @override
@@ -19,27 +29,78 @@ class MultipleChoice extends StatefulWidget {
 }
 
 class _MultipleChoiceState extends State<MultipleChoice> {
-  String correctAnswer = "Choice 4";
+  String correctAnswer;
   LevelContent levelContent;
+  List<String> choices;
+  String choice1, choice2, choice3;
+
+  final databaseReference = FirebaseDatabase.instance.reference();
+
   @override
   void initState() {
     super.initState();
-    levelContent = new LevelContent();
+    levelContent = new LevelContent(
+      databaseTemp: null,
+      wordList: widget.wordList,
+      category: widget.category,
+    );
   }
 
-  List<String> choices = ["Choice 1", "Choice 2", "Choice 3", "Choice 4"];
   @override
   Widget build(BuildContext context) {
+    List<int> usedNum = List<int>();
+    print(widget.wordList);
+    int current = widget.i - 1;
+    print(current);
+    usedNum.add(current);
+    var answerSet = widget.wordList[widget.i - 1];
+    correctAnswer = answerSet['Translation'];
+    choice1 = getChoice(usedNum);
+    choice2 = getChoice(usedNum);
+    choice3 = getChoice(usedNum);
+    choices = [correctAnswer, choice1, choice2, choice3];
+    choices.shuffle();
+
     return PageTitle(
       pageTitle: "Drills",
       pageGreeting: "Question ${(widget.i)}",
-      pageChild: _pageContent(context),
+      pageChild: _pageContent(context, correctAnswer, answerSet),
       bgColor: Color(0xff727764),
       titleColor: Colors.white,
     );
   }
 
+  String getChoice(List<int> usedNum) {
+    print("getChoice");
+    var rng = new Random();
+    int tempNum;
+    while (true) {
+      bool flag = true;
+      tempNum = rng.nextInt(9);
+      for (var i = 0; i < usedNum.length; i++) {
+        if (tempNum == usedNum[i]) {
+          flag = false;
+        }
+      }
+      if (flag) {
+        usedNum.add(tempNum);
+        break;
+      }
+    }
+    return widget.wordList[tempNum]['Translation'];
+  }
+
   Widget correctAnswerValidation(BuildContext context, String correctAnswer) {
+    print(widget.category);
+    print(widget.level);
+    databaseReference
+        .reference()
+        .child(widget.category)
+        .child(widget.level)
+        .child("Words")
+        .child(widget.i.toString())
+        .child("Deck")
+        .set(2);
     return AlertDialog(
       backgroundColor: Color(0xffdef2c8),
       title: Text(
@@ -61,8 +122,8 @@ class _MultipleChoiceState extends State<MultipleChoice> {
       actions: [
         MaterialButton(
           onPressed: () {
-            levelContent.initiateQuiz(
-                widget.currentContext, widget.i, 1, widget.score);
+            levelContent.initiateQuiz(widget.currentContext, widget.i, 1,
+                widget.score, widget.level, widget.category);
           },
           child: Text("Next"),
         )
@@ -92,8 +153,8 @@ class _MultipleChoiceState extends State<MultipleChoice> {
       actions: [
         MaterialButton(
           onPressed: () {
-            levelContent.initiateQuiz(
-                widget.currentContext, widget.i, 0, widget.score);
+            levelContent.initiateQuiz(widget.currentContext, widget.i, 0,
+                widget.score, widget.level, widget.category);
           },
           child: Text("Next"),
         )
@@ -116,13 +177,21 @@ class _MultipleChoiceState extends State<MultipleChoice> {
     );
   }
 
-  Widget _pageContent(context) {
+  Widget _pageContent(context, correctAnswer, answerSet) {
     return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height - 200,
+      width: MediaQuery.of(context).size.width - 30,
+      height: MediaQuery.of(context).size.height - 150,
       child: Column(
         children: [
           Container(
+            child: Center(
+              child: Text(
+                answerSet['Word'],
+                style: GoogleFonts.montserrat(
+                  textStyle: TextStyle(color: Colors.black, fontSize: 30),
+                ),
+              ),
+            ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(7)),
               color: Colors.white,
@@ -138,10 +207,12 @@ class _MultipleChoiceState extends State<MultipleChoice> {
             width: MediaQuery.of(context).size.width / 2 + 120,
             height: MediaQuery.of(context).size.height / 4 + 40,
           ),
+          SizedBox(height: 7),
           Container(
-            margin: EdgeInsets.all(35),
-            width: MediaQuery.of(context).size.width / 2 + 120,
-            height: MediaQuery.of(context).size.height / 4 + 30,
+            // color: Colors.red,
+            margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
+            width: MediaQuery.of(context).size.width / 2 + 200,
+            height: MediaQuery.of(context).size.height / 4 + 60,
             child: GridView.count(
               mainAxisSpacing: 5,
               crossAxisSpacing: 10,
@@ -150,18 +221,28 @@ class _MultipleChoiceState extends State<MultipleChoice> {
               children: [
                 ...choices.map((i) => Container(
                       margin: EdgeInsets.all(10),
-                      // color: Colors.orange,
-                      child: MaterialButton(
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        padding: EdgeInsets.all(0.0),
-                        height: 2.0,
-                        minWidth: 2.0,
-                        color: Colors.grey[300],
-                        onPressed: () {
-                          _quizValidation(i);
-                        },
-                        child: Text(i),
-                      ),
+                      child: RaisedButton(
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          padding: EdgeInsets.all(10.0),
+                          color: Colors.yellow,
+                          onPressed: () {
+                            _quizValidation(i);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  i,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              )
+                            ],
+                          )),
                     ))
               ],
             ),

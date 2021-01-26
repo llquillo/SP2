@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import './common_widgets/page_title.dart';
 import './sub_pages/level_content.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Drills extends StatefulWidget {
   @override
@@ -9,20 +12,121 @@ class Drills extends StatefulWidget {
 
 class _DrillsState extends State<Drills> {
   List buttonsInfo = [
-    ["images/basic.png", "u"],
-    ["images/basic.png", "l"],
-    ["images/family.png", "l"],
-    ["images/school.png", "l"],
-    ["images/shopping.png", "l"],
-    ["images/travel.png", "l"],
+    ["images/basic.png", "u", "basics1"],
+    ["images/basic.png", "l", "basics2"],
+    ["images/family.png", "l", "family"],
+    ["images/school.png", "l", "school"],
+    ["images/shopping.png", "l", "shopping"],
+    ["images/travel.png", "l", "travel"],
   ];
 
   String locked = "images/lock.png";
+  List<Map> words;
+  List<Map> levels;
+  List<Map> wordList;
+  var databaseInstanceTemp;
+  var databaseTemp;
 
-  void _openLevel(context) async {
+  final databaseReference = FirebaseDatabase.instance.reference();
+
+  @override
+  void initState() {
+    super.initState();
+    databaseReference.once().then((DataSnapshot snapshot) {
+      setState(() {
+        _initDatabase(snapshot);
+      });
+    });
+  }
+
+  Future<void> _initDatabase(snapshot) async {
+    // Query _wordQuery = databaseReference.reference().child("word");
+    // // print(_wordQuery);
+    // print(databaseReference
+    //     .reference()
+    //     .child("basics1")
+    //     .child("Level1")
+    //     .child("Words")
+    //     .child("1")
+    //     .child("Deck")
+    //     .set(2));
+    // var temp = snapshot.value;
+    // // print(temp["basics1"]["Level1"]["Words"]);
+    // var tempList = new List<Map>();
+    // words = List<Map>.from(temp["basics1"]["Level1"]["Words"]);
+    // levels = List<Map>.from(temp["basics1"]);
+    // print(levels);
+    // // print(words);
+    // // var j = 0;
+    // // while (j < 1) {
+    // //   if (words[j] != null) {
+    // //     print(words[j]);
+    // //     tempList.add(words[j]);
+    // //     print(j);
+    // //     j++;
+    // //   }
+    // // }
+    // for (var i = 0; i < 11; i++) {
+    //   if (words[i] != null) {
+    //     print(words[i]);
+    //     tempList.add(words[i]);
+    //   }
+    // }
+    // wordList = List<Map>.from(tempList);
+    databaseInstanceTemp = databaseReference.reference();
+    databaseTemp = snapshot.value;
+    print(databaseTemp);
+  }
+
+  void _setloading(context, wordList, category) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+            insetPadding: EdgeInsets.all(50),
+            backgroundColor: Colors.transparent,
+            child: Container(
+              height: MediaQuery.of(context).size.height / 5 - 20,
+              width: MediaQuery.of(context).size.width / 2 - 90,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SpinKitChasingDots(
+                    size: 40,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'Loading',
+                    style: GoogleFonts.montserrat(
+                      color: Colors.white,
+                      fontSize: 23,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                ],
+              ),
+            ));
+      },
+    );
+    new Future.delayed(new Duration(seconds: 2), () {
+      Navigator.pop(context);
+      _openLevel(context, wordList, category);
+    });
+  }
+
+  void _openLevel(context, wordList, category) async {
+    var currentDB = databaseTemp[category];
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LevelContent()),
+      MaterialPageRoute(
+        builder: (context) =>
+            LevelContent(databaseTemp: currentDB, category: category),
+      ),
     );
   }
 
@@ -82,8 +186,8 @@ class _DrillsState extends State<Drills> {
             ...buttonsInfo.map(
               (i) => GestureDetector(
                 onTap: () {
-                  if (i.last == "u") {
-                    _openLevel(context);
+                  if (i[1] == "u") {
+                    _setloading(context, wordList, i.last);
                   }
                 },
                 child: Container(
@@ -108,7 +212,7 @@ class _DrillsState extends State<Drills> {
                     children: [
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: i.last == 'u'
+                        child: i[1] == 'u'
                             ? _unlockedLevel(i.first)
                             : _lockedLevel(i.first),
                       ),
