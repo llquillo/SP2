@@ -1,16 +1,16 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import './common_widgets/dict_button.dart';
 import './sub_pages/dict_content.dart';
 import './common_widgets/page_title.dart';
 
 class Dictionary extends StatelessWidget {
-  void _openDict(context, category) async {
+  void _openDict(context, category, categoryName) async {
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => DictContent(
                 category: category,
+                categoryName: categoryName,
               )),
     );
   }
@@ -38,7 +38,7 @@ class Dictionary extends StatelessWidget {
               buttonName: "Basic Expressions",
               buttonImage: 'images/basic.png',
               onPressed: () {
-                _openDict(context, "Basic Expressions");
+                _openDict(context, "Basic Expressions", "basics1");
               },
             ),
           ),
@@ -48,7 +48,7 @@ class Dictionary extends StatelessWidget {
               buttonName: "Family",
               buttonImage: 'images/family.png',
               onPressed: () {
-                _openDict(context, "Family");
+                _openDict(context, "Family", "family");
               },
             ),
           ),
@@ -58,7 +58,7 @@ class Dictionary extends StatelessWidget {
               buttonName: "School",
               buttonImage: 'images/school.png',
               onPressed: () {
-                _openDict(context, "School");
+                _openDict(context, "School", "school");
               },
             ),
           ),
@@ -68,7 +68,7 @@ class Dictionary extends StatelessWidget {
               buttonName: "Shopping",
               buttonImage: 'images/shopping.png',
               onPressed: () {
-                _openDict(context, "Shopping");
+                _openDict(context, "Shopping", "shopping");
               },
             ),
           ),
@@ -78,7 +78,7 @@ class Dictionary extends StatelessWidget {
               buttonName: "Travel",
               buttonImage: 'images/travel.png',
               onPressed: () {
-                _openDict(context, "Travel");
+                _openDict(context, "Travel", "travel");
               },
             ),
           )

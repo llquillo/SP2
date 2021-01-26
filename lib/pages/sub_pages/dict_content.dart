@@ -5,8 +5,9 @@ import 'package:firebase_database/firebase_database.dart';
 
 class DictContent extends StatefulWidget {
   final String category;
+  final String categoryName;
 
-  DictContent({@required this.category});
+  DictContent({@required this.category, @required this.categoryName});
   @override
   _DictContentState createState() => _DictContentState();
 }
@@ -28,8 +29,20 @@ class _DictContentState extends State<DictContent> {
   }
 
   Future<void> _initDatabase(snapshot) async {
-    finalDict = List<Map>.from(snapshot.value);
+    // print(snapshot.value);
+    finalDict = List<Map>.from(
+            snapshot.value[widget.categoryName]["Level1"]["Words"]) +
+        List<Map>.from(snapshot.value[widget.categoryName]["Level2"]["Words"]) +
+        List<Map>.from(snapshot.value[widget.categoryName]["Level3"]["Words"]) +
+        List<Map>.from(snapshot.value[widget.categoryName]["Level4"]["Words"]) +
+        List<Map>.from(snapshot.value[widget.categoryName]["Level5"]["Words"]);
+    for (var i = 0; i < finalDict.length; i++) {
+      if (finalDict[i] == null) {
+        finalDict.remove(finalDict[i]);
+      }
+    }
     sampleDict = List<Map>.from(finalDict);
+    print(sampleDict);
   }
 
   // Future<void> _initDatabase() async {
@@ -138,56 +151,42 @@ class _DictContentState extends State<DictContent> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Flexible(
+                                  child: Container(
+                                color: Colors.yellow,
                                 child: Text(
                                   i['Word'],
-                                  style: GoogleFonts.playfairDisplay(
+                                  style: GoogleFonts.montserrat(
                                     textStyle: new TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
                                       letterSpacing: 1.2,
+                                    ),
+                                  ),
+                                ),
+                              )),
+                              Flexible(
+                                child: Container(
+                                  padding: EdgeInsets.all(5),
+                                  child: Text(
+                                    i['POS'],
+                                    style: GoogleFonts.montserrat(
+                                      textStyle: new TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w300,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                               Flexible(
                                 child: Container(
-                                  margin: EdgeInsets.zero,
-                                  padding: EdgeInsets.zero,
-                                  width: MediaQuery.of(context).size.width / 2 -
-                                      20,
-                                  height:
-                                      MediaQuery.of(context).size.height / 6,
-                                  child: Text(
-                                    i['Word'],
-                                    style: GoogleFonts.montserrat(
-                                      textStyle: new TextStyle(
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(width: 5, height: 20),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  width: MediaQuery.of(context).size.width / 2 -
-                                      30,
-                                  height:
-                                      MediaQuery.of(context).size.height / 6,
+                                  padding: EdgeInsets.all(0),
                                   child: Text(
                                     i['Translation'],
                                     textAlign: TextAlign.right,
-                                    style: GoogleFonts.playfairDisplay(
+                                    style: GoogleFonts.montserrat(
                                       textStyle: new TextStyle(
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w400,
                                         fontSize: 14,
                                         letterSpacing: 1.2,
                                       ),
@@ -195,28 +194,35 @@ class _DictContentState extends State<DictContent> {
                                   ),
                                 ),
                               ),
-                              // Flexible(
-                              //   child: Container(
-                              //     margin: EdgeInsets.zero,
-                              //     padding: EdgeInsets.zero,
-                              //     width: MediaQuery.of(context).size.width / 2 -
-                              //         20,
-                              //     height:
-                              //         MediaQuery.of(context).size.height / 6,
-                              //     child: Text(
-                              //       i['Word'],
-                              //       textAlign: TextAlign.right,
-                              //       style: GoogleFonts.montserrat(
-                              //         textStyle: new TextStyle(
-                              //           fontSize: 11,
-                              //           fontWeight: FontWeight.w500,
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
                             ],
                           ),
+                          // Column(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   crossAxisAlignment: CrossAxisAlignment.center,
+                          //   children: [
+
+                          //     // Flexible(
+                          //     //   child: Container(
+                          //     //     margin: EdgeInsets.zero,
+                          //     //     padding: EdgeInsets.zero,
+                          //     //     width: MediaQuery.of(context).size.width / 2 -
+                          //     //         20,
+                          //     //     height:
+                          //     //         MediaQuery.of(context).size.height / 6,
+                          //     //     child: Text(
+                          //     //       i['Word'],
+                          //     //       textAlign: TextAlign.right,
+                          //     //       style: GoogleFonts.montserrat(
+                          //     //         textStyle: new TextStyle(
+                          //     //           fontSize: 11,
+                          //     //           fontWeight: FontWeight.w500,
+                          //     //         ),
+                          //     //       ),
+                          //     //     ),
+                          //     //   ),
+                          //     // ),
+                          //   ],
+                          // ),
                         ],
                       ),
                     ),
