@@ -4,10 +4,15 @@ import 'package:sample_firebase/home_page.dart';
 import '../common_widgets/page_title.dart';
 import '../../home_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart';
 
 class ScorePage extends StatelessWidget {
   final int score;
-  ScorePage({@required this.score});
+  final String category;
+  final String level;
+  ScorePage({@required this.score, this.category, this.level});
+  final databaseReference = FirebaseDatabase.instance.reference();
   @override
   Widget build(BuildContext context) {
     return PageTitle(
@@ -16,10 +21,29 @@ class ScorePage extends StatelessWidget {
         pageChild: _pageContent(context));
   }
 
+  void updateDecks() {
+    databaseReference.reference().child(category).child(level).child("Words");
+  }
+
+  void assignPoint() {
+    int points;
+    score > 5 ? points = 10 : points = 5;
+    DateTime now = new DateTime.now();
+    DateTime date = new DateTime(now.year, now.month, now.day);
+    String dateString = DateFormat('d MMM').format(date);
+    print("Points: $points \n Date: $dateString");
+    Timestamp timestamp = new Timestamp(dateString, points);
+    databaseReference
+        .reference()
+        .child('Points')
+        .push()
+        .set(timestamp.toJSON());
+  }
+
   Widget _pageContent(context) {
     return Container(
         width: MediaQuery.of(context).size.width - 50,
-        height: MediaQuery.of(context).size.height - 250,
+        height: MediaQuery.of(context).size.height - 200,
         margin: EdgeInsets.fromLTRB(5, 15, 5, 20),
         padding: EdgeInsets.all(20),
         alignment: Alignment.center,
@@ -62,13 +86,35 @@ class ScorePage extends StatelessWidget {
             SizedBox(height: 30),
             MaterialButton(
               child: Text('Okay'),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
               color: Colors.grey,
               onPressed: () {
+                assignPoint();
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => HomePage()));
               },
             )
           ],
         ));
+  }
+}
+
+class Timestamp {
+  String date;
+  int xp;
+  // int key;
+
+  Timestamp(this.date, this.xp);
+
+  Timestamp.fromSnapshot(DataSnapshot snapshot)
+      : date = snapshot.value["Date"],
+        xp = snapshot.value["XP"];
+  toJSON() {
+    return {
+      "Date": date,
+      "XP": xp,
+    };
   }
 }
