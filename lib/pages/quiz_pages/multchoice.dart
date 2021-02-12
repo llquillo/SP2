@@ -4,12 +4,15 @@ import '../sub_pages/level_content.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MultipleChoice extends StatefulWidget {
   final int i;
   final BuildContext currentContext;
   final int score;
   final List<Map> wordList;
+  final databaseTemp;
+
   final String level;
   final String category;
   var rng = new Random();
@@ -20,6 +23,7 @@ class MultipleChoice extends StatefulWidget {
       this.levelContent,
       this.score,
       this.wordList,
+      this.databaseTemp,
       this.level,
       this.category});
   final LevelContent levelContent;
@@ -40,7 +44,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
   void initState() {
     super.initState();
     levelContent = new LevelContent(
-      databaseTemp: null,
+      databaseTemp: widget.databaseTemp,
       wordList: widget.wordList,
       category: widget.category,
     );
@@ -65,8 +69,8 @@ class _MultipleChoiceState extends State<MultipleChoice> {
       pageTitle: "Drills",
       pageGreeting: "Question ${(widget.i)}",
       pageChild: _pageContent(context, correctAnswer, answerSet),
-      bgColor: Color(0xff727764),
-      titleColor: Colors.white,
+      bgColor: Colors.white,
+      titleColor: Colors.blue,
     );
   }
 
@@ -91,9 +95,13 @@ class _MultipleChoiceState extends State<MultipleChoice> {
   }
 
   Widget correctAnswerValidation(BuildContext context, String correctAnswer) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    final databaseReference = FirebaseDatabase.instance.reference();
+    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
     print(widget.category);
     print(widget.level);
-    databaseReference
+    userDB
         .reference()
         .child(widget.category)
         .child(widget.level)
@@ -122,8 +130,14 @@ class _MultipleChoiceState extends State<MultipleChoice> {
       actions: [
         MaterialButton(
           onPressed: () {
-            levelContent.initiateQuiz(widget.currentContext, widget.i, 1,
-                widget.score, widget.level, widget.category);
+            levelContent.initiateQuiz(
+                widget.currentContext,
+                widget.i,
+                1,
+                widget.score,
+                widget.level,
+                widget.category,
+                widget.databaseTemp);
           },
           child: Text("Next"),
         )
@@ -153,8 +167,14 @@ class _MultipleChoiceState extends State<MultipleChoice> {
       actions: [
         MaterialButton(
           onPressed: () {
-            levelContent.initiateQuiz(widget.currentContext, widget.i, 0,
-                widget.score, widget.level, widget.category);
+            levelContent.initiateQuiz(
+                widget.currentContext,
+                widget.i,
+                0,
+                widget.score,
+                widget.level,
+                widget.category,
+                widget.databaseTemp);
           },
           child: Text("Next"),
         )
@@ -184,11 +204,15 @@ class _MultipleChoiceState extends State<MultipleChoice> {
       child: Column(
         children: [
           Container(
+            padding: EdgeInsets.all(20),
             child: Center(
               child: Text(
                 answerSet['Word'],
                 style: GoogleFonts.montserrat(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 30),
+                  textStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 26,
+                  ),
                 ),
               ),
             ),

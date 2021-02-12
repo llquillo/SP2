@@ -6,49 +6,134 @@ import 'package:percent_indicator/percent_indicator.dart';
 import '../quiz_pages/multchoice.dart';
 import '../quiz_pages/identification.dart';
 import '../quiz_pages/score_page.dart';
+import '../quiz_pages/sent.dart';
+import 'dart:math';
 
 class LevelContent extends StatelessWidget {
   final levels = [
-    ['1', 'u'],
-    ['2', 'l'],
-    ['3', 'l'],
-    ['4', 'l'],
-    ['5', 'l'],
-    ['6', 'l'],
-    ['7', 'l'],
-    ['8', 'l'],
-    ['9', 'l'],
-    ['10', 'l'],
+    ['1', 'u', 'Level1'],
+    ['2', 'u', 'Level2'],
+    ['3', 'u', 'Level3'],
+    ['4', 'l', 'Level4'],
+    ['5', 'l', 'Level5'],
   ];
+  // final List<Map> wordList;
+  var databaseTemp;
+  List<Map> wordList = new List<Map>();
+  List<Map> listTemp = new List<Map>();
+
+  String category;
+
+  LevelContent(
+      {@required this.databaseTemp, this.wordList, @required this.category});
 
   final int iteration = 0;
   final int total = 10;
 
-  void initiateQuiz(context, iteration, addScore, score) async {
-    if (iteration < 10) {
-      if (iteration % 2 == 0) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Identification(
-                  i: iteration, currentContext: context, score: score)),
-          (Route<dynamic> route) => false,
-        );
-        iteration += 1;
-        score += addScore;
-      } else {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-              builder: (context) => MultipleChoice(
-                  i: iteration, currentContext: context, score: score)),
-          (Route<dynamic> route) => false,
-        );
-        iteration += 1;
-        score += addScore;
+  void getWords(context, iteration, addScore, score, level, category) async {
+    if (wordList == null) {
+      List<Map> tempList = new List<Map>();
+      var words = new List<Map>();
+      words = List<Map>.from(databaseTemp[level]["Words"]);
+      listTemp = List<Map>.from(words);
+      print(words);
+      var i = 0;
+      while (i < 11) {
+        print(i);
+        for (var j = 0; j < words.length; j++) {
+          if (words[j] != null) {
+            if (words[j]["Deck"] == 1) {
+              print(words[j]);
+              tempList.add(words[j]);
+              i++;
+            }
+          }
+        }
+        for (var k = 0; k < words.length; k++) {
+          if (words[k] != null) {
+            if (words[k]["Deck"] == 1) {
+              print(words[k]);
+              tempList.add(words[k]);
+              i++;
+            }
+          }
+        }
+        for (var l = 0; l < words.length; l++) {
+          if (words[l] != null) {
+            if (words[l]["Deck"] == 1) {
+              print(words[l]);
+              tempList.add(words[l]);
+              i++;
+            }
+          }
+        }
       }
+      wordList = List<Map>.from(tempList);
+      print(wordList);
     } else {
-      // ScorePage(score: score);
+      initiateQuiz(
+          context, iteration, addScore, score, level, category, databaseTemp);
+    }
+  }
+
+  void initiateQuiz(context, iteration, addScore, score, level, category,
+      databaseTemp) async {
+    if (iteration < 10) {
+      var r = new Random();
+
+      int rand = 1 + r.nextInt(4 - 1);
+      switch (rand) {
+        case 1:
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Sent(
+                      i: iteration,
+                      currentContext: context,
+                      score: score,
+                      wordList: wordList,
+                      databaseTemp: databaseTemp,
+                      level: level,
+                      category: category,
+                    )),
+            (Route<dynamic> route) => false,
+          );
+          break;
+        case 2:
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MultipleChoice(
+                    i: iteration,
+                    currentContext: context,
+                    score: score,
+                    wordList: wordList,
+                    databaseTemp: databaseTemp,
+                    level: level,
+                    category: category)),
+            (Route<dynamic> route) => false,
+          );
+          break;
+        case 3:
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Identification(
+                      i: iteration,
+                      currentContext: context,
+                      score: score,
+                      wordList: wordList,
+                      databaseTemp: databaseTemp,
+                      level: level,
+                      category: category,
+                    )),
+            (Route<dynamic> route) => false,
+          );
+          break;
+      }
+      iteration += 1;
+      score += addScore;
+    } else {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => ScorePage(score: score)),
@@ -57,14 +142,30 @@ class LevelContent extends StatelessWidget {
     }
   }
 
+  double getPercentage(String level) {
+    listTemp = List<Map>.from(databaseTemp[level]["Words"]);
+    var i = 0;
+    print(listTemp);
+    for (var j = 0; j < listTemp.length; j++) {
+      if (listTemp[j] != null) {
+        if (listTemp[j]["Deck"] == 2) {
+          i++;
+        }
+      }
+    }
+    print(i);
+    print(i / listTemp.length);
+    return i / listTemp.length;
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageTitle(
       pageTitle: "Levels",
-      pageGreeting: "Level N",
+      pageGreeting: "Practice!",
       pageChild: pageContent(context),
-      bgColor: Color(0xff727764),
-      titleColor: Colors.white,
+      bgColor: Colors.white,
+      titleColor: Colors.red,
     );
   }
 
@@ -80,8 +181,8 @@ class LevelContent extends StatelessWidget {
           ...levels.map(
             (i) => GestureDetector(
               onTap: () {
-                if (i.last == 'u') {
-                  initiateQuiz(context, iteration, 0, 0);
+                if (i[1] == 'u') {
+                  getWords(context, iteration, 0, 0, i.last, category);
                 }
               },
               child: Container(
@@ -128,7 +229,7 @@ class LevelContent extends StatelessWidget {
                           new LinearPercentIndicator(
                             width: MediaQuery.of(context).size.width / 3 - 10,
                             lineHeight: 4.0,
-                            percent: 0,
+                            percent: getPercentage(i.last),
                             backgroundColor: Colors.grey,
                             progressColor: Colors.green,
                           ),

@@ -4,6 +4,7 @@ import './sub_pages/level_content.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Drills extends StatefulWidget {
   @override
@@ -27,16 +28,25 @@ class _DrillsState extends State<Drills> {
   var databaseInstanceTemp;
   var databaseTemp;
 
-  final databaseReference = FirebaseDatabase.instance.reference();
-
   @override
   void initState() {
     super.initState();
-    databaseReference.once().then((DataSnapshot snapshot) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    print(FirebaseAuth.instance.currentUser);
+    final databaseReference = FirebaseDatabase.instance.reference();
+    print(databaseReference);
+    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
+    userDB.once().then((DataSnapshot snapshot) {
       setState(() {
         _initDatabase(snapshot);
       });
     });
+  }
+
+  String currentUser() {
+    User user = FirebaseAuth.instance.currentUser;
+    return user.uid;
   }
 
   Future<void> _initDatabase(snapshot) async {
@@ -73,7 +83,8 @@ class _DrillsState extends State<Drills> {
     //   }
     // }
     // wordList = List<Map>.from(tempList);
-    databaseInstanceTemp = databaseReference.reference();
+    var curUser = currentUser();
+    print(curUser);
     databaseTemp = snapshot.value;
     print(databaseTemp);
   }
@@ -121,6 +132,7 @@ class _DrillsState extends State<Drills> {
 
   void _openLevel(context, wordList, category) async {
     var currentDB = databaseTemp[category];
+    print(databaseTemp);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -173,7 +185,6 @@ class _DrillsState extends State<Drills> {
       padding: const EdgeInsets.all(13),
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height - 200,
-      // color: Colors.green,
       child: new Container(
         height: MediaQuery.of(context).size.height - 180,
         child: GridView.count(

@@ -5,6 +5,7 @@ import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Progress extends StatefulWidget {
   @override
@@ -22,7 +23,11 @@ class _ProgressState extends State<Progress> {
   @override
   void initState() {
     super.initState();
-    databaseReference.once().then((DataSnapshot snapshot) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    final databaseReference = FirebaseDatabase.instance.reference();
+    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
+    userDB.once().then((DataSnapshot snapshot) {
       setState(() {
         _initDatabase(snapshot);
       });
@@ -94,73 +99,97 @@ class _ProgressState extends State<Progress> {
   }
 
   Widget pageContent(context) {
-    return Container(
-      height: MediaQuery.of(context).size.height - 100,
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(10),
-            margin: EdgeInsets.all(5),
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 4,
-            child: GridView.count(
-              crossAxisCount: 2,
-              scrollDirection: Axis.vertical,
-              childAspectRatio: (MediaQuery.of(context).size.width /
-                  2 /
-                  (((MediaQuery.of(context).size.height) - 230) / 3)),
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(5),
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.black)),
-                  child: Text("Streak:",
-                      style: GoogleFonts.montserrat(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                      )),
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.all(10),
+          margin: EdgeInsets.all(5),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height / 3 + 70,
+          child: GridView.count(
+            crossAxisCount: 2,
+            scrollDirection: Axis.vertical,
+            childAspectRatio: (MediaQuery.of(context).size.width /
+                2 /
+                (((MediaQuery.of(context).size.height) - 230) / 3)),
+            children: [
+              Container(
+                padding: EdgeInsets.all(10),
+                margin: EdgeInsets.all(5),
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.black)),
+                child: Text(
+                  "Streak:",
+                  style: GoogleFonts.montserrat(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-                Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(5),
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.black)),
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text("Total points:",
-                              style: GoogleFonts.montserrat(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w400,
-                              )),
-                        ),
-                        SizedBox(height: 10),
-                        Text("$totalXP",
-                            style: GoogleFonts.montserrat(
-                              fontSize: 30,
-                              fontWeight: FontWeight.w400,
-                            )),
-                      ],
-                    ))
-              ],
-            ),
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                margin: EdgeInsets.all(5),
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.black)),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text("Total points:",
+                          style: GoogleFonts.montserrat(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                          )),
+                    ),
+                    SizedBox(height: 10),
+                    Text("$totalXP",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w400,
+                        )),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                margin: EdgeInsets.all(5),
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.black)),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text("Words mastered:",
+                          style: GoogleFonts.montserrat(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          )),
+                    ),
+                    SizedBox(height: 10),
+                    Text("$totalXP",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w400,
+                        )),
+                  ],
+                ),
+              ),
+            ],
           ),
-          SfCartesianChart(
-              primaryXAxis: CategoryAxis(),
-              title: ChartTitle(text: "Progress Tracker"),
-              legend: Legend(isVisible: false),
-              series: <ChartSeries<_xpData, String>>[
-                LineSeries<_xpData, String>(
-                    dataSource: data,
-                    xValueMapper: (_xpData point, _) => point.date,
-                    yValueMapper: (_xpData point, _) => point.xp,
-                    name: "xp",
-                    dataLabelSettings: DataLabelSettings(isVisible: false))
-              ]),
-        ],
-      ),
+        ),
+        SfCartesianChart(
+            primaryXAxis: CategoryAxis(),
+            title: ChartTitle(text: "Progress Tracker"),
+            legend: Legend(isVisible: false),
+            series: <ChartSeries<_xpData, String>>[
+              LineSeries<_xpData, String>(
+                  dataSource: data,
+                  xValueMapper: (_xpData point, _) => point.date,
+                  yValueMapper: (_xpData point, _) => point.xp,
+                  name: "xp",
+                  dataLabelSettings: DataLabelSettings(isVisible: false))
+            ]),
+      ],
     );
   }
 }
