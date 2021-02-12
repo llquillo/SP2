@@ -29,7 +29,7 @@ class PageTitle extends StatelessWidget {
           child: Container(
             color: bgColor,
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+            // height: MediaQuery.of(context).size.height,
             child: new Column(
               children: <Widget>[
                 SizedBox(height: 30),

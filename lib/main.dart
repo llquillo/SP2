@@ -7,19 +7,19 @@ void main() {
 }
 
 class MyColors {
-  static const MaterialColor timber = MaterialColor(
-    0xffd6d1cd,
+  static const MaterialColor paleBlue = MaterialColor(
+    0xffb8e3ea,
     <int, Color>{
-      50: Color(0xffd6d1cd),
-      100: Color(0xffd6d1cd),
-      200: Color(0xffd6d1cd),
-      300: Color(0xffd6d1cd),
-      400: Color(0xffd6d1cd),
-      500: Color(0xffd6d1cd),
-      600: Color(0xffd6d1cd),
-      700: Color(0xffd6d1cd),
-      800: Color(0xffd6d1cd),
-      900: Color(0xffd6d1cd),
+      50: Color(0xffb8e3ea),
+      100: Color(0xffb8e3ea),
+      200: Color(0xffb8e3ea),
+      300: Color(0xffb8e3ea),
+      400: Color(0xffb8e3ea),
+      500: Color(0xffb8e3ea),
+      600: Color(0xffb8e3ea),
+      700: Color(0xffb8e3ea),
+      800: Color(0xffb8e3ea),
+      900: Color(0xffb8e3ea),
     },
   );
 }
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'App Name',
       theme: new ThemeData(
-        primarySwatch: MyColors.timber,
+        primarySwatch: MyColors.paleBlue,
       ),
       home: new RootPage(auth: new Auth()),
     );

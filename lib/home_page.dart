@@ -127,11 +127,11 @@ class HomePage extends StatelessWidget {
           ],
         ),
         body: new Container(
-          color: Colors.white,
+          color: Color(0xffFFE085),
           width: MediaQuery.of(context).size.width,
           child: new Column(
             children: [
-              SizedBox(height: 20),
+              SizedBox(height: 40),
               new Container(
                 alignment: Alignment(-0.6, 1.0),
                 child: Text(
@@ -139,13 +139,13 @@ class HomePage extends StatelessWidget {
                   style: GoogleFonts.montserrat(
                     textStyle: TextStyle(
                       color: Colors.black,
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.w300,
+                      fontSize: 26.0,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 12),
+              SizedBox(height: 10),
               new Container(
                 height: MediaQuery.of(context).size.height - 180,
                 child: GridView.count(
