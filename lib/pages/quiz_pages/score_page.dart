@@ -6,6 +6,7 @@ import '../../home_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ScorePage extends StatelessWidget {
   final int score;
@@ -26,6 +27,10 @@ class ScorePage extends StatelessWidget {
   }
 
   void assignPoint() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    final databaseReference = FirebaseDatabase.instance.reference();
+    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
     int points;
     score > 5 ? points = 10 : points = 5;
     DateTime now = new DateTime.now();
@@ -33,11 +38,7 @@ class ScorePage extends StatelessWidget {
     String dateString = DateFormat('d MMM').format(date);
     print("Points: $points \n Date: $dateString");
     Timestamp timestamp = new Timestamp(dateString, points);
-    databaseReference
-        .reference()
-        .child('Points')
-        .push()
-        .set(timestamp.toJSON());
+    userDB.reference().child('Points').push().set(timestamp.toJSON());
   }
 
   Widget _pageContent(context) {
