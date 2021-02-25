@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import './common_widgets/dict_button.dart';
 import './sub_pages/dict_content.dart';
 import './common_widgets/page_title.dart';
 
 class Dictionary extends StatelessWidget {
+  final corpus;
+  Dictionary({this.corpus});
   void _openDict(context, category, categoryName) async {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => DictContent(
-                category: category,
-                categoryName: categoryName,
-              )),
+        builder: (context) => DictContent(
+          category: category,
+          categoryName: categoryName,
+          corpus: corpus,
+        ),
+      ),
     );
   }
 
@@ -26,14 +31,13 @@ class Dictionary extends StatelessWidget {
 
   Widget pageContent(context) {
     return Container(
+      // color: Colors.black,
       height: MediaQuery.of(context).size.height - 200,
-      child: ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(20),
-        scrollDirection: Axis.vertical,
+      child: Column(
         children: <Widget>[
           Container(
-            height: (MediaQuery.of(context).size.height - 270) / 5,
+            height: (MediaQuery.of(context).size.height - 270) / 5 + 10,
+            width: MediaQuery.of(context).size.width - 30,
             child: DictButton(
               buttonName: "Basic Expressions",
               buttonImage: 'images/basic.png',
@@ -43,7 +47,8 @@ class Dictionary extends StatelessWidget {
             ),
           ),
           Container(
-            height: (MediaQuery.of(context).size.height - 270) / 5,
+            height: (MediaQuery.of(context).size.height - 270) / 5 + 10,
+            width: MediaQuery.of(context).size.width - 30,
             child: DictButton(
               buttonName: "Family",
               buttonImage: 'images/family.png',
@@ -53,7 +58,8 @@ class Dictionary extends StatelessWidget {
             ),
           ),
           Container(
-            height: (MediaQuery.of(context).size.height - 270) / 5,
+            height: (MediaQuery.of(context).size.height - 270) / 5 + 10,
+            width: MediaQuery.of(context).size.width - 30,
             child: DictButton(
               buttonName: "School",
               buttonImage: 'images/school.png',
@@ -63,7 +69,8 @@ class Dictionary extends StatelessWidget {
             ),
           ),
           Container(
-            height: (MediaQuery.of(context).size.height - 270) / 5,
+            height: (MediaQuery.of(context).size.height - 270) / 5 + 10,
+            width: MediaQuery.of(context).size.width - 30,
             child: DictButton(
               buttonName: "Shopping",
               buttonImage: 'images/shopping.png',
@@ -73,7 +80,8 @@ class Dictionary extends StatelessWidget {
             ),
           ),
           Container(
-            height: (MediaQuery.of(context).size.height - 270) / 5,
+            height: (MediaQuery.of(context).size.height - 270) / 5 + 10,
+            width: MediaQuery.of(context).size.width - 30,
             child: DictButton(
               buttonName: "Travel",
               buttonImage: 'images/travel.png',

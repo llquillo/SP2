@@ -6,14 +6,17 @@ import 'package:firebase_database/firebase_database.dart';
 class DictContent extends StatefulWidget {
   final String category;
   final String categoryName;
+  final corpus;
 
-  DictContent({@required this.category, @required this.categoryName});
+  DictContent(
+      {@required this.category,
+      @required this.categoryName,
+      @required this.corpus});
   @override
   _DictContentState createState() => _DictContentState();
 }
 
 class _DictContentState extends State<DictContent> {
-  final databaseReference = FirebaseDatabase.instance.reference();
   List<Map> finalDict;
   List<Map> sampleDict;
   SearchBar searchBar;
@@ -21,21 +24,22 @@ class _DictContentState extends State<DictContent> {
   @override
   void initState() {
     super.initState();
-    databaseReference.once().then((DataSnapshot snapshot) {
-      setState(() {
-        _initDatabase(snapshot);
-      });
-    });
+    // databaseReference.once().then((DataSnapshot snapshot) {
+    //   setState(() {
+    //     _initDatabase(snapshot);
+    //   });
+    // });
+    print(widget.corpus);
+    _initDatabase(widget.corpus);
   }
 
-  Future<void> _initDatabase(snapshot) async {
+  Future<void> _initDatabase(corpus) {
     // print(snapshot.value);
-    finalDict = List<Map>.from(
-            snapshot.value[widget.categoryName]["Level1"]["Words"]) +
-        List<Map>.from(snapshot.value[widget.categoryName]["Level2"]["Words"]) +
-        List<Map>.from(snapshot.value[widget.categoryName]["Level3"]["Words"]) +
-        List<Map>.from(snapshot.value[widget.categoryName]["Level4"]["Words"]) +
-        List<Map>.from(snapshot.value[widget.categoryName]["Level5"]["Words"]);
+    finalDict = List<Map>.from(corpus[widget.categoryName]["Level1"]["Words"]) +
+        List<Map>.from(corpus[widget.categoryName]["Level2"]["Words"]) +
+        List<Map>.from(corpus[widget.categoryName]["Level3"]["Words"]) +
+        List<Map>.from(corpus[widget.categoryName]["Level4"]["Words"]) +
+        List<Map>.from(corpus[widget.categoryName]["Level5"]["Words"]);
     for (var i = 0; i < finalDict.length; i++) {
       if (finalDict[i] == null) {
         finalDict.remove(finalDict[i]);
@@ -45,19 +49,7 @@ class _DictContentState extends State<DictContent> {
     print(sampleDict);
   }
 
-  // Future<void> _initDatabase() async {
-  //   await databaseReference.once().then((DataSnapshot snapshot) {
-  //     finalDict = List<Map>.from(snapshot.value);
-  //     print(snapshot.value);
-  //     print('data!!!!!!!!!!!!!!');
-  //   });
-  //   print(finalDict);
-  //   sampleDict = List<Map>.from(finalDict);
-  // }
-
   _DictContentState() {
-    // _initDatabase();
-    // sampleDict = List<Map>.from(finalDict);
     searchBar = new SearchBar(
       inBar: true,
       setState: setState,
@@ -141,6 +133,11 @@ class _DictContentState extends State<DictContent> {
                       padding: EdgeInsets.fromLTRB(10, 0, 8, 0),
                       decoration: new BoxDecoration(
                         border: Border.all(width: 1),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20)),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -155,9 +152,9 @@ class _DictContentState extends State<DictContent> {
                                 color: Colors.yellow,
                                 child: Text(
                                   i['Word'],
-                                  style: GoogleFonts.montserrat(
+                                  style: GoogleFonts.fredokaOne(
                                     textStyle: new TextStyle(
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w300,
                                       fontSize: 16,
                                       letterSpacing: 1.2,
                                     ),
@@ -169,10 +166,9 @@ class _DictContentState extends State<DictContent> {
                                   padding: EdgeInsets.all(5),
                                   child: Text(
                                     i['POS'],
-                                    style: GoogleFonts.montserrat(
+                                    style: GoogleFonts.fredokaOne(
                                       textStyle: new TextStyle(
                                         fontSize: 11,
-                                        fontWeight: FontWeight.w300,
                                       ),
                                     ),
                                   ),
@@ -184,9 +180,8 @@ class _DictContentState extends State<DictContent> {
                                   child: Text(
                                     i['Translation'],
                                     textAlign: TextAlign.right,
-                                    style: GoogleFonts.montserrat(
+                                    style: GoogleFonts.fredokaOne(
                                       textStyle: new TextStyle(
-                                        fontWeight: FontWeight.w400,
                                         fontSize: 14,
                                         letterSpacing: 1.2,
                                       ),

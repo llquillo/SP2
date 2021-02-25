@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'common_widgets/page_title.dart';
 import './common_widgets/dict_button.dart';
 
@@ -29,23 +30,22 @@ class _StoriesState extends State<Stories> {
       children: [
         Container(
             height: MediaQuery.of(context).size.height - 200,
-            child: GridView.count(
-              crossAxisCount: 1,
-              mainAxisSpacing: 0,
-              crossAxisSpacing: 0,
-              childAspectRatio: 4.5,
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(20),
+            child: Column(
               children: [
                 ...storyList.map(
                   (i) => Container(
+                    width: MediaQuery.of(context).size.width - 30,
+                    height: (MediaQuery.of(context).size.height - 270) / 5 + 10,
                     color: Colors.transparent,
                     child: DictButton(
                       buttonName: i.first,
                       buttonImage: i.last == 'u'
                           ? 'images/unlock.png'
                           : 'images/lock.png',
-                      onPressed: () {},
+                      onPressed: () {
+                        print(MediaQuery.of(context).size.height);
+                        print(MediaQuery.of(context).size.width);
+                      },
                       imgH: 40,
                       imgW: 40,
                     ),

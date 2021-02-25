@@ -9,7 +9,7 @@ import '../quiz_pages/score_page.dart';
 import '../quiz_pages/sent.dart';
 import 'dart:math';
 
-class LevelContent extends StatelessWidget {
+class LevelContent {
   final levels = [
     ['1', 'u', 'Level1'],
     ['2', 'u', 'Level2'],
@@ -30,7 +30,11 @@ class LevelContent extends StatelessWidget {
   final int iteration = 0;
   final int total = 10;
 
-  void getWords(context, iteration, addScore, score, level, category) async {
+  void getWords(context, iteration, addScore, score, level, category,
+      databaseTemp) async {
+    print("Database: ${databaseTemp[category]}");
+    print("Category: $category");
+
     if (wordList == null) {
       List<Map> tempList = new List<Map>();
       var words = new List<Map>();
@@ -51,7 +55,7 @@ class LevelContent extends StatelessWidget {
         }
         for (var k = 0; k < words.length; k++) {
           if (words[k] != null) {
-            if (words[k]["Deck"] == 1) {
+            if (words[k]["Deck"] == 2) {
               print(words[k]);
               tempList.add(words[k]);
               i++;
@@ -60,7 +64,7 @@ class LevelContent extends StatelessWidget {
         }
         for (var l = 0; l < words.length; l++) {
           if (words[l] != null) {
-            if (words[l]["Deck"] == 1) {
+            if (words[l]["Deck"] == 3) {
               print(words[l]);
               tempList.add(words[l]);
               i++;
@@ -70,6 +74,8 @@ class LevelContent extends StatelessWidget {
       }
       wordList = List<Map>.from(tempList);
       print(wordList);
+      initiateQuiz(
+          context, iteration, addScore, score, level, category, databaseTemp);
     } else {
       initiateQuiz(
           context, iteration, addScore, score, level, category, databaseTemp);
@@ -148,7 +154,7 @@ class LevelContent extends StatelessWidget {
     print(listTemp);
     for (var j = 0; j < listTemp.length; j++) {
       if (listTemp[j] != null) {
-        if (listTemp[j]["Deck"] == 2) {
+        if (listTemp[j]["Deck"] == 3) {
           i++;
         }
       }
@@ -156,98 +162,5 @@ class LevelContent extends StatelessWidget {
     print(i);
     print(i / listTemp.length);
     return i / listTemp.length;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return PageTitle(
-      pageTitle: "Levels",
-      pageGreeting: "Practice!",
-      pageChild: pageContent(context),
-      bgColor: Colors.white,
-      titleColor: Colors.red,
-    );
-  }
-
-  Widget pageContent(context) {
-    return Container(
-      height: MediaQuery.of(context).size.height - 200,
-      child: GridView.count(
-        crossAxisCount: 1,
-        mainAxisSpacing: 0,
-        crossAxisSpacing: 0,
-        childAspectRatio: 5,
-        children: [
-          ...levels.map(
-            (i) => GestureDetector(
-              onTap: () {
-                if (i[1] == 'u') {
-                  getWords(context, iteration, 0, 0, i.last, category);
-                }
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(7)),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black87.withOpacity(0.4),
-                      spreadRadius: 4,
-                      blurRadius: 5,
-                      offset: Offset(0, 4),
-                    )
-                  ],
-                ),
-                margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
-                padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      i.first,
-                      style: GoogleFonts.montserrat(
-                        textStyle: new TextStyle(
-                          fontSize: 24,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    new Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          new Text(
-                            "Progress",
-                            style: GoogleFonts.playfairDisplay(
-                              textStyle: new TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          new LinearPercentIndicator(
-                            width: MediaQuery.of(context).size.width / 3 - 10,
-                            lineHeight: 4.0,
-                            percent: getPercentage(i.last),
-                            backgroundColor: Colors.grey,
-                            progressColor: Colors.green,
-                          ),
-                        ]),
-                    Image.asset(
-                      i.last == 'l'
-                          ? 'images/locked.png'
-                          : 'images/unlocked.png',
-                      height: 30,
-                      width: 30,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
   }
 }
