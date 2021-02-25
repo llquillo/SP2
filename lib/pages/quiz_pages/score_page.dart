@@ -17,9 +17,10 @@ class ScorePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageTitle(
-        pageTitle: 'App Name',
-        pageGreeting: 'Result:',
-        pageChild: _pageContent(context));
+      pageTitle: 'App Name',
+      pageGreeting: 'Result:',
+      pageChild: _pageContent(context),
+    );
   }
 
   void updateDecks() {
@@ -45,8 +46,8 @@ class ScorePage extends StatelessWidget {
     return Container(
         width: MediaQuery.of(context).size.width - 50,
         height: MediaQuery.of(context).size.height - 200,
-        margin: EdgeInsets.fromLTRB(5, 15, 5, 20),
-        padding: EdgeInsets.all(20),
+        margin: EdgeInsets.fromLTRB(5, 5, 5, 20),
+        padding: EdgeInsets.all(15),
         alignment: Alignment.center,
         child: Column(
           children: [
@@ -66,31 +67,47 @@ class ScorePage extends StatelessWidget {
                       height: 100,
                     ),
               backgroundColor: Colors.grey,
-              progressColor: score > 4 ? Colors.green : Colors.red,
+              progressColor: score > 4 ? Color(0xffE0FEBE) : Color(0xffF4DADA),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 15),
             Text(
               score > 4 ? 'Good job!' : 'Study harder! :)',
-              style: GoogleFonts.montserrat(
-                  color: Colors.black,
-                  fontSize: 38,
-                  fontWeight: FontWeight.w300),
+              style: GoogleFonts.fredokaOne(
+                color: Colors.black,
+                fontSize: 38,
+              ),
             ),
             SizedBox(height: 15),
             Text(
               'You got $score/10.',
-              style: GoogleFonts.montserrat(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w300),
-            ),
-            SizedBox(height: 30),
-            MaterialButton(
-              child: Text('Okay'),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
+              style: GoogleFonts.fredokaOne(
+                color: Colors.black,
+                fontSize: 18,
               ),
-              color: Colors.grey,
+            ),
+            Text(
+              'You earned ${score > 4 ? 10 : 5} xp points!',
+              style: GoogleFonts.fredokaOne(
+                color: Colors.black,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 20),
+            MaterialButton(
+              child: Text(
+                'Okay',
+                style: GoogleFonts.fredokaOne(
+                  color: Colors.black,
+                ),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20)),
+              ),
+              color: Colors.grey[200],
               onPressed: () {
                 assignPoint();
                 Navigator.pushReplacement(context,

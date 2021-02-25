@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import '../common_widgets/page_title.dart';
+import '../common_widgets/quiz_template.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import '../sub_pages/level_content.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -351,23 +353,29 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
         ...buttons.map(
           (i) => Container(
             margin: EdgeInsets.all(4),
-            width: MediaQuery.of(context).size.width / 5,
+            width: MediaQuery.of(context).size.width / 4,
             child: MaterialButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20)),
+              ),
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              height: 10.0,
-              minWidth: 15.0,
+              height: 12.0,
+              minWidth: 5.0,
               padding: EdgeInsets.fromLTRB(15, 6, 15, 6),
-              color: Colors.yellow,
+              color: Color(0xffBDE0FE),
               onPressed: () {
                 addWord(i);
               },
               child: Center(
                 child: Text(
                   i,
-                  style: TextStyle(
+                  style: GoogleFonts.fredokaOne(
                     fontSize: 14,
                     color: Colors.black,
-                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
@@ -521,11 +529,125 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return PageTitle(
+    return QuizTemplate(
       pageTitle: "Drills",
       pageGreeting: "Question ${(widget.i)}",
-      pageChild: _pageContent(context),
+      // pageChild: _pageContent(context),
+      quizStatus: widget.i / 10,
+      pageChildUpper: _pageUpper(context),
+      pageChildLower: _pageLower(context),
     );
+  }
+
+  Widget _pageUpper(context) {
+    return Column(
+      children: [
+        Container(
+            padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+            height: MediaQuery.of(context).size.height / 16,
+            child: Row(
+              children: [
+                Icon(
+                  Icons.lightbulb,
+                  color: Colors.yellow,
+                ),
+                Text(
+                  "Translate the sentence given",
+                  style: GoogleFonts.fredokaOne(
+                    textStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ],
+            )),
+        Container(
+          padding: EdgeInsets.all(20),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height / 5,
+          child: Center(
+            child: Text(
+              finalSentence,
+              style: GoogleFonts.fredokaOne(
+                textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _pageLower(context) {
+    return Column(children: [
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: EdgeInsets.all(0),
+            width: MediaQuery.of(context).size.width - 140,
+            height: MediaQuery.of(context).size.height / 3 - 140,
+            child: TextFormField(
+              controller: answerController,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.fredokaOne(color: Colors.black),
+            ),
+          ),
+          SizedBox(width: 10),
+          MaterialButton(
+            padding: EdgeInsets.all(2),
+            height: 5.0,
+            minWidth: 2.0,
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            child: Icon(
+              Icons.delete,
+              size: 30.0,
+            ),
+            onPressed: () {
+              deleteWord();
+            },
+          )
+        ],
+      ),
+      Container(
+        padding: EdgeInsets.all(8),
+        width: MediaQuery.of(context).size.width - 30,
+        height: MediaQuery.of(context).size.height / 3 - 110,
+        child: Center(
+          child: buildAnswerBox(),
+        ),
+      ),
+      Container(
+        width: MediaQuery.of(context).size.width / 3 - 20,
+        child: RaisedButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20)),
+          ),
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
+          color: Colors.grey[300],
+          onPressed: () {
+            _quizValidation();
+            // formSentence();
+          },
+          child: Text(
+            "Submit",
+            style: GoogleFonts.fredokaOne(
+              textStyle: TextStyle(color: Colors.black, fontSize: 13),
+            ),
+          ),
+        ),
+      )
+    ]);
   }
 
   Widget _pageContent(context) {
@@ -535,27 +657,23 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
       child: Column(
         children: [
           Container(
-            width: MediaQuery.of(context).size.width - 50,
-            height: MediaQuery.of(context).size.height / 3,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 4 + 20,
             child: Center(
               child: Text(
                 finalSentence,
-                style: GoogleFonts.montserrat(
+                style: GoogleFonts.fredokaOne(
                   textStyle: TextStyle(fontSize: 24),
                 ),
               ),
             ),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(7)),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  spreadRadius: 6,
-                  blurRadius: 6,
-                  offset: Offset(0, 4),
-                )
-              ],
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20)),
+              color: Color(0xffFFE8F0),
             ),
           ),
           SizedBox(height: 10),
@@ -570,17 +688,19 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                 child: TextFormField(
                   controller: answerController,
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black),
+                  style: GoogleFonts.fredokaOne(color: Colors.black),
                 ),
               ),
-              SizedBox(width: 20),
+              SizedBox(width: 10),
               MaterialButton(
-                padding: EdgeInsets.all(9),
-                height: 2.0,
+                padding: EdgeInsets.all(2),
+                height: 5.0,
                 minWidth: 2.0,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                color: Colors.blue,
-                child: Text('Del'),
+                child: Icon(
+                  Icons.delete,
+                  size: 30.0,
+                ),
                 onPressed: () {
                   deleteWord();
                 },
@@ -609,7 +729,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
               },
               child: Text(
                 "Submit",
-                style: GoogleFonts.montserrat(
+                style: GoogleFonts.fredokaOne(
                   textStyle: TextStyle(color: Colors.black, fontSize: 13),
                 ),
               ),
