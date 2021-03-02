@@ -56,6 +56,16 @@ class UserData {
       "Points": {
         "-MS-4Pt02EJzmU9_mXoK": {"Date": "26 Jan", "XP": 0},
       },
+      "DG": {"Date": " ", "Earn": 0, "Practice": 0, "Quiz": 0},
+      "WOTD": {
+        "1": {
+          "Deck": 2,
+          "POS": "Exclamation",
+          "Translation": "Sure",
+          "Word": "Iyo baga"
+        },
+        "Date": " "
+      },
       "basics1": {
         "Drink": [
           {"POS": "Noun", "Translation": "Coffee", "Word": "Kape"},
