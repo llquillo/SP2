@@ -18,6 +18,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'pages/sub_pages/level_content.dart';
 import 'dart:math';
 import 'dart:async';
+import 'package:overlay_support/overlay_support.dart';
 
 class HomePage extends StatefulWidget {
   final BaseAuth auth;
@@ -87,7 +88,12 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _initDatabase(snapshot);
         _initCorpusDatabase(snapshot);
+        resetGoalStatus();
+
+        getWordOfTheDay();
         getcurrentXP();
+        setGoalStatus("Earn");
+        setGoalStatus("Quiz");
       });
     });
     buttonKeys.add(basics1);
@@ -222,6 +228,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onClickMenu(MenuItemProvider item) {
+    setGoalStatus("Earn");
+    setGoalStatus("Quiz");
     print("Category: $category");
     levelContent =
         new LevelContent(databaseTemp: corpus[category], category: category);
@@ -255,12 +263,10 @@ class _HomePageState extends State<HomePage> {
     wordDay = getWord();
   }
 
+  // Function for getting the percentage of each level
   double getPercentage(String level, String category) {
-    print(level);
-    print(corpus);
     var listTemp = List<Map>.from(corpus[category][level]["Words"]);
     var i = 0;
-    print(listTemp);
     for (var j = 0; j < listTemp.length; j++) {
       if (listTemp[j] != null) {
         if (listTemp[j]["Deck"] == 3) {
@@ -268,8 +274,6 @@ class _HomePageState extends State<HomePage> {
         }
       }
     }
-    print(i);
-    print(i / listTemp.length);
     return i / listTemp.length;
   }
 
@@ -313,6 +317,7 @@ class _HomePageState extends State<HomePage> {
         .toList();
   }
 
+  // Function for fetching the current user
   String currentUser() {
     User user = FirebaseAuth.instance.currentUser;
     return user.uid;
@@ -325,22 +330,41 @@ class _HomePageState extends State<HomePage> {
     // levelContent.getWords(context, iteration, addScore, score, level, category)
   }
 
+  bool checkDates(var tempData) {
+    var count = 1;
+    while (count < tempData.length) {
+      for (var i = 0; i < tempData.length - count; i++) {
+        print(tempData[i].date);
+        if (tempData[i].date == tempData[i + count].date) {
+          return true;
+        }
+      }
+      count++;
+    }
+    return false;
+  }
+
   Future<void> _initDatabase(snapshot) async {
     Map<dynamic, dynamic> databaseTemp =
         Map<dynamic, dynamic>.from(snapshot.value["Points"]);
     databaseTemp.forEach(
         (key, value) => {tempData.add(_xpData(value["Date"], value["XP"]))});
 
-    var i = 0;
-    while (i < tempData.length - 1) {
-      print(tempData[i].date);
-      if (tempData[i].date == tempData[i + 1].date) {
-        tempData[i].xp += tempData[i + 1].xp;
-        tempData.remove(tempData[i + 1]);
-        i = 0;
-      } else {
-        i++;
+    var flag = true;
+    while (flag) {
+      var count = 1;
+      while (count < tempData.length) {
+        for (var i = 0; i < tempData.length - count; i++) {
+          print(tempData[i].date);
+          if (tempData[i].date == tempData[i + count].date) {
+            tempData[i].xp += tempData[i + count].xp;
+            tempData.remove(tempData[i + count]);
+          }
+        }
+        count++;
       }
+
+      flag = checkDates(tempData);
     }
     for (var i = 0; i < tempData.length; i++) {
       print("${tempData[i].date} : ${tempData[i].xp}");
@@ -368,6 +392,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  // Function for fetching the current XP points of the user for the day
   int getcurrentXP() {
     currentXP = 0;
     print('before: $currentXP');
@@ -390,26 +415,96 @@ class _HomePageState extends State<HomePage> {
     var currentDB = corpus[category];
   }
 
+  // Function for getting the Word Of The Day
+  void getWordOfTheDay() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    final databaseReference = FirebaseDatabase.instance.reference();
+    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
+    DateTime now = new DateTime.now();
+    DateTime date = new DateTime(now.year, now.month, now.day);
+    String dateString = DateFormat('d MMM').format(date);
+    if (corpus["WOTD"]["Date"] != dateString) {
+      userDB.reference().child("WOTD").child("Date").set(dateString);
+      userDB.reference().child("WOTD").child("1").set(getWord());
+      wordDay = corpus["WOTD"]["1"];
+    } else {
+      wordDay = corpus["WOTD"]["1"];
+    }
+  }
+
+  void setGoalStatus(String goal) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    final databaseReference = FirebaseDatabase.instance.reference();
+    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
+    DateTime now = new DateTime.now();
+    DateTime date = new DateTime(now.year, now.month, now.day);
+    String dateString = DateFormat('d MMM').format(date);
+    if (corpus["DG"]["Date"] == dateString) {
+      if (corpus["DG"][goal] == 0) {
+        switch (goal) {
+          case "Earn":
+            if (currentXP >= 10) {
+              userDB.reference().child("DG").child(goal).set(1);
+              notification("\nGoal complete: \n✓ Earned 10 XP!\n");
+            }
+            break;
+          case "Practice":
+            userDB.reference().child("DG").child(goal).set(1);
+            notification("\nGoal complete: \n✓ Practiced once! \n");
+
+            break;
+          case "Quiz":
+            if (currentXP >= 5) {
+              userDB.reference().child("DG").child(goal).set(1);
+              notification("\nGoal complete: \n✓ Finished a quiz! \n");
+            }
+            break;
+        }
+      }
+    }
+    userDB.once().then((DataSnapshot snapshot) {
+      setState(() {
+        _initCorpusDatabase(snapshot);
+      });
+    });
+  }
+
+  void resetGoalStatus() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    final databaseReference = FirebaseDatabase.instance.reference();
+    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
+    DateTime now = new DateTime.now();
+    DateTime date = new DateTime(now.year, now.month, now.day);
+    String dateString = DateFormat('d MMM').format(date);
+    if (corpus["DG"]["Date"] != dateString) {
+      userDB.reference().child("DG").child("Date").set(dateString);
+      userDB.reference().child("DG").child("Earn").set(0);
+      userDB.reference().child("DG").child("Practice").set(0);
+      userDB.reference().child("DG").child("Quiz").set(0);
+    }
+  }
+
+  // Template layout for the carousel slider
   Widget carouselTemplate(context, title, body) {
     return Container(
-      // margin: EdgeInsets.all(5),
       padding: EdgeInsets.all(4),
-      // color: Colors.white,
       child: Column(
         children: [
           Align(
             alignment: Alignment.topLeft,
             child: Container(
-              // color: Colors.blue[100],
               padding: EdgeInsets.fromLTRB(15, 10, 2, 2),
               child: Text(
                 title,
-                style: GoogleFonts.fredokaOne(
+                style: GoogleFonts.libreBaskerville(
                   textStyle: TextStyle(
-                    color: Colors.black,
-                    letterSpacing: -.5,
+                    color: Colors.white,
+                    letterSpacing: .3,
                     fontSize: 16.0,
-                    // fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
               ),
@@ -418,6 +513,38 @@ class _HomePageState extends State<HomePage> {
           body,
         ],
       ),
+    );
+  }
+
+  void notification(String notif) {
+    showSimpleNotification(
+      Text(notif,
+          textAlign: TextAlign.left,
+          style: GoogleFonts.robotoMono(
+              textStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 14.0,
+            fontWeight: FontWeight.w800,
+          ))),
+      background: Color(0xffFFAFCC),
+      autoDismiss: false,
+      trailing: Builder(builder: (context) {
+        return FlatButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            textColor: Colors.black,
+            onPressed: () {
+              OverlaySupportEntry.of(context).dismiss();
+            },
+            child: Text('Dismiss',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.robotoMono(
+                    textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.w800,
+                ))));
+      }),
     );
   }
 
@@ -441,12 +568,12 @@ class _HomePageState extends State<HomePage> {
     } else {
       greeting = "Good morning, \n Wiqi";
     }
-    // Timer timer = new Timer(new Duration(seconds: 5), () {
-    //   debugPrint("Print after 5 seconds");
-    // });
-    // Map wordDay = getWord();
 
-    Timer.periodic(new Duration(seconds: 1), (timer) => setWord());
+    // getWordOfTheDay();
+    // setGoalStatus("Earn");
+    // setGoalStatus("Practice");
+    // setGoalStatus("Quiz");
+    // resetGoalStatus();
 
     List<Widget> _widgetOptions = new List<Widget>();
     return _widgetOptions = <Widget>[
@@ -464,7 +591,7 @@ class _HomePageState extends State<HomePage> {
               child: CarouselSlider(
                 options: CarouselOptions(
                   height: 180.0,
-                  autoPlay: false,
+                  autoPlay: true,
                   aspectRatio: 2.0,
                   enlargeCenterPage: true,
                 ),
@@ -485,11 +612,12 @@ class _HomePageState extends State<HomePage> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   wordDay["Word"],
-                                  style: GoogleFonts.fredokaOne(
+                                  style: GoogleFonts.libreBaskerville(
                                     textStyle: TextStyle(
                                       color: Colors.white,
-                                      letterSpacing: -.5,
+                                      letterSpacing: .5,
                                       fontSize: 20.0,
+                                      fontWeight: FontWeight.w900,
                                     ),
                                   ),
                                 ),
@@ -498,12 +626,13 @@ class _HomePageState extends State<HomePage> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   wordDay["POS"],
-                                  style: GoogleFonts.fredokaOne(
+                                  style: GoogleFonts.libreBaskerville(
                                     textStyle: TextStyle(
                                       color: Colors.white,
-                                      letterSpacing: -.5,
+                                      letterSpacing: .5,
                                       fontSize: 14.0,
                                       fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ),
@@ -513,11 +642,12 @@ class _HomePageState extends State<HomePage> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   "\"${wordDay["Translation"]}\"",
-                                  style: GoogleFonts.fredokaOne(
+                                  style: GoogleFonts.libreBaskerville(
                                     textStyle: TextStyle(
                                       color: Colors.white,
-                                      letterSpacing: -.5,
+                                      letterSpacing: .5,
                                       fontSize: 16.0,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ),
@@ -542,46 +672,56 @@ class _HomePageState extends State<HomePage> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Icon(Icons.check_box_outline_blank,
-                                        color: Colors.white),
+                                    (corpus["DG"]["Quiz"] == 0
+                                        ? Icon(Icons.check_box_outline_blank,
+                                            color: Colors.white)
+                                        : Icon(Icons.check_box,
+                                            color: Colors.white)),
                                     SizedBox(width: 6),
                                     Text("Finish one quiz",
-                                        style: GoogleFonts.fredokaOne(
-                                            fontSize: 14, color: Colors.white))
+                                        style: GoogleFonts.libreBaskerville(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                        ))
                                   ],
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Icon(Icons.check_box_outline_blank,
-                                        color: Colors.white),
+                                    (corpus["DG"]["Practice"] == 0
+                                        ? Icon(Icons.check_box_outline_blank,
+                                            color: Colors.white)
+                                        : Icon(Icons.check_box,
+                                            color: Colors.white)),
                                     SizedBox(width: 6),
                                     Text("Practice one time",
-                                        style: GoogleFonts.fredokaOne(
-                                            fontSize: 14, color: Colors.white))
+                                        style: GoogleFonts.libreBaskerville(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                        ))
                                   ],
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Icon(Icons.check_box_outline_blank,
-                                        color: Colors.white),
+                                    (corpus["DG"]["Earn"] == 0
+                                        ? Icon(Icons.check_box_outline_blank,
+                                            color: Colors.white)
+                                        : Icon(Icons.check_box,
+                                            color: Colors.white)),
                                     SizedBox(width: 6),
                                     Text("Earn 10 XP",
-                                        style: GoogleFonts.fredokaOne(
-                                            fontSize: 14, color: Colors.white))
+                                        style: GoogleFonts.libreBaskerville(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                        ))
                                   ],
                                 ),
                               ])))),
-                  Container(
-                    child: Text("Tip of the day"),
-                  ),
-                  Container(
-                    child: Text("Word of the day"),
-                  ),
-                  Container(
-                    child: Text("Word of the day"),
-                  )
+                  carouselTemplate(context, "Tip of the day:", Container()),
                 ].map((i) {
                   return Builder(
                     builder: (BuildContext context) {
@@ -620,9 +760,10 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Container(
-                height: MediaQuery.of(context).size.height - 528,
+                height: MediaQuery.of(context).size.height / 5.2,
                 margin: EdgeInsets.all(5),
-                padding: EdgeInsets.fromLTRB(35, 5, 0, 0),
+                padding: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.height / 24, 5, 0, 0),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
@@ -637,14 +778,14 @@ class _HomePageState extends State<HomePage> {
                   ),
                 )),
             Container(
-              height: MediaQuery.of(context).size.height - 500,
+              height: MediaQuery.of(context).size.height / 5,
               width: MediaQuery.of(context).size.width,
               child: GridView.count(
                 scrollDirection: Axis.vertical,
                 crossAxisCount: 4,
-                childAspectRatio:
-                    ((MediaQuery.of(context).size.height / 2) + 50) /
-                        MediaQuery.of(context).size.width,
+                childAspectRatio: (MediaQuery.of(context).size.height /
+                        MediaQuery.of(context).size.width) /
+                    1.75,
                 children: [
                   ...buttonsInfo.map(
                     (i) => GestureDetector(
@@ -667,7 +808,8 @@ class _HomePageState extends State<HomePage> {
                             )
                           ],
                         ),
-                        margin: EdgeInsets.all(6),
+                        margin: EdgeInsets.all(
+                            MediaQuery.of(context).size.width / 90),
                         padding: EdgeInsets.all(3),
                         alignment: Alignment.topCenter,
                         child: Column(
@@ -676,15 +818,12 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Image.asset(
                               i.first,
-                              height: (((MediaQuery.of(context).size.height) -
-                                      470) /
-                                  3),
-                              width:
-                                  (MediaQuery.of(context).size.width / 2) - 140,
+                              height: MediaQuery.of(context).size.height / 10,
+                              width: MediaQuery.of(context).size.width / 7.5,
                             ),
                             Text(i[1],
                                 style: GoogleFonts.fredokaOne(
-                                  fontSize: 12,
+                                  fontSize: 11.5,
                                 )),
                           ],
                         ),
@@ -709,10 +848,14 @@ class _HomePageState extends State<HomePage> {
             children: [
               Center(
                   child: Container(
-                margin: EdgeInsets.fromLTRB(35, 20, 35, 5),
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                margin: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.width / 10,
+                    MediaQuery.of(context).size.width / 20,
+                    MediaQuery.of(context).size.width / 10,
+                    5),
+                padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 2 - 215,
+                height: MediaQuery.of(context).size.height / 5.5,
                 decoration: BoxDecoration(
                   color: Color(0xffbde0fe),
                   borderRadius: BorderRadius.only(
@@ -779,34 +922,36 @@ class _HomePageState extends State<HomePage> {
                 ),
               )),
               Container(
-                // color: Colors.black,
-                height: MediaQuery.of(context).size.height / 2 + 50,
+                height: MediaQuery.of(context).size.height / 1.8,
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.fromLTRB(
                     (MediaQuery.of(context).size.width / 14),
                     0,
                     (MediaQuery.of(context).size.width / 14),
                     0),
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                 child: GridView.count(
                   scrollDirection: Axis.vertical,
                   crossAxisCount: 2,
-                  childAspectRatio:
-                      ((MediaQuery.of(context).size.height / 2) + 210) /
-                          MediaQuery.of(context).size.width,
+                  childAspectRatio: (MediaQuery.of(context).size.height /
+                          MediaQuery.of(context).size.width) /
+                      1.18,
                   children: [
                     ...drillsButtons.map(
                       (i) => GestureDetector(
                         key: buttonKeys[drillsButtons.indexOf(i)],
                         onTap: () {
                           if (i[1] == "u") {
-                            // _setloading(context, wordList, i.last);
                             category = i[2];
                             popUpMenu(drillsButtons.indexOf(i), i.last);
                           }
                         },
                         child: Container(
-                          margin: EdgeInsets.fromLTRB(10, 8, 10, 2),
+                          margin: EdgeInsets.fromLTRB(
+                            MediaQuery.of(context).size.width / 35,
+                            MediaQuery.of(context).size.width / 45,
+                            MediaQuery.of(context).size.width / 35,
+                            MediaQuery.of(context).size.width / 80,
+                          ),
                           // margin: EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             color: Color(0xffBFB8EA),
@@ -868,9 +1013,9 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all((MediaQuery.of(context).size.width / 20)),
             width: MediaQuery.of(context).size.width - 10,
-            height: MediaQuery.of(context).size.height / 3 - 40,
+            height: MediaQuery.of(context).size.height / 3.7,
             // color: Colors.yellow,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -880,16 +1025,17 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(
+                          MediaQuery.of(context).size.width / 48),
                       decoration: BoxDecoration(
                         color: Color(0xffffc8dd),
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                            topRight: Radius.circular(12),
-                            bottomLeft: Radius.circular(12),
-                            bottomRight: Radius.circular(12)),
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
                       ),
-                      width: MediaQuery.of(context).size.width / 2 - 30,
+                      width: MediaQuery.of(context).size.width / 2.35,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -915,17 +1061,18 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(
+                          MediaQuery.of(context).size.width / 48),
                       decoration: BoxDecoration(
                         color: Color(0xffffc8dd),
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15),
-                            bottomLeft: Radius.circular(15),
-                            bottomRight: Radius.circular(15)),
+                            topLeft: Radius.circular(13),
+                            topRight: Radius.circular(13),
+                            bottomLeft: Radius.circular(13),
+                            bottomRight: Radius.circular(13)),
                       ),
-                      width: MediaQuery.of(context).size.width / 2 - 30,
-                      height: MediaQuery.of(context).size.height / 8 + 5,
+                      width: MediaQuery.of(context).size.width / 2.35,
+                      height: MediaQuery.of(context).size.height / 7.40,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -952,14 +1099,19 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 Container(
-                  padding: EdgeInsets.fromLTRB(8, 8, 8, 50),
+                  padding: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.width / 48,
+                    MediaQuery.of(context).size.width / 48,
+                    MediaQuery.of(context).size.width / 48,
+                    MediaQuery.of(context).size.width / 7.5,
+                  ),
                   decoration: BoxDecoration(
                     color: Color(0xffffc8dd),
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(18),
-                        topRight: Radius.circular(18),
-                        bottomLeft: Radius.circular(18),
-                        bottomRight: Radius.circular(18)),
+                        topLeft: Radius.circular(14),
+                        topRight: Radius.circular(14),
+                        bottomLeft: Radius.circular(14),
+                        bottomRight: Radius.circular(14)),
                     // boxShadow: [
                     //   BoxShadow(
                     //     color: Color(0xffFFDBE9).withOpacity(0.9),
@@ -969,7 +1121,7 @@ class _HomePageState extends State<HomePage> {
                     //   )
                     // ],
                   ),
-                  width: MediaQuery.of(context).size.width / 2 - 30,
+                  width: MediaQuery.of(context).size.width / 2.35,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -1061,6 +1213,9 @@ class _HomePageState extends State<HomePage> {
       },
     );
     new Future.delayed(new Duration(seconds: 2), () {
+      if (pagePicked == "Practice") {
+        setGoalStatus("Practice");
+      }
       Navigator.pop(context);
       _switchPages(pagePicked, context);
     });
@@ -1083,7 +1238,7 @@ class _HomePageState extends State<HomePage> {
         {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Practice()),
+            MaterialPageRoute(builder: (context) => Practice(corpus: corpus)),
           );
           break;
         }
@@ -1108,7 +1263,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: false,
       drawer: Drawer(
@@ -1140,7 +1295,7 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           'Profile',
                           style: GoogleFonts.fredokaOne(
-                              letterSpacing: 1,
+                              letterSpacing: .5,
                               fontSize: 18,
                               fontWeight: FontWeight.w400,
                               color: Colors.black),
@@ -1160,7 +1315,7 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           'Settings',
                           style: GoogleFonts.fredokaOne(
-                              letterSpacing: 1,
+                              letterSpacing: .5,
                               fontSize: 18,
                               fontWeight: FontWeight.w400,
                               color: Colors.black),
@@ -1180,7 +1335,7 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           'Logout',
                           style: GoogleFonts.fredokaOne(
-                              letterSpacing: 1,
+                              letterSpacing: .5,
                               fontSize: 18,
                               fontWeight: FontWeight.w400,
                               color: Colors.black),

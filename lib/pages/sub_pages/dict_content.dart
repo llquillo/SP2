@@ -109,18 +109,18 @@ class _DictContentState extends State<DictContent> {
               alignment: Alignment(-0.8, 1.0),
               child: Text(
                 widget.category,
-                style: GoogleFonts.montserrat(
+                style: GoogleFonts.fredokaOne(
                   textStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 30.0,
-                    fontWeight: FontWeight.w300,
+                    // fontWeight: FontWeight.w300,
                   ),
                 ),
               ),
             ),
             SizedBox(height: 10),
             Container(
-              height: MediaQuery.of(context).size.height - 200,
+              height: MediaQuery.of(context).size.height / 1.5,
               child: GridView.count(
                 crossAxisCount: 1,
                 mainAxisSpacing: 0,
