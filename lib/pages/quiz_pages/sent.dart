@@ -387,37 +387,20 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
   }
 
   Widget correctAnswerValidation(BuildContext context, String correctAnswer) {
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    User user = auth.currentUser;
-    final databaseReference = FirebaseDatabase.instance.reference();
-    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
-    print("category ${widget.category}");
-    print("level ${widget.level}");
-    print(widget.i.toString());
-    print(userDB
-        .reference()
-        .child(widget.category)
-        .child(widget.level)
-        .child("Words")
-        .child(widget.i.toString())
-        .child("Deck")
-        .set(2));
     return AlertDialog(
       backgroundColor: Color(0xffdef2c8),
       title: Text(
         'You are correct!',
-        style: GoogleFonts.montserrat(
+        style: GoogleFonts.fredokaOne(
           color: Colors.black,
           fontSize: 22,
-          fontWeight: FontWeight.w600,
         ),
       ),
       content: Text(
-        'The correct answer is $correctAnswer',
-        style: GoogleFonts.montserrat(
+        'The correct answer is: $correctAnswer',
+        style: GoogleFonts.fredokaOne(
           color: Colors.black,
           fontSize: 14,
-          fontWeight: FontWeight.w400,
         ),
       ),
       actions: [
@@ -433,7 +416,11 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                 widget.category,
                 widget.databaseTemp);
           },
-          child: Text("Next"),
+          child: Text("Next",
+              style: GoogleFonts.fredokaOne(
+                fontSize: 16,
+                decoration: TextDecoration.underline,
+              )),
         )
       ],
     );
@@ -444,18 +431,16 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
       backgroundColor: Color(0xffedafb8),
       title: Text(
         'You are incorrect!',
-        style: GoogleFonts.montserrat(
+        style: GoogleFonts.fredokaOne(
           color: Colors.black,
           fontSize: 22,
-          fontWeight: FontWeight.w600,
         ),
       ),
       content: Text(
-        'The correct answer is $correctAnswer',
-        style: GoogleFonts.montserrat(
+        'The correct answer is: $correctAnswer',
+        style: GoogleFonts.fredokaOne(
           color: Colors.black,
           fontSize: 14,
-          fontWeight: FontWeight.w400,
         ),
       ),
       actions: [
@@ -470,7 +455,11 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                 widget.category,
                 widget.databaseTemp);
           },
-          child: Text("Next"),
+          child: Text("Next",
+              style: GoogleFonts.fredokaOne(
+                fontSize: 16,
+                decoration: TextDecoration.underline,
+              )),
         )
       ],
     );
@@ -590,9 +579,10 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
         children: [
           Container(
             margin: EdgeInsets.all(0),
-            width: MediaQuery.of(context).size.width - 140,
-            height: MediaQuery.of(context).size.height / 3 - 140,
+            width: MediaQuery.of(context).size.width / 1.8,
+            height: MediaQuery.of(context).size.height / 10,
             child: TextFormField(
+              enabled: false,
               controller: answerController,
               textAlign: TextAlign.center,
               style: GoogleFonts.fredokaOne(color: Colors.black),
@@ -648,95 +638,5 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
         ),
       )
     ]);
-  }
-
-  Widget _pageContent(context) {
-    return Container(
-      width: MediaQuery.of(context).size.width - 30,
-      height: MediaQuery.of(context).size.height - 180,
-      child: Column(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 4 + 20,
-            child: Center(
-              child: Text(
-                finalSentence,
-                style: GoogleFonts.fredokaOne(
-                  textStyle: TextStyle(fontSize: 24),
-                ),
-              ),
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20)),
-              color: Color(0xffFFE8F0),
-            ),
-          ),
-          SizedBox(height: 10),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.all(0),
-                width: MediaQuery.of(context).size.width - 140,
-                height: MediaQuery.of(context).size.height / 3 - 140,
-                child: TextFormField(
-                  controller: answerController,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.fredokaOne(color: Colors.black),
-                ),
-              ),
-              SizedBox(width: 10),
-              MaterialButton(
-                padding: EdgeInsets.all(2),
-                height: 5.0,
-                minWidth: 2.0,
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                child: Icon(
-                  Icons.delete,
-                  size: 30.0,
-                ),
-                onPressed: () {
-                  deleteWord();
-                },
-              )
-            ],
-          ),
-          Container(
-            padding: EdgeInsets.all(8),
-            width: MediaQuery.of(context).size.width - 30,
-            height: MediaQuery.of(context).size.height / 3 - 110,
-            child: Center(
-              child: buildAnswerBox(),
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width / 3 - 20,
-            child: MaterialButton(
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
-              height: 2.0,
-              minWidth: 2.0,
-              color: Colors.grey[300],
-              onPressed: () {
-                _quizValidation();
-                // formSentence();
-              },
-              child: Text(
-                "Submit",
-                style: GoogleFonts.fredokaOne(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 13),
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
   }
 }

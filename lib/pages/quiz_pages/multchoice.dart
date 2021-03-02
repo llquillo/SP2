@@ -98,20 +98,23 @@ class _MultipleChoiceState extends State<MultipleChoice> {
   }
 
   Widget correctAnswerValidation(BuildContext context, String correctAnswer) {
+    var currentDeck;
+    var currentDeckIndex;
     final FirebaseAuth auth = FirebaseAuth.instance;
     User user = auth.currentUser;
     final databaseReference = FirebaseDatabase.instance.reference();
     DatabaseReference userDB = databaseReference.child('users').child(user.uid);
-    var currentDeck = widget.wordList[widget.i - 1]["Deck"];
-    print(currentDeck);
-    print(widget.wordList[widget.i - 1]["Translation"]);
-    // userDB.orderByChild('title')
-    //     .equalTo('one2three')
-    //      .once('value')
-    //      .then(function(snapshot){
-    //         var value = snapshot.val()
-    //         if(value){
-    //         var key = Object.keys(value)[0];
+    for (var i = 0;
+        i < widget.databaseTemp[widget.level]["Words"].length;
+        i++) {
+      if (widget.databaseTemp[widget.level]["Words"][i] != null) {
+        if (widget.databaseTemp[widget.level]["Words"][i]['Translation'] ==
+            correctAnswer) {
+          currentDeckIndex = i;
+          currentDeck = widget.databaseTemp[widget.level]["Words"][i]["Deck"];
+        }
+      }
+    }
     switch (currentDeck) {
       case 1:
         userDB
@@ -119,7 +122,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
             .child(widget.category)
             .child(widget.level)
             .child("Words")
-            .child(widget.i.toString())
+            .child(currentDeckIndex.toString())
             .child("Deck")
             .set(2);
         break;
@@ -129,7 +132,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
             .child(widget.category)
             .child(widget.level)
             .child("Words")
-            .child(widget.i.toString())
+            .child(currentDeckIndex.toString())
             .child("Deck")
             .set(3);
         break;
@@ -139,35 +142,25 @@ class _MultipleChoiceState extends State<MultipleChoice> {
             .child(widget.category)
             .child(widget.level)
             .child("Words")
-            .child(widget.i.toString())
+            .child(currentDeckIndex.toString())
             .child("Deck")
             .set(3);
         break;
     }
-    // userDB
-    //     .reference()
-    //     .child(widget.category)
-    //     .child(widget.level)
-    //     .child("Words")
-    //     .child(widget.i.toString())
-    //     .child("Deck")
-    //     .set(2);
     return AlertDialog(
       backgroundColor: Color(0xffdef2c8),
       title: Text(
         'You are correct!',
-        style: GoogleFonts.montserrat(
+        style: GoogleFonts.fredokaOne(
           color: Colors.black,
           fontSize: 22,
-          fontWeight: FontWeight.w600,
         ),
       ),
       content: Text(
-        'The correct answer is $correctAnswer',
-        style: GoogleFonts.montserrat(
+        'The correct answer is: $correctAnswer',
+        style: GoogleFonts.fredokaOne(
           color: Colors.black,
           fontSize: 14,
-          fontWeight: FontWeight.w400,
         ),
       ),
       actions: [
@@ -182,29 +175,58 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                 widget.category,
                 widget.databaseTemp);
           },
-          child: Text("Next"),
+          child: Text("Next",
+              style: GoogleFonts.fredokaOne(
+                fontSize: 16,
+                decoration: TextDecoration.underline,
+              )),
         )
       ],
     );
   }
 
   Widget incorrectAnswerValidation(BuildContext context, String correctAnswer) {
+    var currentDeck;
+    var currentDeckIndex;
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    final databaseReference = FirebaseDatabase.instance.reference();
+    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
+    for (var i = 0;
+        i < widget.databaseTemp[widget.level]["Words"].length;
+        i++) {
+      if (widget.databaseTemp[widget.level]["Words"][i] != null) {
+        if (widget.databaseTemp[widget.level]["Words"][i]['Translation'] ==
+            correctAnswer) {
+          currentDeckIndex = i;
+          currentDeck = widget.databaseTemp[widget.level]["Words"][i]["Deck"];
+        }
+      }
+    }
+    if (currentDeck == 3) {
+      userDB
+          .reference()
+          .child(widget.category)
+          .child(widget.level)
+          .child("Words")
+          .child(currentDeckIndex.toString())
+          .child("Deck")
+          .set(2);
+    }
     return AlertDialog(
       backgroundColor: Color(0xffedafb8),
       title: Text(
         'You are incorrect!',
-        style: GoogleFonts.montserrat(
+        style: GoogleFonts.fredokaOne(
           color: Colors.black,
           fontSize: 22,
-          fontWeight: FontWeight.w600,
         ),
       ),
       content: Text(
-        'The correct answer is $correctAnswer',
-        style: GoogleFonts.montserrat(
+        'The correct answer is: $correctAnswer',
+        style: GoogleFonts.fredokaOne(
           color: Colors.black,
           fontSize: 14,
-          fontWeight: FontWeight.w400,
         ),
       ),
       actions: [
@@ -219,7 +241,11 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                 widget.category,
                 widget.databaseTemp);
           },
-          child: Text("Next"),
+          child: Text("Next",
+              style: GoogleFonts.fredokaOne(
+                fontSize: 16,
+                decoration: TextDecoration.underline,
+              )),
         )
       ],
     );
@@ -286,8 +312,6 @@ class _MultipleChoiceState extends State<MultipleChoice> {
   Widget _pageLower(context, correctAnswer, answerSet) {
     return Container(
       margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
-      width: MediaQuery.of(context).size.width / 2 + 200,
-      height: MediaQuery.of(context).size.height / 4 + 60,
       child: GridView.count(
         mainAxisSpacing: 5,
         crossAxisSpacing: 10,
@@ -325,88 +349,6 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                       ],
                     )),
               ))
-        ],
-      ),
-    );
-  }
-
-  Widget _pageContent(context, correctAnswer, answerSet) {
-    return Container(
-      width: MediaQuery.of(context).size.width - 30,
-      height: MediaQuery.of(context).size.height - 150,
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(20),
-            child: Center(
-              child: Text(
-                answerSet['Word'],
-                style: GoogleFonts.fredokaOne(
-                  textStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 26,
-                  ),
-                ),
-              ),
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20)),
-              color: Color(0xffF1F8FF),
-            ),
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 4 + 20,
-          ),
-          SizedBox(height: 7),
-          Container(
-            // color: Colors.red,
-            margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
-            width: MediaQuery.of(context).size.width / 2 + 200,
-            height: MediaQuery.of(context).size.height / 4 + 60,
-            child: GridView.count(
-              mainAxisSpacing: 5,
-              crossAxisSpacing: 10,
-              childAspectRatio: 2.1,
-              crossAxisCount: 2,
-              children: [
-                ...choices.map((i) => Container(
-                      margin: EdgeInsets.all(10),
-                      child: RaisedButton(
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          padding: EdgeInsets.all(10.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
-                                bottomLeft: Radius.circular(20),
-                                bottomRight: Radius.circular(20)),
-                          ),
-                          color: Color(0xffBDE0FE),
-                          onPressed: () {
-                            _quizValidation(i);
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  i,
-                                  style: GoogleFonts.fredokaOne(
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              )
-                            ],
-                          )),
-                    ))
-              ],
-            ),
-          ),
         ],
       ),
     );
