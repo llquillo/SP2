@@ -51,7 +51,7 @@ class _PracticeState extends State<Practice> {
     return FlipCard(
       key: cardKey,
       flipOnTouch: true,
-      speed: 2000,
+      speed: 800,
       direction: FlipDirection.HORIZONTAL, // default
       front: Container(
         padding: EdgeInsets.fromLTRB(

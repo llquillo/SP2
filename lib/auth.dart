@@ -5,7 +5,8 @@ import 'dart:async';
 
 abstract class BaseAuth {
   Future<String> signInWithEmailAndPassword(String email, String password);
-  Future<String> createUserWithEmailAndPassword(String email, String password);
+  Future<String> createUserWithEmailAndPassword(
+      String email, String password, String name);
   Future<String> currentUser();
   Future<void> signOutUser();
 }
@@ -23,11 +24,11 @@ class Auth implements BaseAuth {
   }
 
   Future<String> createUserWithEmailAndPassword(
-      String email, String password) async {
+      String email, String password, String name) async {
     User user = (await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password))
         .user;
-    createUser(user.uid);
+    createUser(user.uid, name);
     return user.uid;
   }
 
@@ -40,19 +41,25 @@ class Auth implements BaseAuth {
     return FirebaseAuth.instance.signOut();
   }
 
-  void createUser(String uid) {
-    UserData user = new UserData(uid);
+  void createUser(String uid, String name) {
+    UserData user = new UserData(uid, name);
     databaseReference.reference().child('users').child(uid).set(user.toJSON());
   }
 }
 
 class UserData {
   String uid;
+  String name;
 
-  UserData(this.uid);
+  UserData(this.uid, this.name);
   // UserData.fromSnapshot(DataSnapshot snapshot) : uid = snapshot.value;
   toJSON() {
     return {
+      "Streak": {
+        "Date": "26 Jan",
+        "Value": 0,
+      },
+      "Name": name,
       "Points": {
         "-MS-4Pt02EJzmU9_mXoK": {"Date": "26 Jan", "XP": 0},
       },

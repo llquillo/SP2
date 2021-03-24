@@ -48,7 +48,7 @@ class DictButton extends StatelessWidget {
               bottomRight: Radius.circular(20)),
         ),
         color: Color(0xffa2d2ff),
-        child: new Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(

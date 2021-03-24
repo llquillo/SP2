@@ -19,6 +19,7 @@ import 'pages/sub_pages/level_content.dart';
 import 'dart:math';
 import 'dart:async';
 import 'package:overlay_support/overlay_support.dart';
+import 'pages/sub_pages/profile.dart';
 
 class HomePage extends StatefulWidget {
   final BaseAuth auth;
@@ -263,6 +264,23 @@ class _HomePageState extends State<HomePage> {
     wordDay = getWord();
   }
 
+  int getWordsMastered() {
+    int wordsCount = 0;
+    var combinedCorpus = List<Map>.from(corpus["basics1"]["Level1"]["Words"]) +
+        List<Map>.from(corpus["basics1"]["Level2"]["Words"]) +
+        List<Map>.from(corpus["basics1"]["Level3"]["Words"]) +
+        List<Map>.from(corpus["basics1"]["Level4"]["Words"]) +
+        List<Map>.from(corpus["basics1"]["Level5"]["Words"]);
+    for (var i = 0; i < combinedCorpus.length; i++) {
+      if (combinedCorpus[i] != null) {
+        if (combinedCorpus[i]["Deck"] == 3) {
+          wordsCount++;
+        }
+      }
+    }
+    return wordsCount;
+  }
+
   // Function for getting the percentage of each level
   double getPercentage(String level, String category) {
     var listTemp = List<Map>.from(corpus[category][level]["Words"]);
@@ -284,7 +302,11 @@ class _HomePageState extends State<HomePage> {
         Positioned(
           child: Opacity(
             opacity: 0.7,
-            child: Image.asset(i),
+            child: Image.asset(
+              i,
+              height: MediaQuery.of(context).size.height / 12,
+              width: MediaQuery.of(context).size.width / 4,
+            ),
           ),
         ),
         Positioned(
@@ -292,8 +314,8 @@ class _HomePageState extends State<HomePage> {
             opacity: .9,
             child: Image.asset(
               locked,
-              height: 45,
-              width: 45,
+              height: MediaQuery.of(context).size.height / 12,
+              width: MediaQuery.of(context).size.width / 4,
             ),
           ),
         ),
@@ -302,7 +324,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _unlockedLevel(i) {
-    return Image.asset(i);
+    return Image.asset(
+      i,
+      height: MediaQuery.of(context).size.height / 8,
+      width: MediaQuery.of(context).size.width / 4,
+    );
   }
 
   DateTime findFirstDate(DateTime dateTime) {
@@ -321,6 +347,11 @@ class _HomePageState extends State<HomePage> {
   String currentUser() {
     User user = FirebaseAuth.instance.currentUser;
     return user.uid;
+  }
+
+  String getCurUserEmail() {
+    User user = FirebaseAuth.instance.currentUser;
+    return user.email;
   }
 
   Future<void> _initCorpusDatabase(snapshot) async {
@@ -501,7 +532,7 @@ class _HomePageState extends State<HomePage> {
                 title,
                 style: GoogleFonts.libreBaskerville(
                   textStyle: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     letterSpacing: .3,
                     fontSize: 16.0,
                     fontWeight: FontWeight.w900,
@@ -554,6 +585,7 @@ class _HomePageState extends State<HomePage> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   getWidgetOptions(context) {
+    var height = MediaQuery.of(context).size.height;
     getcurrentXP();
     final FirebaseAuth auth = FirebaseAuth.instance;
     User user = auth.currentUser;
@@ -562,11 +594,11 @@ class _HomePageState extends State<HomePage> {
     String greeting;
     var time = int.parse(DateFormat('HH').format(DateTime.now()));
     if (time > 12 && time < 18) {
-      greeting = "Good afternoon, \n Wiqi";
+      greeting = "Good afternoon, \n ${corpus["Name"]}";
     } else if (time > 18) {
-      greeting = "Good evening, \n Wiqi";
+      greeting = "Good evening, \n ${corpus["Name"]}";
     } else {
-      greeting = "Good morning, \n Wiqi";
+      greeting = "Good morning, \n ${corpus["Name"]}";
     }
 
     // getWordOfTheDay();
@@ -590,7 +622,7 @@ class _HomePageState extends State<HomePage> {
               height: MediaQuery.of(context).size.height / 3,
               child: CarouselSlider(
                 options: CarouselOptions(
-                  height: 180.0,
+                  height: MediaQuery.of(context).size.height / 3.5,
                   autoPlay: true,
                   aspectRatio: 2.0,
                   enlargeCenterPage: true,
@@ -614,7 +646,7 @@ class _HomePageState extends State<HomePage> {
                                   wordDay["Word"],
                                   style: GoogleFonts.libreBaskerville(
                                     textStyle: TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       letterSpacing: .5,
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.w900,
@@ -628,7 +660,7 @@ class _HomePageState extends State<HomePage> {
                                   wordDay["POS"],
                                   style: GoogleFonts.libreBaskerville(
                                     textStyle: TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       letterSpacing: .5,
                                       fontSize: 14.0,
                                       fontStyle: FontStyle.italic,
@@ -644,7 +676,7 @@ class _HomePageState extends State<HomePage> {
                                   "\"${wordDay["Translation"]}\"",
                                   style: GoogleFonts.libreBaskerville(
                                     textStyle: TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       letterSpacing: .5,
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w600,
@@ -674,15 +706,15 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     (corpus["DG"]["Quiz"] == 0
                                         ? Icon(Icons.check_box_outline_blank,
-                                            color: Colors.white)
+                                            color: Colors.black)
                                         : Icon(Icons.check_box,
-                                            color: Colors.white)),
+                                            color: Colors.black)),
                                     SizedBox(width: 6),
                                     Text("Finish one quiz",
                                         style: GoogleFonts.libreBaskerville(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 14,
-                                          color: Colors.white,
+                                          color: Colors.black,
                                         ))
                                   ],
                                 ),
@@ -691,15 +723,15 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     (corpus["DG"]["Practice"] == 0
                                         ? Icon(Icons.check_box_outline_blank,
-                                            color: Colors.white)
+                                            color: Colors.black)
                                         : Icon(Icons.check_box,
-                                            color: Colors.white)),
+                                            color: Colors.black)),
                                     SizedBox(width: 6),
                                     Text("Practice one time",
                                         style: GoogleFonts.libreBaskerville(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 14,
-                                          color: Colors.white,
+                                          color: Colors.black,
                                         ))
                                   ],
                                 ),
@@ -708,15 +740,15 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     (corpus["DG"]["Earn"] == 0
                                         ? Icon(Icons.check_box_outline_blank,
-                                            color: Colors.white)
+                                            color: Colors.black)
                                         : Icon(Icons.check_box,
-                                            color: Colors.white)),
+                                            color: Colors.black)),
                                     SizedBox(width: 6),
-                                    Text("Earn 10 XP",
+                                    Text("Earn 10xp",
                                         style: GoogleFonts.libreBaskerville(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 14,
-                                          color: Colors.white,
+                                          color: Colors.black,
                                         ))
                                   ],
                                 ),
@@ -734,10 +766,10 @@ class _HomePageState extends State<HomePage> {
                               topRight: Radius.circular(20),
                               bottomLeft: Radius.circular(20),
                               bottomRight: Radius.circular(20)),
-                          color: Color(0xffa2d2ff),
+                          color: Color(0xffbde0fe),
                           boxShadow: [
                             BoxShadow(
-                              color: Color(0xffB7DCFF).withOpacity(0.7),
+                              color: Color(0xffB7DCFF).withOpacity(0.5),
                               spreadRadius: 1,
                               blurRadius: 8,
                               offset: Offset(8, 8),
@@ -810,7 +842,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         margin: EdgeInsets.all(
                             MediaQuery.of(context).size.width / 90),
-                        padding: EdgeInsets.all(3),
+                        padding: EdgeInsets.all(2),
                         alignment: Alignment.topCenter,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -818,12 +850,12 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Image.asset(
                               i.first,
-                              height: MediaQuery.of(context).size.height / 10,
-                              width: MediaQuery.of(context).size.width / 7.5,
+                              height: MediaQuery.of(context).size.height / 11,
+                              width: MediaQuery.of(context).size.width / 8,
                             ),
                             Text(i[1],
                                 style: GoogleFonts.fredokaOne(
-                                  fontSize: 11.5,
+                                  fontSize: 11,
                                 )),
                           ],
                         ),
@@ -837,14 +869,11 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        // color: Color(0xffE6F5F7),
-        // padding: EdgeInsets.all(10),
-        color: Colors.white,
+        // height: MediaQuery.of(context).size.height,
+        // width: MediaQuery.of(context).size.width,
+        // color: Colors.black,
         child: Column(children: [
-          ListView(
-            shrinkWrap: true,
+          Column(
             children: [
               Center(
                   child: Container(
@@ -863,19 +892,6 @@ class _HomePageState extends State<HomePage> {
                       topRight: Radius.circular(20),
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20)),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Color(0xffbde0fe).withOpacity(0.6),
-                  //     spreadRadius: 3,
-                  //     blurRadius: 4,
-                  //     offset: Offset(0, 2),
-                  //   )
-                  // ],
-                  // border: Border(
-                  //     bottom: BorderSide(
-                  //   color: Colors.black,
-                  //   width: 2,
-                  // )),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -922,19 +938,20 @@ class _HomePageState extends State<HomePage> {
                 ),
               )),
               Container(
-                height: MediaQuery.of(context).size.height / 1.8,
+                // color: Colors.yellow,
+                height: MediaQuery.of(context).size.height * .56,
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.fromLTRB(
-                    (MediaQuery.of(context).size.width / 14),
+                    (MediaQuery.of(context).size.width / 14.5),
                     0,
-                    (MediaQuery.of(context).size.width / 14),
+                    (MediaQuery.of(context).size.width / 14.5),
                     0),
                 child: GridView.count(
                   scrollDirection: Axis.vertical,
                   crossAxisCount: 2,
-                  childAspectRatio: (MediaQuery.of(context).size.height /
-                          MediaQuery.of(context).size.width) /
-                      1.18,
+                  childAspectRatio: (MediaQuery.of(context).size.width /
+                          MediaQuery.of(context).size.height) /
+                      .43,
                   children: [
                     ...drillsButtons.map(
                       (i) => GestureDetector(
@@ -948,9 +965,9 @@ class _HomePageState extends State<HomePage> {
                         child: Container(
                           margin: EdgeInsets.fromLTRB(
                             MediaQuery.of(context).size.width / 35,
-                            MediaQuery.of(context).size.width / 45,
+                            MediaQuery.of(context).size.width / 85,
                             MediaQuery.of(context).size.width / 35,
-                            MediaQuery.of(context).size.width / 80,
+                            MediaQuery.of(context).size.width / 85,
                           ),
                           // margin: EdgeInsets.all(5),
                           decoration: BoxDecoration(
@@ -965,7 +982,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Color(0xffD8D2FF).withOpacity(0.7),
                                 spreadRadius: 2,
                                 blurRadius: 4,
-                                offset: Offset(0, 4),
+                                offset: Offset(0, 1),
                               )
                             ],
                           ),
@@ -992,7 +1009,7 @@ class _HomePageState extends State<HomePage> {
                                 style: GoogleFonts.fredokaOne(
                                   letterSpacing: .5,
                                   color: Colors.black,
-                                  fontSize: 14,
+                                  fontSize: 11,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -1051,7 +1068,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.black),
                           ),
                           Text(
-                            "$totalXP",
+                            "${corpus["Streak"]["Value"]}",
                             style: GoogleFonts.fredokaOne(
                               fontSize: 20,
                               fontWeight: FontWeight.w300,
@@ -1087,7 +1104,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.black),
                           ),
                           Text(
-                            "1000",
+                            getWordsMastered().toString(),
                             style: GoogleFonts.fredokaOne(
                               fontSize: 20,
                               fontWeight: FontWeight.w300,
@@ -1263,173 +1280,229 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      resizeToAvoidBottomInset: false,
-      drawer: Drawer(
-          child: Container(
-        color: Color(0xffb8e3ea),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height / 3 + 20,
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
+    return FutureBuilder(
+      future: _initCorpusDatabase(context),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Scaffold(
+            resizeToAvoidBottomPadding: false,
+            resizeToAvoidBottomInset: false,
+            drawer: Container(
+                width: MediaQuery.of(context).size.width / 1.55,
+                child: Drawer(
+                    child: Container(
+                  color: Color(0xffF1F8FF),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height / 3 + 20,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        child: Column(
+                          children: [
+                            MaterialButton(
+                              highlightColor: Colors.grey[200],
+                              padding: EdgeInsets.all(15),
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Profile(
+                                            corpus: corpus,
+                                            userEmail: getCurUserEmail(),
+                                            userID: currentUser(),
+                                          )),
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(Icons.person),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'Profile',
+                                    style: GoogleFonts.fredokaOne(
+                                        letterSpacing: .5,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            MaterialButton(
+                              highlightColor: Colors.grey[200],
+                              padding: EdgeInsets.all(15),
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              onPressed: () {},
+                              child: Row(
+                                children: [
+                                  Icon(Icons.settings),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'Settings',
+                                    style: GoogleFonts.fredokaOne(
+                                        letterSpacing: .5,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            MaterialButton(
+                              highlightColor: Colors.grey[200],
+                              padding: EdgeInsets.all(15),
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              onPressed: _signOut,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.logout),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'Logout',
+                                    style: GoogleFonts.fredokaOne(
+                                        letterSpacing: .5,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Divider(height: 0),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        child: Column(
+                          children: [
+                            MaterialButton(
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              minWidth: MediaQuery.of(context).size.width,
+                              highlightColor: Colors.grey[200],
+                              onPressed: () {
+                                print("hi");
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(Icons.share),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'Tell a Friend',
+                                    style: GoogleFonts.fredokaOne(
+                                        letterSpacing: .5,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            MaterialButton(
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              minWidth: MediaQuery.of(context).size.width,
+                              highlightColor: Colors.grey[200],
+                              onPressed: () {
+                                print("hi");
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(Icons.feedback),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'Help and Feedback',
+                                    style: GoogleFonts.fredokaOne(
+                                        letterSpacing: .5,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                                height:
+                                    MediaQuery.of(context).size.height / 12),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ))),
+            appBar: new AppBar(
+              title: new Text('App Name'),
+              elevation: 5,
             ),
-            Container(
-              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-              child: Column(
+            body: Center(
+              child: getWidgetOptions(context).elementAt(_selectedIndex),
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: Colors.black87,
+              unselectedItemColor: Colors.white,
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.school),
+                  label: 'Drills',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.fitness_center),
+                  label: 'Progress',
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: Color(0xffb8e3ea),
+              onTap: _onItemTapped,
+            ),
+          );
+        } else {
+          return Dialog(
+            backgroundColor: Colors.white,
+            child: Container(
+              color: Colors.black,
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  MaterialButton(
-                    highlightColor: Colors.grey[200],
-                    padding: EdgeInsets.all(15),
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    onPressed: () {},
-                    child: Row(
-                      children: [
-                        Icon(Icons.person),
-                        SizedBox(width: 10),
-                        Text(
-                          'Profile',
-                          style: GoogleFonts.fredokaOne(
-                              letterSpacing: .5,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        ),
-                      ],
+                  SpinKitChasingDots(
+                    size: 40,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'Loading',
+                    style: GoogleFonts.roboto(
+                      color: Colors.white,
+                      fontSize: 23,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  MaterialButton(
-                    highlightColor: Colors.grey[200],
-                    padding: EdgeInsets.all(15),
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    onPressed: () {},
-                    child: Row(
-                      children: [
-                        Icon(Icons.settings),
-                        SizedBox(width: 10),
-                        Text(
-                          'Settings',
-                          style: GoogleFonts.fredokaOne(
-                              letterSpacing: .5,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        ),
-                      ],
-                    ),
-                  ),
-                  MaterialButton(
-                    highlightColor: Colors.grey[200],
-                    padding: EdgeInsets.all(15),
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    onPressed: _signOut,
-                    child: Row(
-                      children: [
-                        Icon(Icons.logout),
-                        SizedBox(width: 10),
-                        Text(
-                          'Logout',
-                          style: GoogleFonts.fredokaOne(
-                              letterSpacing: .5,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        ),
-                      ],
-                    ),
-                  ),
+                  SizedBox(width: 10),
                 ],
               ),
             ),
-            Divider(height: 0),
-            Container(
-              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-              child: Column(
-                children: [
-                  MaterialButton(
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    minWidth: MediaQuery.of(context).size.width,
-                    highlightColor: Colors.grey[200],
-                    onPressed: () {
-                      print("hi");
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.share),
-                        SizedBox(width: 10),
-                        Text(
-                          'Tell a Friend',
-                          style: GoogleFonts.fredokaOne(
-                              letterSpacing: .5,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        ),
-                      ],
-                    ),
-                  ),
-                  MaterialButton(
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    minWidth: MediaQuery.of(context).size.width,
-                    highlightColor: Colors.grey[200],
-                    onPressed: () {
-                      print("hi");
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.feedback),
-                        SizedBox(width: 10),
-                        Text(
-                          'Help and Feedback',
-                          style: GoogleFonts.fredokaOne(
-                              letterSpacing: .5,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(height: MediaQuery.of(context).size.height / 12),
-                ],
-              ),
-            ),
-          ],
-        ),
-      )),
-      appBar: new AppBar(
-        title: new Text('App Name'),
-        elevation: 5,
-      ),
-      body: Center(
-        child: getWidgetOptions(context).elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black87,
-        unselectedItemColor: Colors.white,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Drills',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.fitness_center),
-            label: 'Progress',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xffb8e3ea),
-        onTap: _onItemTapped,
-      ),
+          );
+        }
+      },
     );
   }
 }
