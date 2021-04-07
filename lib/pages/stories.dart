@@ -3,19 +3,22 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'common_widgets/page_title.dart';
 import './common_widgets/dict_button.dart';
+import './common_widgets/story_template.dart';
 
 class Stories extends StatefulWidget {
+  final stories;
+  Stories({@required this.stories});
   @override
   _StoriesState createState() => _StoriesState();
 }
 
 class _StoriesState extends State<Stories> {
   final List<List<String>> storyList = [
-    ['Story1', 'l'],
-    ['Story2', 'l'],
-    ['Story3', 'l'],
-    ['Story4', 'l'],
-    ['Story5', 'l']
+    ['Introduction', 'u', "1"],
+    ['Story2', 'l', "2"],
+    ['Story3', 'l', "3"],
+    ['Story4', 'l', "4"],
+    ['Story5', 'l', "5"]
   ];
   @override
   Widget build(BuildContext context) {
@@ -39,12 +42,15 @@ class _StoriesState extends State<Stories> {
                     color: Colors.transparent,
                     child: DictButton(
                       buttonName: i.first,
-                      buttonImage: i.last == 'u'
-                          ? 'images/unlock.png'
-                          : 'images/lock.png',
+                      buttonImage:
+                          i[1] == 'u' ? 'images/unlock.png' : 'images/lock.png',
                       onPressed: () {
-                        print(MediaQuery.of(context).size.height);
-                        print(MediaQuery.of(context).size.width);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => StoryTemplate(
+                                  story: widget.stories[int.parse(i.last)])),
+                        );
                       },
                       imgH: 40,
                       imgW: 40,
