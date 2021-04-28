@@ -50,10 +50,21 @@ class Dictionary extends StatelessWidget {
             height: (MediaQuery.of(context).size.height - 270) / 5 + 10,
             width: MediaQuery.of(context).size.width - 30,
             child: DictButton(
-              buttonName: "Family",
-              buttonImage: 'images/family.png',
+              buttonName: "Shopping",
+              buttonImage: 'images/shopping.png',
               onPressed: () {
-                _openDict(context, "Family", "family");
+                _openDict(context, "Shopping", "shopping");
+              },
+            ),
+          ),
+          Container(
+            height: (MediaQuery.of(context).size.height - 270) / 5 + 10,
+            width: MediaQuery.of(context).size.width - 30,
+            child: DictButton(
+              buttonName: "Travel",
+              buttonImage: 'images/travel.png',
+              onPressed: () {
+                _openDict(context, "Travel", "travel");
               },
             ),
           ),
@@ -72,24 +83,13 @@ class Dictionary extends StatelessWidget {
             height: (MediaQuery.of(context).size.height - 270) / 5 + 10,
             width: MediaQuery.of(context).size.width - 30,
             child: DictButton(
-              buttonName: "Shopping",
-              buttonImage: 'images/shopping.png',
+              buttonName: "Family",
+              buttonImage: 'images/family.png',
               onPressed: () {
-                _openDict(context, "Shopping", "shopping");
+                _openDict(context, "Family", "family");
               },
             ),
           ),
-          Container(
-            height: (MediaQuery.of(context).size.height - 270) / 5 + 10,
-            width: MediaQuery.of(context).size.width - 30,
-            child: DictButton(
-              buttonName: "Travel",
-              buttonImage: 'images/travel.png',
-              onPressed: () {
-                _openDict(context, "Travel", "travel");
-              },
-            ),
-          )
         ],
       ),
     );

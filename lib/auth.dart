@@ -73,6 +73,158 @@ class UserData {
         },
         "Date": " "
       },
+      //=======================================================================
+      //===============================STORIES=================================
+      //=======================================================================
+      "Stories": [
+        {
+          "Status": 'u',
+          "Quiz": [
+            {
+              "Answer": "Pedro",
+              "Question": "Who invited Juan to eat?",
+              "Type": "I"
+            },
+            {
+              "Answer": "Prutas",
+              "Question": "What was the first thing Juan ate?",
+              "Type": "I"
+            },
+            {
+              "Answer": "Karne",
+              "Question": "What was the second thing Juan ate?",
+              "Type": "I"
+            },
+            {
+              "Answer": "Banggi",
+              "Choice1": "Banggi",
+              "Choice2": "Udto",
+              "Choice3": "Bahaw",
+              "Question": "What did they eat?",
+              "Type": "MC"
+            }
+          ],
+          "Story":
+              "\t\t Matalik na magkaibigan si Pedro at Juan. Inimbitahan ni Pedro si Juan sa kanyang bahay upang kumain ng hapunan. / \t  \t“Maugmay na hapon po.” sabi ni Juan sa Ama at Ina ni Pedro. / \t \t“Maugmay na hapon din. Kumusta ka, Juan?” simbag ng Ina ni Pedro. /  \t“Maray po, salamat.” / \t \tAng apat ay pumunta sa komedor at nagsimula nang magkaon. Unang kinain ni Juan ay ang prutas na inihanda.  /  \t“Karne o sira, Juan?” tanong ng Ama ni Pedro. / \t \t“Karne po, salamat.” sabi ni Juan at iniabot sa kanya ang karne. /  \tNagkaon sila nang madami. Pagkatapos nila magkaon ng banggi, Nag-inom sila kan tubig. /  \t“Salamat po sa kakan. Maduman na ako.” taram ni Juan. /  \t“Daing ano man. Paaram.” simbag ni Pedro. /"
+        },
+        {
+          "Status": 'u',
+          "Quiz": [
+            {
+              "Answer": "Domingo",
+              "Question": "When is the feast?",
+              "Type": "I"
+            },
+            {
+              "Answer": "Bestida",
+              "Question": "What did they buy at the mall?",
+              "Type": "I"
+            },
+            {
+              "Answer": "Ensalada",
+              "Question": "What did Maria eat?",
+              "Type": "I"
+            },
+            {
+              "Answer": "Kaunan",
+              "Choice1": "Harong",
+              "Choice2": "Fiesta",
+              "Choice3": "Kaunan",
+              "Question": "Where did they go after buying?",
+              "Type": "MC"
+            }
+          ],
+          "Story":
+              "\t\tSi Maria at Clara ay nagduman sa Mall para bumakal ki bado para sa piesta kan saindang bayan sa maabot na domingo. Nakakita tulos si Clara ki bestida na muya nya isulot sa piesta. /\t\t“Mamira ini tabi?” hapot ni Clara sa saleslady habang kapot kapot an bestida. /\t\t“250 tabi.” simbag kan saleslady. /\t\t“Husto daw ini sakuya?” hapot ni Clara kay Maria. /\t\t“Garo dakula saimon.” simbag ni Maria. /\t\tNagparahanap pa si Maria dangan si Clara sa tindahan ugaring mga mahalon. Nagbalyo na sana sinda sa ibang tindahan taning makahanap pa nung magayon. / \t\t“Magayon ining bestida, Clara!” taram ni Maria. /\t\t“Bukon ba halipot sako?” simbag ni Clara kay Maria. /\t\t“Dai dangan barato pa, bakalon mo na!” /\t\t“Sige! Ika Maria, dai ka mabakal?” hapot ni Clara sa kaibigan. /\t\t“Dai. Igwa ako bado sa harong.” sagot ni Maria. / \t\tKan matapos sinda magbayad nag-adun sinda sa kaunan. Manok at maluto ki Clara, ensalada naman ki Maria. /\t\t“Magkaon na kita!” taram ni Clara at pigtao ki Maria an saiyang order. /\t\tNagkakan an mag-amiga dangan nag-uli na saindang harong. /"
+        },
+        {
+          "Quiz": [
+            {"Answer": "Mark", "Question": "Who called Rob?", "Type": "I"},
+            {
+              "Answer": "Legazpi",
+              "Question": "Where did they go for their fieldtrip?",
+              "Type": "I"
+            },
+            {
+              "Answer": "Gwardiya",
+              "Question": "Who did Rob ask for directions?",
+              "Type": "I"
+            },
+            {
+              "Answer": "Hotel",
+              "Choice1": "Hotel",
+              "Choice2": "Park",
+              "Choice3": "Kaunan",
+              "Question": "Where did they go after they left the airport?",
+              "Type": "MC"
+            }
+          ],
+          "Story":
+              "\t\tSarong aldaw sa Manila, igwang estudiante na si Rob ang naimbitahan ng saiyang eskuwelahan na sumama sa sarong fieldtrip kaibahan an saiyang mga amigo ngunit, siya ay nasobrahan sa katurog. /\t\tPingapodan ng saiyang mga amigo si Rob sa telepono para magmata. /\t\t“Rob haen ka?” hapot kan amigo ni Rob na si Mark. / \t\t“Kamamata ko sana, nalabihan ako kan katurog.” simbag ni Rob. /\t\t“Ala! Nasa harong ka pa?” hapot ni Mark. /\t\t“Nagpakarhay kan gamit so Rob at nagdalagan paluwas kn harong at naglunad ki bus paduman sa airport kung saen sinda maghirilingan. /\t\tKan mahiling ni Mark si Rob sa airport, pig-apod niya ito. /\t\t“Rob yaon kami digdi!” suriyaw ni Mark. /\t\tSinda ay naglunad sa eroplano paduman sa Legazpi, Bicol kan saan an saindang field trip. /\t\tPag kalipas kan sarong oras nag-abot na sinda sa Bicol. /\t\t“Mark, haen digdi an banyo?” hapot ni Rob. /\t\t“Dai ko aram. Hapoton mo su gwardiya.” simbag ni Mark. /\t\tHinapot ni Rob and gwardiya para sa direksyon paduman sa banyo. Suminunod si Rob sa pigtao na direksyon kan gwardiya at nagbweltada tulos sa mga kaklase nya. /\t\t“Magduman kita sa kaunan at sa parke!” taram kan sarong kaklase. /\t\t“Atuan na gayod, dumuman muna kita sa hotel ta walaton ta su mga gamit ta. Bumakal din kita kan payo ta garu maruan.” simbag ni Rob. /\t\tSinda ay naduman sa hotel at nagpahingalo. Dangan pagkatapos magpahingalo ay maugma sindang naglibot-libot para mahiling an magagayon na lugar sa Legazpi."
+        },
+        {
+          "Status": 'u',
+          "Quiz": [
+            {
+              "Answer": "Juan",
+              "Question": "Who is Pedro's friend?",
+              "Type": "I"
+            },
+            {
+              "Answer": "75",
+              "Question": "What is the passing grade?",
+              "Type": "I"
+            },
+            {
+              "Answer": "Sanaysay",
+              "Question": "What did the students write?",
+              "Type": "I"
+            },
+            {
+              "Answer": "3PM",
+              "Choice1": "5PM",
+              "Choice2": "3PM",
+              "Choice3": "4PM",
+              "Question": "What time did Simon leave the school?",
+              "Type": "MC"
+            }
+          ],
+          "Story":
+              "\t\t Inot na aldaw ni Simon sa saiyang bagong eskwelahan. Siya ay nagtukaw dangan pigkaag an saiyang mga libro at kwaderno sa lamesa. /  \t  \t“Kumusta! Ako si Pedro. Ano ngaran mo?” taram kan estudiante na nasa tuo niya. / \t  \t “Ako si Simon. Bago lang ako digdi.” simbag ni Simon. /\t  \t“Ah bago ka palan digdi. Pamidbid taka sa kaibigan ko.” nagtindog si Pedro sa saiyang tukawan at pigapod an saiyang amigo. /\t  \t“Ini si Juan.” itinuro ni Pedro ang kaniyang kaibigan. “Ini naman si Simon. Bago siya sa eskwelahan ta.” / \t  \t“Kumusta ka Simon?” taram ni Juan. “Igwa ka hapot samuya?” / \t  \t“Mapagal ba an eksaminasion at anu an pasadong marka?” hapot ni Simon. /\t  \t“Basta mag-adal ka sana ki marhay mapasa ka sa mga eksam.” simbag ni Pedro. /\t  \t“An pasadong marka ay 75.” simbag ni Juan. “Dai ka magparahadit! Kaya an.” /\t  \t“Sana nga at gusto ko maging abogado. Kaipohan ko halangkaw na grado sa gabos na aralin ko.” taram ni Simon. \"Kamo? Unan kukuon nindo na kurso sa kolehiyo?\" /\t  \t“Ako arkitektura.” simbag ni Pedro. “Si Juan naman ay medisina.” Nagtanog an kampana pagkasimbag ni Pedro. / \t  \t“Magturukaw na kita ta maabot na ang maestro.” taram ni Juan. /\t  \t An mga estudiante ay nagbasa kan saindang mga libro, nakinig sa kaindang mga maestro, at nagsurat kan mga sanaysay. /\t  \tPag-abot ng alas-tres ay hapon, nag-uli na si Simon sa saiyang harong. /\t  \t“Kumusta an eskuela?” hapot kan ina nya. /\t  \t “Maogma man tabi!” simbag ni Simon. /"
+        },
+        {
+          "Quiz": [
+            {
+              "Answer": "Clara",
+              "Question": "Whose house did Ana went to?",
+              "Type": "I"
+            },
+            {
+              "Answer": "Sala",
+              "Question": "Which part of the house was shown first?",
+              "Type": "I"
+            },
+            {
+              "Answer": "Kusina",
+              "Question": "What's beside the dining area?",
+              "Type": "I"
+            },
+            {
+              "Answer": "Isabela",
+              "Choice1": "Ana",
+              "Choice2": "Maria",
+              "Choice3": "Isabela",
+              "Question": "What's name of Clara's sister?",
+              "Type": "MC"
+            }
+          ],
+          "Story":
+              "\t\t Si Ana ay nagduman sa harong ni Clara para mag-”sleepover”. Pag-abot ni Ana ay kumatok siya sa puerta. /\t\t“Yaon ka na palan Ana!” maogmang taram ni Clara. “Maglaog ka!” /\t\tPaglaog ni Ana sa harong ay binati siya ng Ama at Ina ni Clara. /\t\t“Kumusta ka Ana?” hapot ninda. /\t\t“Marhay na hapon tabi. Marhay man po, salamat.” simbag ni Ana. /\t\t“Clara, ipasyar mo si Ana sa satuyang harong.” taram kan Ama ni Clara. /\t\t“Iyo tabi. Ini an samuyang sala, Ana.” taram ni Clara. /\t\tNagduman sinda sa ibang kuarto. “Ini an samuyang komedor.” taram ni Clara sa sarong kuarto na igwa lamesa at tukawan. “Kataning kaini an samuyang kusina.” /\t\tNagpanik sinda sa itaas.”Digdi naman an samuyang kuarto.” /\t\tNaglaog an dua sa kuarto sa wala. “Ini an sako na kuarto at digdi kita makaturog.” taram ni Clara habang pigturo an saiyang kama. /\t\t“Magayon an harong nindo, Clara!” taram ni Ana. /\t\t“Salamat, Ana. Mare na ta matapos na sinda magluro kan pagkaon si ina.” /\t\tAn duwa ay nagduman sa komedor at nagkaon si Ana kaibahan an pamilya ni Clara. /\t\t“Uni palan si manay Isabela at manoy Simon ko.” taram ni Clara kay Ana. /\t\t“Kumusta po kamo manay at manoy.” taram ni Ana sa mga tugang ni Clara. /\t\t“Ika palan an amiga ni Clara.” taram ni Isabela. “Magkaon ka dakol!” pigturo ni Isabela an maluto kay Ana. /\t\t“Mabalos po, taram ni Ana.” / \t\tPagkatapos ninda magkaon dangan mag-huron ay nagduman na sila sa kuarto dangan naturog. /"
+        },
+      ],
+      //=======================================================================
+      //===============================BASICS1=================================
+      //=======================================================================
       "basics1": {
         "Drink": [
           {"POS": "Noun", "Translation": "Coffee", "Word": "Kape"},
@@ -90,7 +242,6 @@ class UserData {
           "LevelID": 1,
           "LevelStatus": 0,
           "Words": [
-            null,
             {
               "Deck": 1,
               "POS": "Exclamation",
@@ -343,7 +494,6 @@ class UserData {
           "LevelID": 3,
           "LevelStatus": 0,
           "Words": [
-            null,
             {"Deck": 1, "POS": "Noun", "Translation": "Age", "Word": "Edad"},
             {
               "Deck": 1,
@@ -422,7 +572,6 @@ class UserData {
               "Translation": "Sunday",
               "Word": "Domingo"
             },
-            null,
             {
               "Deck": 1,
               "POS": "Noun",
@@ -454,7 +603,6 @@ class UserData {
           "LevelID": 4,
           "LevelStatus": 0,
           "Words": [
-            null,
             {
               "Deck": 1,
               "POS": "Verb",
@@ -599,14 +747,13 @@ class UserData {
           "LevelID": 5,
           "LevelStatus": 0,
           "Words": [
-            null,
             {"Deck": 1, "POS": "Noun", "Translation": "Boy", "Word": "Nonoy"},
             {"Deck": 1, "POS": "Noun", "Translation": "Girl", "Word": "Nene"},
             {"Deck": 1, "POS": "Noun", "Translation": "Man", "Word": "Lalaki"},
             {
               "Deck": 1,
               "POS": "Noun",
-              "Translation": "Babae",
+              "Translation": "Woman",
               "Word": "Babayi"
             },
             {"Deck": 1, "POS": "Pronoun", "Translation": "He", "Word": "Siya"},
@@ -657,7 +804,6 @@ class UserData {
           ]
         },
         "Markers": [
-          null,
           {"POS": "Marker", "Translation": "Of/By/With/From", "Word": "Nin"},
           {"POS": "Marker", "Translation": "The (singular)", "Word": "An"},
           {"POS": "Marker", "Translation": "The (plural)", "Word": "An mga"},
@@ -685,9 +831,8 @@ class UserData {
           }
         ],
         "Pronouns": [
-          null,
           {
-            "Number": "Singular",
+            "Number": "Plural",
             "POS": "Pronoun",
             "POV": "Second",
             "Translation": "You",
@@ -724,52 +869,21 @@ class UserData {
             "Word": "Siya"
           }
         ],
-        "Sentences": [
-          null,
-          {"Sentence": "Siya si Clara", "Translation": "She is Clara"},
-          {"Sentence": "Nagkaon ako tinapay", "Translation": "I ate bread"},
-          {"Sentence": "Siya si Juan", "Translation": "He is Juan"},
-          {"Sentence": "Babayi ako", "Translation": "I am a woman"},
-          {"Sentence": "Lalaki ako", "Translation": "I am a man"},
-          {
-            "Sentence": "Nagkaon si Juan kan mansanas",
-            "Translation": "Juan ate an apple"
-          },
-          {
-            "Sentence": "Gusto mo kan kape?",
-            "Translation": "Do you want coffee?"
-          },
-          {
-            "Sentence": "Si Juan ay nagkakaon ng karne",
-            "Translation": "Juan is eating meat"
-          },
-          {"Sentence": "Ang mga nonoy", "Translation": "The boys"},
-          {"Sentence": "Ang mga babayi", "Translation": "The women"},
-          {
-            "Sentence": "Nagkaon kan mga niyog ang mga lalaki",
-            "Translation": "The men ate coconuts"
-          },
-          {
-            "Sentence": "Gusto mo su mangga?",
-            "Translation": "Do you want the mango?"
-          }
-        ],
         "Verbs": [
-          null,
-          {
-            "Category": "Food",
-            "POS": "Verb",
-            "Tense": "Continuous",
-            "Translation": "Eat",
-            "Word": "Kakaon"
-          },
-          {
-            "Category": "Drink",
-            "POS": "Verb",
-            "Tense": "Continuous",
-            "Translation": "Drink",
-            "Word": "Inom"
-          },
+          // {
+          //   "Category": "Food",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Eat",
+          //   "Word": "Makaon"
+          // },
+          // {
+          //   "Category": "Drink",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Drink",
+          //   "Word": "Mag-inom"
+          // },
           {
             "Category": "Food",
             "POS": "Verb",
@@ -813,6 +927,3138 @@ class UserData {
             "Word": "Nag-inom"
           }
         ]
+      },
+      //=======================================================================
+      //===============================TRAVEL==================================
+      //=======================================================================
+      "travel": {
+        "See": [
+          {"POS": "Noun", "Translation": "Concert", "Word": "Konsierto"},
+          {"POS": "Noun", "Translation": "Parade", "Word": "Parada"},
+          {"POS": "Noun", "Translation": "Beach", "Word": "Baybay"},
+          {"POS": "Noun", "Translation": "Waterfall", "Word": "Busay"},
+        ],
+        "Ask": [
+          {"POS": "Name", "Translation": "Clara", "Word": "Clara"},
+          {"POS": "Pronoun", "Translation": "Her", "Word": "Saiya"},
+          {"POS": "Name", "Translation": "Juan", "Word": "Juan"},
+          {"POS": "Pronoun", "Translation": "Him", "Word": "Saiya"},
+        ],
+        "Look": [
+          {"POS": "Noun", "Translation": "Passport", "Word": "Pasaporte"},
+          {"POS": "Noun", "Translation": "Bathroom", "Word": "Banyo"},
+          {"POS": "Noun", "Translation": "Guide", "Word": "Giya"},
+          {"POS": "Noun", "Translation": "Bank", "Word": "Banko"},
+          {"POS": "Noun", "Translation": "Telephone", "Word": "Telepono"},
+        ],
+        "Bring": [
+          {"POS": "Noun", "Translation": "Passport", "Word": "Pasaporte"},
+          {"POS": "Noun", "Translation": "Certificate", "Word": "Sertipiko"},
+          {"POS": "Noun", "Translation": "Food", "Word": "Pagkaon"},
+          {"POS": "Noun", "Translation": "Pen", "Word": "Pluma"},
+          {"POS": "Noun", "Translation": "Book", "Word": "Libro"},
+        ],
+        "Call": [
+          {"POS": "Noun", "Translation": "Friend", "Word": "Amigo"},
+          {"POS": "Noun", "Translation": "Friend", "Word": "Amiga"},
+          {"POS": "Noun", "Translation": "Restaurant", "Word": "Restauran"},
+          {"POS": "Noun", "Translation": "Hospital", "Word": "Ospital"},
+          {"POS": "Noun", "Translation": "Bank", "Word": "Banko"},
+        ],
+        "Place": [
+          {"POS": "Noun", "Translation": "Beach", "Word": "Baybay"},
+          {"POS": "Noun", "Translation": "Island", "Word": "Isla"},
+          {"POS": "Noun", "Translation": "Park", "Word": "Parke"},
+        ],
+        "Adjectives": [
+          {
+            "Category": "Place",
+            "POS": "Adjective",
+            "Translation": "Sunny",
+            "Word": "Maaraw"
+          },
+          {
+            "Category": "Place",
+            "POS": "Adjective",
+            "Translation": "Cloudy",
+            "Word": "Rumarom"
+          },
+          {
+            "Category": "Place",
+            "POS": "Adjective",
+            "Translation": "Rainy",
+            "Word": "Mauran"
+          },
+          {
+            "Category": "Place",
+            "POS": "Adjective",
+            "Translation": "Windy",
+            "Word": "Maduros"
+          },
+          {
+            "Category": "Place",
+            "POS": "Adjective",
+            "Translation": "Hot",
+            "Word": "Mainit"
+          },
+          {
+            "Category": "Place",
+            "POS": "Adjective",
+            "Translation": "Cold",
+            "Word": "Malipot"
+          },
+          {
+            "Category": "Place",
+            "POS": "Adjective",
+            "Translation": "Popular",
+            "Word": "Popular"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Hungry",
+            "Word": "Gutom"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Thirsty",
+            "Word": "Paha"
+          },
+        ],
+        "Verbs": [
+          // {
+          //   "Category": "See",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "See",
+          //   "Word": "Maghiling"
+          // },
+          {
+            "Category": "See",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Seeing",
+            "Word": "Naghihiling"
+          },
+          {
+            "Category": "See",
+            "POS": "Verb",
+            "Tense": "Future",
+            "Translation": "will See",
+            "Word": "Maghihiling"
+          },
+          {
+            "Category": "See",
+            "POS": "Verb",
+            "Tense": "Past",
+            "Translation": "Saw",
+            "Word": "Naghiling"
+          },
+          // {
+          //   "Category": "Ask",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Ask",
+          //   "Word": "Maghapot"
+          // },
+          {
+            "Category": "Ask",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Asking",
+            "Word": "Naghahapot"
+          },
+          {
+            "Category": "Ask",
+            "POS": "Verb",
+            "Tense": "Future",
+            "Translation": "will Ask",
+            "Word": "Maghahapot"
+          },
+          {
+            "Category": "Ask",
+            "POS": "Verb",
+            "Tense": "Past",
+            "Translation": "Asked",
+            "Word": "Naghapot"
+          },
+          // {
+          //   "Category": "Look",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Look",
+          //   "Word": "Maghanap"
+          // },
+          {
+            "Category": "Look",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Looking",
+            "Word": "Naghahanap"
+          },
+          {
+            "Category": "Look",
+            "POS": "Verb",
+            "Tense": "Future",
+            "Translation": "will Look",
+            "Word": "Maghahanap"
+          },
+          {
+            "Category": "Look",
+            "POS": "Verb",
+            "Tense": "Past",
+            "Translation": "Looked",
+            "Word": "Naghanap"
+          },
+          // {
+          //   "Category": "Bring",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Bring",
+          //   "Word": "Magdara"
+          // },
+          {
+            "Category": "Bring",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Bringing",
+            "Word": "Nagdadara"
+          },
+          {
+            "Category": "Bring",
+            "POS": "Verb",
+            "Tense": "Future",
+            "Translation": "will Bring",
+            "Word": "Magdadara"
+          },
+          {
+            "Category": "Bring",
+            "POS": "Verb",
+            "Tense": "Past",
+            "Translation": "Brought",
+            "Word": "Nagdara"
+          },
+          // {
+          //   "Category": "Call",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Call",
+          //   "Word": "Mag-apod"
+          // },
+          {
+            "Category": "Call",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Calling",
+            "Word": "Nag-aapod"
+          },
+          {
+            "Category": "Call",
+            "POS": "Verb",
+            "Tense": "Future",
+            "Translation": "will Call",
+            "Word": "Mag-aapod"
+          },
+          {
+            "Category": "Call",
+            "POS": "Verb",
+            "Tense": "Past",
+            "Translation": "Called",
+            "Word": "Nag-apod"
+          },
+        ],
+        "Names": [
+          {
+            "Gender": "Female",
+            "Name": "Clara",
+            "Number": "Singular",
+            "POS": "Proper Noun"
+          },
+          {
+            "Gender": "Male",
+            "Name": "Simon",
+            "Number": "Singular",
+            "POS": "Proper Noun"
+          },
+          {
+            "Gender": "Male",
+            "Name": "Juan",
+            "Number": "Singular",
+            "POS": "Proper Noun"
+          }
+        ],
+        "Pronouns": [
+          {
+            "Number": "Plural",
+            "POS": "Pronoun",
+            "POV": "Second",
+            "Translation": "You",
+            "Word": "Ika"
+          },
+          {
+            "Number": "Plural",
+            "POS": "Pronoun",
+            "POV": "Second",
+            "Translation": "You",
+            "Word": "Kamo"
+          },
+          {
+            "Number": "Plural",
+            "POS": "Pronoun",
+            "POV": "First",
+            "Translation": "I",
+            "Word": "Ako"
+          },
+          {
+            "Gender": "Female",
+            "Number": "Singular",
+            "POS": "Pronoun",
+            "POV": "Third",
+            "Translation": "She",
+            "Word": "Siya"
+          },
+          {
+            "Gender": "Male",
+            "Number": "Singular",
+            "POS": "Pronoun",
+            "POV": "Third",
+            "Translation": "He",
+            "Word": "Siya"
+          }
+        ],
+        "Level1": {
+          "LevelID": 1,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "House",
+              "Word": "Balay",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Home",
+              "Word": "Baluy",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Address",
+              "Word": "Adres",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Direction",
+              "Word": "Direksyon",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Certificate",
+              "Word": "Sertipiko",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Building",
+              "Word": "Bilding",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Elevator",
+              "Word": "Elevator",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Stairs",
+              "Word": "Hagyan",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Bathroom",
+              "Word": "Banyo",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Level",
+              "Word": "Patas",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Camera",
+              "Word": "Kamera",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Telephone",
+              "Word": "Telepono",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Foreigner",
+              "Word": "Dayo",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Guide",
+              "Word": "Giya",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Right",
+              "Word": "To",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Left",
+              "Word": "Wala",
+            },
+            {
+              "Deck": 1,
+              "POS": "Common Phrase",
+              "Translation": "Where are you?",
+              "Word": "Hain ka?",
+            },
+            {
+              "Deck": 1,
+              "POS": "Common Phrase",
+              "Translation": "Where are you going?",
+              "Word": "Padin ka?",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Passport",
+              "Word": "Pasaporte",
+            },
+          ]
+        },
+        "Level2": {
+          "LevelID": 2,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to See",
+              "Word": "Hiling",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Ask",
+              "Word": "Hapot",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Find",
+              "Word": "Ku'a",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Church",
+              "Word": "Simbahan",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Airport",
+              "Word": "Airport",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "School",
+              "Word": "Eskuela",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Police Station",
+              "Word": "Polisia",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Park",
+              "Word": "Parke",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Market",
+              "Word": "Saod",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Bakery",
+              "Word": "Panaderia",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Hair Salon",
+              "Word": "Salon",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Museum",
+              "Word": "Museo",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Gas Station",
+              "Word": "Gasolinahan",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Bank",
+              "Word": "Banko",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Pharmacy",
+              "Word": "To",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Zoo",
+              "Word": "Zoo",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Bus Station",
+              "Word": "Parada",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Restaurant",
+              "Word": "Restauran",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Cinema",
+              "Word": "Sine",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Shop",
+              "Word": "Tindahan",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Chapel",
+              "Word": "Kapilya",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Clinic",
+              "Word": "Klinika",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "",
+              "Word": "",
+            },
+          ],
+        },
+        "Level3": {
+          "LevelID": 3,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Go",
+              "Word": "Duman",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Run",
+              "Word": "Dalagan",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Concert",
+              "Word": "Konsierto",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Feast",
+              "Word": "Piesta",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Wedding",
+              "Word": "Kasal",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Parade",
+              "Word": "Parada",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Game",
+              "Word": "Kawat",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Start",
+              "Word": "Puon",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "End",
+              "Word": "Tapos",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Time",
+              "Word": "Oras",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Ticket",
+              "Word": "Tiket",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Ticket Window",
+              "Word": "Takilya",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Car",
+              "Word": "Auto",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Bicycle",
+              "Word": "Bisikleta",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Motorcycle",
+              "Word": "Motorsiklo",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Train",
+              "Word": "Tren",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Taxi Cab",
+              "Word": "Taxi",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Boat",
+              "Word": "Bangka",
+            },
+          ]
+        },
+        "Level4": {
+          "LevelID": 4,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Cloud",
+              "Word": "Panganuron",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Sun",
+              "Word": "Saldang",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Rain",
+              "Word": "Uran",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Star",
+              "Word": "Bituon",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Moon",
+              "Word": "Bulan",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Sky",
+              "Word": "Langit",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Shooting Star",
+              "Word": "Bulalakaw",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Rainbow",
+              "Word": "Balangaw",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Cloudy",
+              "Word": "Rumarom",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Rainy",
+              "Word": "Mauran",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Windy",
+              "Word": "Duros",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Rain",
+              "Word": "Uran",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Beach",
+              "Word": "Baybay",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Garden",
+              "Word": "Hardin",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Island",
+              "Word": "Isla",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Mountain",
+              "Word": "Bulod",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Volcano",
+              "Word": "Bulkan",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Hill",
+              "Word": "Bukid",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Waterfall",
+              "Word": "Busay",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Ocean",
+              "Word": "Dagat",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "River",
+              "Word": "Salog",
+            },
+          ],
+        },
+        "Level5": {
+          "LevelID": 5,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+          ],
+        },
+      },
+      //=======================================================================
+      //===============================FAMILY==================================
+      //=======================================================================
+      "family": {
+        "Food": [
+          {"POS": "Noun", "Translation": "Meat", "Word": "Karne"},
+          {"POS": "Noun", "Translation": "Bread", "Word": "Tinapay"},
+          {"POS": "Noun", "Translation": "Rice", "Word": "Luto"},
+          {"POS": "Noun", "Translation": "Soup", "Word": "Sabaw"},
+        ],
+        "House": [
+          {"POS": "Noun", "Translation": "Living Room", "Word": "Sala"},
+          {"POS": "Noun", "Translation": "Room", "Word": "Kuarto"},
+          {"POS": "Noun", "Translation": "Dining Room", "Word": "Komedor"},
+          {"POS": "Noun", "Translation": "Window", "Word": "Bintana"},
+        ],
+        "Talk": [
+          {"POS": "Noun", "Translation": "Mother", "Word": "Ina"},
+          {"POS": "Noun", "Translation": "Father", "Word": "Ama"},
+          {"POS": "Noun", "Translation": "Siblings", "Word": "Mga tugang"},
+          {"POS": "Noun", "Translation": "Grandmother", "Word": "Lola"},
+        ],
+        "Adverb": [
+          {
+            "Category": "Present",
+            "POS": "Adverb",
+            "Translation": "Often",
+            "Word": "Parati"
+          },
+          {
+            "Category": "Continuous",
+            "POS": "Adverb",
+            "Translation": "Rarely",
+            "Word": "Bihira"
+          },
+          {
+            "Category": "Present",
+            "POS": "Adverb",
+            "Translation": "Quickly",
+            "Word": "Dali-dali"
+          },
+          {
+            "Category": "Continuous",
+            "POS": "Adverb",
+            "Translation": "Slowly",
+            "Word": "Luway-luway"
+          },
+        ],
+        "VerbsCont": [
+          {
+            "Category": "Food",
+            "POS": "Verb",
+            "Tense": "Continuous",
+            "Translation": "Cook",
+            "Word": "Magluto"
+          },
+          {
+            "Category": "House",
+            "POS": "Verb",
+            "Tense": "Continuous",
+            "Translation": "Clean",
+            "Word": "Maglinig"
+          },
+          {
+            "Category": "Talk",
+            "POS": "Verb",
+            "Tense": "Continuous",
+            "Translation": "Talk",
+            "Word": "Maghuron"
+          },
+        ],
+        "VerbsPresent": [
+          {
+            "Category": "Food",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Cook",
+            "Word": "Nagluluto"
+          },
+          {
+            "Category": "House",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Clean",
+            "Word": "Naglilinig"
+          },
+          {
+            "Category": "Talk",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Talk",
+            "Word": "Naghuhuron"
+          },
+        ],
+        "Room": [
+          {
+            "POS": "Noun",
+            "Translation": "Bed Room",
+            "Word": "Kuarto",
+            "Number": "Singular"
+          },
+          {
+            "POS": "Noun",
+            "Translation": "Living Room",
+            "Word": "Sala",
+            "Number": "Singular"
+          },
+          {
+            "POS": "Noun",
+            "Translation": "Kitchen",
+            "Word": "Kusina",
+            "Number": "Singular"
+          },
+          {
+            "POS": "Noun",
+            "Translation": "Garden",
+            "Word": "Hardin",
+            "Number": "Singular"
+          },
+        ],
+        "Things": [
+          {
+            "POS": "Noun",
+            "Translation": "Cabinet",
+            "Word": "Aparador",
+            "Number": "Singular"
+          },
+          {
+            "POS": "Noun",
+            "Translation": "Plate",
+            "Word": "Plato",
+            "Number": "Singular"
+          },
+          {
+            "POS": "Noun",
+            "Translation": "Kitchen",
+            "Word": "Kusina",
+            "Number": "Singular"
+          },
+          {
+            "POS": "Noun",
+            "Translation": "Garden",
+            "Word": "Hardin",
+            "Number": "Singular"
+          },
+        ],
+        "Adjectives": [
+          {
+            "Category": "Room",
+            "POS": "Adjective",
+            "Translation": "Big",
+            "Word": "Dakula"
+          },
+          {
+            "Category": "Room",
+            "POS": "Adjective",
+            "Translation": "Small",
+            "Word": "Sadit"
+          },
+          {
+            "Category": "Room",
+            "POS": "Adjective",
+            "Translation": "Wide",
+            "Word": "Hiwas"
+          },
+          {
+            "Category": "Room",
+            "POS": "Adjective",
+            "Translation": "Narrow",
+            "Word": "Mapiot"
+          },
+          {
+            "Category": "Room",
+            "POS": "Adjective",
+            "Translation": "Clean",
+            "Word": "Malinig"
+          },
+          {
+            "Category": "Room",
+            "POS": "Adjective",
+            "Translation": "Dirty",
+            "Word": "Maati"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Short",
+            "Word": "Lipot"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Tall",
+            "Word": "Langkaw"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Early",
+            "Word": "Amay"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Late",
+            "Word": "Huri"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Young",
+            "Word": "Hoben"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Old",
+            "Word": "Gurang"
+          },
+          {
+            "Category": "Things",
+            "POS": "Adjective",
+            "Translation": "New",
+            "Word": "Bago"
+          },
+          {
+            "Category": "Things",
+            "POS": "Adjective",
+            "Translation": "Old",
+            "Word": "Luma"
+          },
+          {
+            "Category": "Things",
+            "POS": "Adjective",
+            "Translation": "Important",
+            "Word": "Importante"
+          },
+        ],
+        "Verbs": [
+          // {
+          //   "Category": "Food",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Cook",
+          //   "Word": "Magluto"
+          // },
+          {
+            "Category": "Food",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Cooking",
+            "Word": "Nagluluto"
+          },
+          {
+            "Category": "Food",
+            "POS": "Verb",
+            "Tense": "Future",
+            "Translation": "will Cook",
+            "Word": "Magluluto"
+          },
+          {
+            "Category": "Food",
+            "POS": "Verb",
+            "Tense": "Past",
+            "Translation": "Cooked",
+            "Word": "Nagluto"
+          },
+          // {
+          //   "Category": "House",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Clean",
+          //   "Word": "Maglinig"
+          // },
+          {
+            "Category": "House",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Cleaning",
+            "Word": "Naglilinig"
+          },
+          {
+            "Category": "House",
+            "POS": "Verb",
+            "Tense": "Future",
+            "Translation": "will Clean",
+            "Word": "Maglilinig"
+          },
+          {
+            "Category": "House",
+            "POS": "Verb",
+            "Tense": "Past",
+            "Translation": "Cleaned",
+            "Word": "Naglinig"
+          },
+          // {
+          //   "Category": "Talk",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Talk",
+          //   "Word": "Maghuron"
+          // },
+          {
+            "Category": "Talk",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Talking",
+            "Word": "Naghuhuron"
+          },
+          {
+            "Category": "Talk",
+            "POS": "Verb",
+            "Tense": "Future",
+            "Translation": "will Talk",
+            "Word": "Maghuhuron"
+          },
+          {
+            "Category": "Talk",
+            "POS": "Verb",
+            "Tense": "Past",
+            "Translation": "Talked",
+            "Word": "Naghuron"
+          },
+        ],
+        "Names": [
+          {
+            "Gender": "Female",
+            "Name": "Clara",
+            "Number": "Singular",
+            "POS": "Proper Noun"
+          },
+          {
+            "Gender": "Male",
+            "Name": "Simon",
+            "Number": "Singular",
+            "POS": "Proper Noun"
+          },
+          {
+            "Gender": "Male",
+            "Name": "Juan",
+            "Number": "Singular",
+            "POS": "Proper Noun"
+          }
+        ],
+        "Pronouns": [
+          {
+            "Number": "Plural",
+            "POS": "Pronoun",
+            "POV": "Second",
+            "Translation": "You",
+            "Word": "Ika"
+          },
+          {
+            "Number": "Plural",
+            "POS": "Pronoun",
+            "POV": "Second",
+            "Translation": "You",
+            "Word": "Kamo"
+          },
+          {
+            "Number": "Plural",
+            "POS": "Pronoun",
+            "POV": "First",
+            "Translation": "I",
+            "Word": "Ako"
+          },
+          {
+            "Gender": "Female",
+            "Number": "Singular",
+            "POS": "Pronoun",
+            "POV": "Third",
+            "Translation": "She",
+            "Word": "Siya"
+          },
+          {
+            "Gender": "Male",
+            "Number": "Singular",
+            "POS": "Pronoun",
+            "POV": "Third",
+            "Translation": "He",
+            "Word": "Siya"
+          }
+        ],
+        "Level1": {
+          "LevelID": 1,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Family",
+              "Word": "Pamilya",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Husband and Wife",
+              "Word": "Mag-agom",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Boyfriend and Girlfriend",
+              "Word": "Mag-ilusyon",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Father",
+              "Word": "Ama",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Mother",
+              "Word": "Ina",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Siblings",
+              "Word": "Tugang",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Older brother",
+              "Word": "Kuya",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Older sister",
+              "Word": "Ate",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Parents",
+              "Word": "Magurang",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Children",
+              "Word": "Mga aki",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Child",
+              "Word": "Aki",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Grandfather",
+              "Word": "Lolo",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Grandmother",
+              "Word": "Lola",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Grandchild",
+              "Word": "Apo",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Grandchildren",
+              "Word": "Makoapo",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Baby",
+              "Word": "Umboy",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Uncle",
+              "Word": "Tiyo",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Aunt",
+              "Word": "Tiya",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Spouse",
+              "Word": "Agom",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Cousin",
+              "Word": "Pinsan",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Husband",
+              "Word": "Agom",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Wife",
+              "Word": "Agom",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Boyfriend",
+              "Word": "Ilusyon",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Girlfriend",
+              "Word": "Ilusyon",
+            },
+          ]
+        },
+        "Level2": {
+          "LevelID": 2,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Big",
+              "Word": "Dakula",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Small",
+              "Word": "Sadit",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Short",
+              "Word": "Li'pot",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Tall",
+              "Word": "Langkaw",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Long",
+              "Word": "Laba",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Little",
+              "Word": "Dikit",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Height",
+              "Word": "Langkaw",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Weight",
+              "Word": "Timbang",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Wide",
+              "Word": "Hiwas",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Narrow",
+              "Word": "Pi'ot",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Important",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Clean",
+              "Word": "Linig",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Dirty",
+              "Word": "Ati",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Clean",
+              "Word": "Linig",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Cook",
+              "Word": "Luto",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Live in/at",
+              "Word": "Istar",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "New",
+              "Word": "Bago",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Old (Things)",
+              "Word": "Luma",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Early",
+              "Word": "Amay",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Late",
+              "Word": "Huri",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Young",
+              "Word": "Hoben",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Old (People)",
+              "Word": "Gurang",
+            },
+          ]
+        },
+        "Level3": {
+          "LevelID": 3,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Couch",
+              "Word": "Katre",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Bed",
+              "Word": "Kama",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Toilet",
+              "Word": "Kasilyasan",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Shower",
+              "Word": "Banyo",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Bed Room",
+              "Word": "Kuarto",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Living Room",
+              "Word": "Sala",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Kitchen",
+              "Word": "Kosina",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Dining Room",
+              "Word": "Komedor",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Attic",
+              "Word": "Kisame",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Garden",
+              "Word": "Hardin",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Pillow",
+              "Word": "Ulon",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Blanket",
+              "Word": "Tamong",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Cabinet",
+              "Word": "Aparador",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Floor",
+              "Word": "Salog",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Trashcan",
+              "Word": "Basurahan",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Plate",
+              "Word": "Plato",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Spoon",
+              "Word": "Kutsara",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Fork",
+              "Word": "Tinidor",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Bowl",
+              "Word": "Mangko",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Teaspoon",
+              "Word": "Kutsarita",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Cup",
+              "Word": "Tasa",
+            },
+          ]
+        },
+        "Level4": {
+          "LevelID": 4,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Elderly",
+              "Word": "Gurang",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Godfather",
+              "Word": "Ninong",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Godmother",
+              "Word": "Ninang",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Godchild",
+              "Word": "Tinubong",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Friends",
+              "Word": "Barkada",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Friend",
+              "Word": "Amigo",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Friend",
+              "Word": "Amiga",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to get Acquainted",
+              "Word": "Bistado",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Talk",
+              "Word": "Taram",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Meet",
+              "Word": "Sabat",
+            },
+          ]
+        }
+      },
+      //=======================================================================
+      //===============================SCHOOL==================================
+      //=======================================================================
+      "school": {
+        "Study": [
+          {"POS": "Noun", "Translation": "Mathematics", "Word": "Matematika"},
+          {"POS": "Noun", "Translation": "Science", "Word": "Siensia"},
+          {"POS": "Noun", "Translation": "Philosophy", "Word": "Pilosopia"},
+          {"POS": "Noun", "Translation": "Medicine", "Word": "Medisina"},
+        ],
+        "Write": [
+          {"POS": "Noun", "Translation": "Book", "Word": "Libro"},
+          {"POS": "Noun", "Translation": "Letter", "Word": "Letra"},
+          {"POS": "Noun", "Translation": "Name", "Word": "Pangaran"},
+          {"POS": "Noun", "Translation": "Number", "Word": "Numero"},
+        ],
+        "Read": [
+          {"POS": "Noun", "Translation": "Book", "Word": "Libro"},
+          {"POS": "Noun", "Translation": "Magazine", "Word": "Magasin"},
+          {"POS": "Noun", "Translation": "Sign", "Word": "Karatula"},
+          {"POS": "Noun", "Translation": "Letter", "Word": "Letra"},
+          {"POS": "Noun", "Translation": "Newspaper", "Word": "Diario"},
+        ],
+        "Adverb": [
+          {
+            "Category": "Present",
+            "POS": "Adverb",
+            "Translation": "Often",
+            "Word": "Parati"
+          },
+          {
+            "Category": "Continuous",
+            "POS": "Adverb",
+            "Translation": "Rarely",
+            "Word": "Bihira"
+          },
+          {
+            "Category": "Present",
+            "POS": "Adverb",
+            "Translation": "Quickly",
+            "Word": "Dali-dali"
+          },
+          {
+            "Category": "Continuous",
+            "POS": "Adverb",
+            "Translation": "Slowly",
+            "Word": "Luway-luway"
+          },
+        ],
+        "VerbsCont": [
+          {
+            "Category": "Study",
+            "POS": "Verb",
+            "Tense": "Continuous",
+            "Translation": "Study",
+            "Word": "Mag-adal"
+          },
+          {
+            "Category": "Write",
+            "POS": "Verb",
+            "Tense": "Continuous",
+            "Translation": "Write",
+            "Word": "Magsurat"
+          },
+          {
+            "Category": "Read",
+            "POS": "Verb",
+            "Tense": "Continuous",
+            "Translation": "Read",
+            "Word": "Magbasa"
+          },
+        ],
+        "VerbsPresent": [
+          {
+            "Category": "Study",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Study",
+            "Word": "Nag-aadal"
+          },
+          {
+            "Category": "Write",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Write",
+            "Word": "Nagsusurat"
+          },
+          {
+            "Category": "Read",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Read",
+            "Word": "Nagbabasa"
+          },
+        ],
+        "Subjects": [
+          {
+            "POS": "Noun",
+            "Translation": "Mathematics",
+            "Word": "Matematika",
+            "Number": "Singular"
+          },
+          {
+            "POS": "Noun",
+            "Translation": "Science",
+            "Word": "Siensia",
+            "Number": "Singular"
+          },
+          {
+            "POS": "Noun",
+            "Translation": "Philosophy",
+            "Word": "Pilosopia",
+            "Number": "Singular"
+          },
+          {
+            "POS": "Noun",
+            "Translation": "Examinations",
+            "Word": "Mga eksaminasion",
+            "Number": "Plural"
+          },
+        ],
+        "Adjectives": [
+          {
+            "Category": "Subjects",
+            "POS": "Adjective",
+            "Translation": "Interesting",
+            "Word": "Interesante"
+          },
+          {
+            "Category": "Subjects",
+            "POS": "Adjective",
+            "Translation": "Difficult",
+            "Word": "Dipisil"
+          },
+          {
+            "Category": "Subjects",
+            "POS": "Adjective",
+            "Translation": "Easy",
+            "Word": "Madali"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Tired",
+            "Word": "Mapagal"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Quiet",
+            "Word": "Matuninong"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Angry",
+            "Word": "Maanggot"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Comfortable",
+            "Word": "Maginhawa"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Excited",
+            "Word": "Magana"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Friendly",
+            "Word": "Maamigo"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Helpful",
+            "Word": "Matinabang"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Serious",
+            "Word": "Serioso"
+          },
+          {
+            "Category": "Person",
+            "POS": "Adjective",
+            "Translation": "Diligent",
+            "Word": "Matali"
+          },
+        ],
+        "Verbs": [
+          // {
+          //   "Category": "Study",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Study",
+          //   "Word": "Mag-adal"
+          // },
+          {
+            "Category": "Study",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Studying",
+            "Word": "Nag-aadal"
+          },
+          {
+            "Category": "Study",
+            "POS": "Verb",
+            "Tense": "Future",
+            "Translation": "will Study",
+            "Word": "Mag-aadal"
+          },
+          {
+            "Category": "Study",
+            "POS": "Verb",
+            "Tense": "Past",
+            "Translation": "Studied",
+            "Word": "Nag-adal"
+          },
+          // {
+          //   "Category": "Write",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Write",
+          //   "Word": "Magsurat"
+          // },
+          {
+            "Category": "Write",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Writing",
+            "Word": "Nagsusurat"
+          },
+          {
+            "Category": "Write",
+            "POS": "Verb",
+            "Tense": "Future",
+            "Translation": "will Write",
+            "Word": "Magsusurat"
+          },
+          {
+            "Category": "Write",
+            "POS": "Verb",
+            "Tense": "Past",
+            "Translation": "Wrote",
+            "Word": "Nagsurat"
+          },
+          // {
+          //   "Category": "Read",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Read",
+          //   "Word": "Magbasa"
+          // },
+          {
+            "Category": "Read",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Reading",
+            "Word": "Nagbabasa"
+          },
+          {
+            "Category": "Read",
+            "POS": "Verb",
+            "Tense": "Future",
+            "Translation": "will Read",
+            "Word": "Magbabasa"
+          },
+          {
+            "Category": "Read",
+            "POS": "Verb",
+            "Tense": "Past",
+            "Translation": "Read",
+            "Word": "Nagbasa"
+          },
+        ],
+        "Names": [
+          {
+            "Gender": "Female",
+            "Name": "Clara",
+            "Number": "Singular",
+            "POS": "Proper Noun"
+          },
+          {
+            "Gender": "Male",
+            "Name": "Simon",
+            "Number": "Singular",
+            "POS": "Proper Noun"
+          },
+          {
+            "Gender": "Male",
+            "Name": "Juan",
+            "Number": "Singular",
+            "POS": "Proper Noun"
+          }
+        ],
+        "Pronouns": [
+          {
+            "Number": "Plural",
+            "POS": "Pronoun",
+            "POV": "Second",
+            "Translation": "You",
+            "Word": "Ika"
+          },
+          {
+            "Number": "Plural",
+            "POS": "Pronoun",
+            "POV": "Second",
+            "Translation": "You",
+            "Word": "Kamo"
+          },
+          {
+            "Number": "Plural",
+            "POS": "Pronoun",
+            "POV": "First",
+            "Translation": "I",
+            "Word": "Ako"
+          },
+          {
+            "Gender": "Female",
+            "Number": "Singular",
+            "POS": "Pronoun",
+            "POV": "Third",
+            "Translation": "She",
+            "Word": "Siya"
+          },
+          {
+            "Gender": "Male",
+            "Number": "Singular",
+            "POS": "Pronoun",
+            "POV": "Third",
+            "Translation": "He",
+            "Word": "Siya"
+          }
+        ],
+        "Level1": {
+          "LevelID": 1,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Chair",
+              "Word": "Tukawan",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Table",
+              "Word": "Lamesa",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Book",
+              "Word": "Libro",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Letter",
+              "Word": "Letra",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Newspaper",
+              "Word": "Diario",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Student",
+              "Word": "Estudiante",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Teacher",
+              "Word": "Maestro",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Subject",
+              "Word": "Tema",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "School",
+              "Word": "Eskuela",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Schedule",
+              "Word": "Programa",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Notebook",
+              "Word": "Kwaderno",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Pencil",
+              "Word": "Lapis",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Pen",
+              "Word": "Pluma",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Guitar",
+              "Word": "Gitara",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Instrument",
+              "Word": "Instrumento",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Introduction",
+              "Word": "Midmid",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Introduce",
+              "Word": "Midmid",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Sit",
+              "Word": "Tukaw",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Stand",
+              "Word": "Tindag",
+            },
+          ]
+        },
+        "Level2": {
+          "LevelID": 2,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Study",
+              "Word": "Adal",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Say",
+              "Word": "Sabihun",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Go to School",
+              "Word": "Eskuela",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Acknowledgement",
+              "Word": "Simbag",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Advice",
+              "Word": "Hatol",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Announcement",
+              "Word": "Anunsiyo",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Department",
+              "Word": "Departamento",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Semester",
+              "Word": "Semestre",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Enrollment",
+              "Word": "Entra",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Examination",
+              "Word": "Eksaminasion",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Government",
+              "Word": "Gobierno",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Grade",
+              "Word": "Marka",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Group",
+              "Word": "Grupo",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Hobby",
+              "Word": "Apision",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Instruction",
+              "Word": "Instrukesiones",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Interview",
+              "Word": "Interbiyu",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "",
+              "Word": "",
+            },
+          ]
+        },
+        "Level3": {
+          "LevelID": 3,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Write",
+              "Word": "Surat",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Read",
+              "Word": "Basa",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Lawyer",
+              "Word": "Abogado",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Judge",
+              "Word": "Huwes",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Doctor",
+              "Word": "Doktor",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Actor",
+              "Word": "Aktor",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Engineer",
+              "Word": "Inheniero",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Artist",
+              "Word": "Artista",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Chemist",
+              "Word": "Kimiko",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Architect",
+              "Word": "Arkitekto",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Baker",
+              "Word": "Panadero",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Cook",
+              "Word": "Kosinero",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Author",
+              "Word": "Autor",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Dentist",
+              "Word": "Dentista",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Farmer",
+              "Word": "Uma",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Fisherman",
+              "Word": "Sira",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Electrician",
+              "Word": "Elektrisista",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Secretary",
+              "Word": "Sekretario",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Priest",
+              "Word": "Padi",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Nun",
+              "Word": "Madre",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Shepherd",
+              "Word": "Pastor",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Fireman",
+              "Word": "Bombero",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Guitarist",
+              "Word": "Gitarista",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Pianist",
+              "Word": "Pianista",
+            }
+          ]
+        },
+        "Level4": {
+          "LevelID": 4,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Architecture",
+              "Word": "Arkitektura",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Chemistry",
+              "Word": "Kimika",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Mathematics",
+              "Word": "Matematika",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Science",
+              "Word": "Siensia",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "English",
+              "Word": "Ingles",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Grammar",
+              "Word": "Gramatika",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Philosophy",
+              "Word": "Pilosopia",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Sports",
+              "Word": "Kawat",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Engineering",
+              "Word": "Inhenieria",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Medicine",
+              "Word": "Medisina",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Employee",
+              "Word": "Empleado",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "Employer",
+              "Word": "Bos",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Manager",
+              "Word": "Maneho",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Company",
+              "Word": "Kompania",
+            },
+          ]
+        },
+        "Level5": {
+          "LevelID": 5,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Leave",
+              "Word": "Hali",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Work",
+              "Word": "Trabaho",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Artistic",
+              "Word": "Arte",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Interesting",
+              "Word": "Interesante",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Difficult",
+              "Word": "Dipisil",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+            {
+              "Deck": 1,
+              "POS": "",
+              "Translation": "",
+              "Word": "",
+            },
+          ]
+        },
+      },
+      //=======================================================================
+      //===============================SHOPPING================================
+      //=======================================================================
+      "shopping": {
+        "Have": [
+          {"POS": "Noun", "Translation": "Clothes", "Word": "Bado"},
+          {"POS": "Noun", "Translation": "Sickness", "Word": "Mati"},
+          {"POS": "Noun", "Translation": "Pants", "Word": "Pantalon"},
+          {"POS": "Noun", "Translation": "Money", "Word": "Kuarta"},
+        ],
+        "Want": [
+          {"POS": "Noun", "Translation": "Food", "Word": "Pagkaon"},
+          {"POS": "Noun", "Translation": "Coffee", "Word": "Kape"},
+          {"POS": "Verb", "Translation": "Go out", "Word": "Magluwas"},
+          {"POS": "Verb", "Translation": "Eat", "Word": "Magkaon"},
+        ],
+        "Get": [
+          {"POS": "Noun", "Translation": "Passport", "Word": "Pasaporte"},
+          {"POS": "Noun", "Translation": "Food", "Word": "Pagkaon"},
+          {"POS": "Noun", "Translation": "Guide", "Word": "Giya"},
+          {"POS": "Noun", "Translation": "Money", "Word": "Kuarta"},
+          {"POS": "Noun", "Translation": "Telephone", "Word": "Telepono"},
+        ],
+        "Buy": [
+          {"POS": "Noun", "Translation": "Dress", "Word": "Bestida"},
+          {"POS": "Noun", "Translation": "Wallet", "Word": "Pitaka"},
+          {"POS": "Noun", "Translation": "Shoes", "Word": "Sapatos"},
+          {"POS": "Noun", "Translation": "Pen", "Word": "Pluma"},
+          {"POS": "Noun", "Translation": "Book", "Word": "Libro"},
+        ],
+        "Pay": [
+          {"POS": "Noun", "Translation": "Cashier", "Word": "Kahero"},
+          {"POS": "Noun", "Translation": "Cashier's window", "Word": "Takilya"},
+          {"POS": "Noun", "Translation": "Driver", "Word": "Tsuper"},
+        ],
+        "Clothes": [
+          {
+            "POS": "Noun",
+            "Translation": "Clothes",
+            "Word": "Bado",
+            "Number": "Plural"
+          },
+          {
+            "POS": "Noun",
+            "Translation": "Pants",
+            "Word": "Pantalon",
+            "Number": "Singular",
+          },
+          {
+            "POS": "Noun",
+            "Translation": "Dress",
+            "Word": "Bestida",
+            "Number": "Singular",
+          },
+        ],
+        "Adjectives": [
+          {
+            "Category": "Clothes",
+            "POS": "Adjective",
+            "Translation": "Beautiful",
+            "Word": "Magayon"
+          },
+          {
+            "Category": "Clothes",
+            "POS": "Adjective",
+            "Translation": "Big",
+            "Word": "Dakula"
+          },
+          {
+            "Category": "Clothes",
+            "POS": "Adjective",
+            "Translation": "Small",
+            "Word": "Sadit"
+          },
+          {
+            "Category": "Clothes",
+            "POS": "Adjective",
+            "Translation": "Short",
+            "Word": "Lipot"
+          },
+          {
+            "Category": "Clothes",
+            "POS": "Adjective",
+            "Translation": "Long",
+            "Word": "Laba"
+          },
+          {
+            "Category": "Clothes",
+            "POS": "Adjective",
+            "Translation": "Cheap",
+            "Word": "Barato"
+          },
+          {
+            "Category": "Clothes",
+            "POS": "Adjective",
+            "Translation": "Expensive",
+            "Word": "Mahal"
+          },
+        ],
+        "Verbs": [
+          {
+            "Category": "Have",
+            "POS": "Verb",
+            "Tense": "Continuous",
+            "Translation": "Have",
+            "Word": "Igwa"
+          },
+          {
+            "Category": "Want",
+            "POS": "Verb",
+            "Tense": "Continuous",
+            "Translation": "Want",
+            "Word": "Gusto"
+          },
+          // {
+          //   "Category": "Get",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Get",
+          //   "Word": "Magkua"
+          // },
+          {
+            "Category": "Get",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Getting",
+            "Word": "Nagkukua"
+          },
+          {
+            "Category": "Get",
+            "POS": "Verb",
+            "Tense": "Future",
+            "Translation": "will Get",
+            "Word": "Magkukua"
+          },
+          {
+            "Category": "Get",
+            "POS": "Verb",
+            "Tense": "Past",
+            "Translation": "Got",
+            "Word": "Nakua"
+          },
+          // {
+          //   "Category": "Buy",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Buy",
+          //   "Word": "Mabakal"
+          // },
+          {
+            "Category": "Buy",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Buying",
+            "Word": "Nagbabakal"
+          },
+          {
+            "Category": "Buy",
+            "POS": "Verb",
+            "Tense": "Future",
+            "Translation": "will Buy",
+            "Word": "Magbabakal"
+          },
+          {
+            "Category": "Buy",
+            "POS": "Verb",
+            "Tense": "Past",
+            "Translation": "bought",
+            "Word": "Nagbakal"
+          },
+          // {
+          //   "Category": "Pay",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Pay",
+          //   "Word": "Magbayad"
+          // },
+          {
+            "Category": "Pay",
+            "POS": "Verb",
+            "Tense": "Present",
+            "Translation": "Paying",
+            "Word": "Nagbayayad"
+          },
+          {
+            "Category": "Pay",
+            "POS": "Verb",
+            "Tense": "Future",
+            "Translation": "will Pay",
+            "Word": "Magbabayad"
+          },
+          {
+            "Category": "Pay",
+            "POS": "Verb",
+            "Tense": "Past",
+            "Translation": "Paid",
+            "Word": "Nagbayad"
+          },
+        ],
+        "Names": [
+          {
+            "Gender": "Female",
+            "Name": "Clara",
+            "Number": "Singular",
+            "POS": "Proper Noun"
+          },
+          {
+            "Gender": "Male",
+            "Name": "Simon",
+            "Number": "Singular",
+            "POS": "Proper Noun"
+          },
+          {
+            "Gender": "Male",
+            "Name": "Juan",
+            "Number": "Singular",
+            "POS": "Proper Noun"
+          }
+        ],
+        "Pronouns": [
+          {
+            "Number": "Plural",
+            "POS": "Pronoun",
+            "POV": "Second",
+            "Translation": "You",
+            "Word": "Ika"
+          },
+          {
+            "Number": "Plural",
+            "POS": "Pronoun",
+            "POV": "Second",
+            "Translation": "You",
+            "Word": "Kamo"
+          },
+          {
+            "Number": "Plural",
+            "POS": "Pronoun",
+            "POV": "First",
+            "Translation": "I",
+            "Word": "Ako"
+          },
+          {
+            "Gender": "Female",
+            "Number": "Singular",
+            "POS": "Pronoun",
+            "POV": "Third",
+            "Translation": "She",
+            "Word": "Siya"
+          },
+          {
+            "Gender": "Male",
+            "Number": "Singular",
+            "POS": "Pronoun",
+            "POV": "Third",
+            "Translation": "He",
+            "Word": "Siya"
+          }
+        ],
+        "Level1": {
+          "LevelID": 1,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Common Phrase",
+              "Translation": "How much?",
+              "Word": "Mamira?",
+            },
+            {
+              "Deck": 1,
+              "POS": "Common Phrase",
+              "Translation": "Let's eat!",
+              "Word": "Magkaon kita!",
+            },
+            {
+              "Deck": 1,
+              "POS": "Common Phrase",
+              "Translation": "One more",
+              "Word": "Saro pa tabi",
+            },
+            {
+              "Deck": 1,
+              "POS": "Common Phrase",
+              "Translation": "How many?",
+              "Word": "Pira?",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Many",
+              "Word": "Dakolon",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Few",
+              "Word": "Diiton",
+            },
+            {
+              "Deck": 1,
+              "POS": "Pronoun",
+              "Translation": "This",
+              "Word": "Ini",
+            },
+            {
+              "Deck": 1,
+              "POS": "Prnoun",
+              "Translation": "Those",
+              "Word": "Ini",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Buy",
+              "Word": "Mabakal",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Pay",
+              "Word": "Bayad",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Free",
+              "Word": "Libre",
+            },
+          ]
+        },
+        "Level2": {
+          "LevelID": 2,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Check",
+              "Word": "Tseke",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Clothes",
+              "Word": "Bado",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Shoes",
+              "Word": "Sapatos",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Dress",
+              "Word": "Bestida",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Wallet",
+              "Word": "Pitaka",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Shorts",
+              "Word": "Media-Pantalon",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Pants",
+              "Word": "Pantalon",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Hat",
+              "Word": "Kopya",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Socks",
+              "Word": "Medias",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Belt",
+              "Word": "Paha",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "Boots",
+              "Word": "Botas",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Get",
+              "Word": "Ku'a",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Want",
+              "Word": "Gusto",
+            },
+          ]
+        },
+        "Level3": {
+          "LevelID": 3,
+          "LevelStatus": 0,
+          "Words": [
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Have",
+              "Word": "Igwa",
+            },
+            {
+              "Deck": 1,
+              "POS": "Verb",
+              "Translation": "to Give",
+              "Word": "Ta'o",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Beautiful",
+              "Word": "Magayon",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Big",
+              "Word": "Dakula",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Small",
+              "Word": "Sadit",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Short",
+              "Word": "Li'pot",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Long",
+              "Word": "Laba",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Cheap",
+              "Word": "Barato",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Expensive",
+              "Word": "Mahal",
+            },
+            {
+              "Deck": 1,
+              "POS": "Noun",
+              "Translation": "",
+              "Word": "",
+            },
+          ]
+        }
       }
     };
   }

@@ -62,7 +62,7 @@ class QuizTemplate extends StatelessWidget {
             Container(
               margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 3,
+              height: MediaQuery.of(context).size.height / 2.5,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),

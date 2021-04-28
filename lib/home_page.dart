@@ -20,6 +20,7 @@ import 'dart:math';
 import 'dart:async';
 import 'package:overlay_support/overlay_support.dart';
 import 'pages/sub_pages/profile.dart';
+import 'pages/sub_pages/review_content.dart';
 
 class HomePage extends StatefulWidget {
   final BaseAuth auth;
@@ -40,11 +41,11 @@ class _HomePageState extends State<HomePage> {
   ];
   List drillsButtons = [
     ["images/basic.png", "u", "basics1", "Basics 1"],
-    ["images/basic.png", "l", "basics2", "Basics 2"],
-    ["images/family.png", "l", "family", "Family"],
-    ["images/school.png", "l", "school", "School"],
-    ["images/shopping.png", "l", "shopping", "Shopping"],
-    ["images/travel.png", "l", "travel", "Travel"],
+    ["images/shopping.png", "u", "shopping", "Shopping"],
+    ["images/travel.png", "u", "travel", "Travel"],
+    ["images/school.png", "u", "school", "School"],
+    ["images/family.png", "u", "family", "Family"],
+    ["images/basic.png", "u", "basics2", "Basics 2"],
   ];
 
   List levelStatus = ["1", "2", "3", "4", "5"];
@@ -57,6 +58,10 @@ class _HomePageState extends State<HomePage> {
   int totalXP = 0;
   PopupMenu menu = new PopupMenu();
   PopupMenu menu2 = new PopupMenu();
+  PopupMenu menu3 = new PopupMenu();
+  PopupMenu menu4 = new PopupMenu();
+  PopupMenu menu5 = new PopupMenu();
+  PopupMenu menu6 = new PopupMenu();
 
   GlobalKey basics1 = new GlobalKey();
   GlobalKey basics2 = new GlobalKey();
@@ -70,6 +75,7 @@ class _HomePageState extends State<HomePage> {
   final databaseReference = FirebaseDatabase.instance.reference();
 
   LevelContent levelContent;
+  ReviewContent reviewContent;
 
   var corpus;
   String category;
@@ -112,7 +118,7 @@ class _HomePageState extends State<HomePage> {
             highlightColor: Color(0xffffafcc),
             lineColor: Color(0xffa2d2ff),
             backgroundColor: Colors.black,
-            maxColumn: 2,
+            // maxColumn: 2,
             items: [
               MenuItem(
                   title: 'Level 1',
@@ -168,6 +174,241 @@ class _HomePageState extends State<HomePage> {
         break;
       case 1:
         menu2 = PopupMenu(
+            highlightColor: Color(0xffffafcc),
+            lineColor: Color(0xffa2d2ff),
+            backgroundColor: Colors.black,
+            items: [
+              MenuItem(
+                  title: 'Level 1',
+                  image: CircularPercentIndicator(
+                    radius: 25.0,
+                    lineWidth: 3.0,
+                    percent: getPercentage('Level1', 'shopping'),
+                    progressColor: Color(0xffffafcc),
+                  )),
+              MenuItem(
+                  title: 'Level 2',
+                  image: CircularPercentIndicator(
+                    radius: 25.0,
+                    lineWidth: 3.0,
+                    percent: getPercentage('Level2', 'shopping'),
+                    progressColor: Colors.green,
+                  )),
+              MenuItem(
+                  title: 'Level 3',
+                  image: CircularPercentIndicator(
+                    radius: 25.0,
+                    lineWidth: 3.0,
+                    percent: getPercentage('Level3', 'shopping'),
+                    progressColor: Colors.green,
+                  )),
+              // MenuItem(
+              //     title: 'Level 4',
+              //     image: CircularPercentIndicator(
+              //       radius: 25.0,
+              //       lineWidth: 3.0,
+              //       percent: getPercentage('Level4', 'shopping'),
+              //       progressColor: Colors.green,
+              //     )),
+              // MenuItem(
+              //     title: 'Level 5',
+              //     image: CircularPercentIndicator(
+              //       radius: 25.0,
+              //       lineWidth: 3.0,
+              //       percent: 0,
+              //       progressColor: Colors.green,
+              //     )),
+              MenuItem(
+                  title: 'Review',
+                  image: Icon(
+                    Icons.power,
+                    color: Colors.white,
+                  )),
+            ],
+            onClickMenu: onClickMenu,
+            stateChanged: stateChanged,
+            onDismiss: onDismiss);
+        menu2.show(widgetKey: buttonKeys[1]);
+        break;
+      case 2:
+        menu3 = PopupMenu(
+            highlightColor: Color(0xffffafcc),
+            lineColor: Color(0xffa2d2ff),
+            backgroundColor: Colors.black,
+            items: [
+              MenuItem(
+                  title: 'Level 1',
+                  image: CircularPercentIndicator(
+                    radius: 25.0,
+                    lineWidth: 3.0,
+                    percent: getPercentage('Level1', 'travel'),
+                    progressColor: Color(0xffffafcc),
+                  )),
+              MenuItem(
+                  title: 'Level 2',
+                  image: CircularPercentIndicator(
+                    radius: 25.0,
+                    lineWidth: 3.0,
+                    percent: getPercentage('Level2', 'travel'),
+                    progressColor: Colors.green,
+                  )),
+              MenuItem(
+                  title: 'Level 3',
+                  image: CircularPercentIndicator(
+                    radius: 25.0,
+                    lineWidth: 3.0,
+                    percent: getPercentage('Level3', 'travel'),
+                    progressColor: Colors.green,
+                  )),
+              MenuItem(
+                  title: 'Level 4',
+                  image: CircularPercentIndicator(
+                    radius: 25.0,
+                    lineWidth: 3.0,
+                    percent: getPercentage('Level4', 'travel'),
+                    progressColor: Colors.green,
+                  )),
+              // MenuItem(
+              //     title: 'Level 5',
+              //     image: CircularPercentIndicator(
+              //       radius: 25.0,
+              //       lineWidth: 3.0,
+              //       percent: 0,
+              //       progressColor: Colors.green,
+              //     )),
+              MenuItem(
+                  title: 'Review',
+                  image: Icon(
+                    Icons.power,
+                    color: Colors.white,
+                  )),
+            ],
+            onClickMenu: onClickMenu,
+            stateChanged: stateChanged,
+            onDismiss: onDismiss);
+        menu3.show(widgetKey: buttonKeys[2]);
+        break;
+      case 3:
+        menu4 = PopupMenu(
+            highlightColor: Color(0xffffafcc),
+            lineColor: Color(0xffa2d2ff),
+            backgroundColor: Colors.black,
+            items: [
+              MenuItem(
+                  title: 'Level 1',
+                  image: CircularPercentIndicator(
+                    radius: 25.0,
+                    lineWidth: 3.0,
+                    percent: getPercentage('Level1', 'school'),
+                    progressColor: Color(0xffffafcc),
+                  )),
+              MenuItem(
+                  title: 'Level 2',
+                  image: CircularPercentIndicator(
+                    radius: 25.0,
+                    lineWidth: 3.0,
+                    percent: getPercentage('Level2', 'school'),
+                    progressColor: Colors.green,
+                  )),
+              MenuItem(
+                  title: 'Level 3',
+                  image: CircularPercentIndicator(
+                    radius: 25.0,
+                    lineWidth: 3.0,
+                    percent: getPercentage('Level3', 'school'),
+                    progressColor: Colors.green,
+                  )),
+              MenuItem(
+                  title: 'Level 4',
+                  image: CircularPercentIndicator(
+                    radius: 25.0,
+                    lineWidth: 3.0,
+                    percent: getPercentage('Level4', 'school'),
+                    progressColor: Colors.green,
+                  )),
+              // MenuItem(
+              //     title: 'Level 5',
+              //     image: CircularPercentIndicator(
+              //       radius: 25.0,
+              //       lineWidth: 3.0,
+              //       percent: 0,
+              //       progressColor: Colors.green,
+              //     )),
+              MenuItem(
+                  title: 'Review',
+                  image: Icon(
+                    Icons.power,
+                    color: Colors.white,
+                  )),
+            ],
+            onClickMenu: onClickMenu,
+            stateChanged: stateChanged,
+            onDismiss: onDismiss);
+        menu4.show(widgetKey: buttonKeys[3]);
+        break;
+      case 4:
+        menu5 = PopupMenu(
+            highlightColor: Color(0xffffafcc),
+            lineColor: Color(0xffa2d2ff),
+            backgroundColor: Colors.black,
+            items: [
+              MenuItem(
+                  title: 'Level 1',
+                  image: CircularPercentIndicator(
+                    radius: 25.0,
+                    lineWidth: 3.0,
+                    percent: getPercentage('Level1', 'family'),
+                    progressColor: Color(0xffffafcc),
+                  )),
+              MenuItem(
+                  title: 'Level 2',
+                  image: CircularPercentIndicator(
+                    radius: 25.0,
+                    lineWidth: 3.0,
+                    percent: getPercentage('Level2', 'family'),
+                    progressColor: Colors.green,
+                  )),
+              MenuItem(
+                  title: 'Level 3',
+                  image: CircularPercentIndicator(
+                    radius: 25.0,
+                    lineWidth: 3.0,
+                    percent: getPercentage('Level3', 'family'),
+                    progressColor: Colors.green,
+                  )),
+              MenuItem(
+                  title: 'Level 4',
+                  image: CircularPercentIndicator(
+                    radius: 25.0,
+                    lineWidth: 3.0,
+                    percent: getPercentage('Level4', 'family'),
+                    progressColor: Colors.green,
+                  )),
+              // MenuItem(
+              //     title: 'Level 5',
+              //     image: CircularPercentIndicator(
+              //       radius: 25.0,
+              //       lineWidth: 3.0,
+              //       percent: 0,
+              //       progressColor: Colors.green,
+              //     )),
+              MenuItem(
+                  title: 'Review',
+                  image: Icon(
+                    Icons.power,
+                    color: Colors.white,
+                  )),
+            ],
+            onClickMenu: onClickMenu,
+            stateChanged: stateChanged,
+            onDismiss: onDismiss);
+        menu5.show(widgetKey: buttonKeys[4]);
+        break;
+      case 5:
+        menu6 = PopupMenu(
+            highlightColor: Color(0xffffafcc),
+            lineColor: Color(0xffa2d2ff),
+            backgroundColor: Colors.black,
             items: [
               MenuItem(
                   title: 'Level 1',
@@ -219,7 +460,7 @@ class _HomePageState extends State<HomePage> {
             onClickMenu: onClickMenu,
             stateChanged: stateChanged,
             onDismiss: onDismiss);
-        menu2.show(widgetKey: buttonKeys[1]);
+        menu6.show(widgetKey: buttonKeys[5]);
         break;
     }
   }
@@ -231,13 +472,17 @@ class _HomePageState extends State<HomePage> {
   void onClickMenu(MenuItemProvider item) {
     setGoalStatus("Earn");
     setGoalStatus("Quiz");
-    print("Category: $category");
-    levelContent =
-        new LevelContent(databaseTemp: corpus[category], category: category);
-    levelContent.getWords(context, iteration, 0, 0,
-        item.menuTitle.replaceAll(" ", ""), category, corpus[category]);
-    print("Corpus: $corpus");
-    print('Click menu -> ${item.menuTitle}');
+    if (item.menuTitle == "review") {
+      reviewContent =
+          new ReviewContent(databaseTemp: corpus[category], category: category);
+      reviewContent.getWords(
+          context, iteration, 0, 0, null, category, corpus[category]);
+    } else {
+      levelContent =
+          new LevelContent(databaseTemp: corpus[category], category: category);
+      levelContent.getWords(context, iteration, 0, 0,
+          item.menuTitle.replaceAll(" ", ""), category, corpus[category]);
+    }
   }
 
   void onDismiss() {
@@ -257,7 +502,11 @@ class _HomePageState extends State<HomePage> {
     }
     var rand = new Random();
     int r = 0 + rand.nextInt(combinedCorpus.length - 1);
-    return combinedCorpus[r];
+    if (combinedCorpus[r]["POS"] == "Common Phrase") {
+      getWord();
+    } else {
+      return combinedCorpus[r];
+    }
   }
 
   void setWord() {
@@ -617,7 +866,7 @@ class _HomePageState extends State<HomePage> {
         width: MediaQuery.of(context).size.width,
         child: new Column(
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height / 28),
+            SizedBox(height: MediaQuery.of(context).size.height / 18),
             Container(
               height: MediaQuery.of(context).size.height / 3,
               child: CarouselSlider(
@@ -795,7 +1044,10 @@ class _HomePageState extends State<HomePage> {
                 height: MediaQuery.of(context).size.height / 5.2,
                 margin: EdgeInsets.all(5),
                 padding: EdgeInsets.fromLTRB(
-                    MediaQuery.of(context).size.height / 24, 5, 0, 0),
+                    MediaQuery.of(context).size.height / 24,
+                    MediaQuery.of(context).size.height / 30,
+                    0,
+                    0),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
@@ -810,14 +1062,14 @@ class _HomePageState extends State<HomePage> {
                   ),
                 )),
             Container(
-              height: MediaQuery.of(context).size.height / 5,
+              height: MediaQuery.of(context).size.height / 6,
               width: MediaQuery.of(context).size.width,
               child: GridView.count(
                 scrollDirection: Axis.vertical,
                 crossAxisCount: 4,
-                childAspectRatio: (MediaQuery.of(context).size.height /
-                        MediaQuery.of(context).size.width) /
-                    1.75,
+                childAspectRatio: (MediaQuery.of(context).size.width /
+                        MediaQuery.of(context).size.height) /
+                    .68,
                 children: [
                   ...buttonsInfo.map(
                     (i) => GestureDetector(
@@ -825,6 +1077,7 @@ class _HomePageState extends State<HomePage> {
                         _setloading(context, i.last);
                       },
                       child: Container(
+                        padding: EdgeInsets.fromLTRB(2, 5, 2, 2),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(20),
@@ -842,7 +1095,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         margin: EdgeInsets.all(
                             MediaQuery.of(context).size.width / 90),
-                        padding: EdgeInsets.all(2),
+                        // padding: EdgeInsets.all(2),
                         alignment: Alignment.topCenter,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -855,7 +1108,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Text(i[1],
                                 style: GoogleFonts.fredokaOne(
-                                  fontSize: 11,
+                                  fontSize: 12,
                                 )),
                           ],
                         ),
@@ -869,9 +1122,6 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       Container(
-        // height: MediaQuery.of(context).size.height,
-        // width: MediaQuery.of(context).size.width,
-        // color: Colors.black,
         child: Column(children: [
           Column(
             children: [
@@ -1263,7 +1513,8 @@ class _HomePageState extends State<HomePage> {
         {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Stories()),
+            MaterialPageRoute(
+                builder: (context) => Stories(stories: corpus["Stories"])),
           );
           break;
         }

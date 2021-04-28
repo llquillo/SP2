@@ -24,11 +24,7 @@ class _DictContentState extends State<DictContent> {
   @override
   void initState() {
     super.initState();
-    // databaseReference.once().then((DataSnapshot snapshot) {
-    //   setState(() {
-    //     _initDatabase(snapshot);
-    //   });
-    // });
+
     print(widget.corpus);
     _initDatabase(widget.corpus);
   }
@@ -37,9 +33,15 @@ class _DictContentState extends State<DictContent> {
     // print(snapshot.value);
     finalDict = List<Map>.from(corpus[widget.categoryName]["Level1"]["Words"]) +
         List<Map>.from(corpus[widget.categoryName]["Level2"]["Words"]) +
-        List<Map>.from(corpus[widget.categoryName]["Level3"]["Words"]) +
-        List<Map>.from(corpus[widget.categoryName]["Level4"]["Words"]) +
-        List<Map>.from(corpus[widget.categoryName]["Level5"]["Words"]);
+        List<Map>.from(corpus[widget.categoryName]["Level3"]["Words"]);
+    if (corpus[widget.categoryName]["Level4"] != null) {
+      finalDict +=
+          List<Map>.from(corpus[widget.categoryName]["Level4"]["Words"]);
+    }
+    if (corpus[widget.categoryName]["Level5"] != null) {
+      finalDict +=
+          List<Map>.from(corpus[widget.categoryName]["Level5"]["Words"]);
+    }
     for (var i = 0; i < finalDict.length; i++) {
       if (finalDict[i] == null) {
         finalDict.remove(finalDict[i]);
@@ -130,7 +132,7 @@ class _DictContentState extends State<DictContent> {
                   ...sampleDict.map(
                     (i) => Container(
                       margin: EdgeInsets.fromLTRB(10, 5, 10, 0),
-                      padding: EdgeInsets.fromLTRB(10, 0, 8, 0),
+                      padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                       decoration: new BoxDecoration(
                         border: Border.all(width: 1),
                         borderRadius: BorderRadius.only(
@@ -141,11 +143,11 @@ class _DictContentState extends State<DictContent> {
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Flexible(
                                   child: Container(

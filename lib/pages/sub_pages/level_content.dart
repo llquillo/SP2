@@ -14,8 +14,8 @@ class LevelContent {
     ['1', 'u', 'Level1'],
     ['2', 'u', 'Level2'],
     ['3', 'u', 'Level3'],
-    ['4', 'l', 'Level4'],
-    ['5', 'l', 'Level5'],
+    ['4', 'u', 'Level4'],
+    ['5', 'u', 'Level5'],
   ];
   // final List<Map> wordList;
   var databaseTemp;
@@ -86,8 +86,13 @@ class LevelContent {
       databaseTemp) async {
     if (iteration < 10) {
       var r = new Random();
-
-      int rand = 1 + r.nextInt(4 - 1);
+      // int rand = 1 + r.nextInt(4 - 1);
+      // if (wordList[iteration + 1]["POS"] == "Common Phrase") {
+      //   if (rand == 3) {
+      //     rand = 2;
+      //   }
+      // }
+      int rand = 1;
       switch (rand) {
         case 1:
           Navigator.pushAndRemoveUntil(
@@ -142,7 +147,7 @@ class LevelContent {
     } else {
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => ScorePage(score: score)),
+        MaterialPageRoute(builder: (context) => ScorePage(score: score + 1)),
         (Route<dynamic> route) => false,
       );
     }
