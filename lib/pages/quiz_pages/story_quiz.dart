@@ -130,11 +130,15 @@ class _StoryQuizState extends State<StoryQuiz> {
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   )),
-              Text(i["Question"],
-                  style: GoogleFonts.libreBaskerville(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  )),
+              Wrap(children: [
+                Container(
+                    width: MediaQuery.of(context).size.width / 1.5,
+                    child: Text(i["Question"],
+                        style: GoogleFonts.libreBaskerville(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        )))
+              ]),
             ]),
             Container(
               // margin: EdgeInsets.all(40),
@@ -260,6 +264,7 @@ class _StoryQuizState extends State<StoryQuiz> {
     choices.add(i["Choice2"]);
     choices.add(i["Choice3"]);
     return Container(
+        width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.fromLTRB(
             0,
             MediaQuery.of(context).size.height / 40,
@@ -274,11 +279,15 @@ class _StoryQuizState extends State<StoryQuiz> {
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     )),
-                Text(i["Question"],
-                    style: GoogleFonts.libreBaskerville(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    )),
+                Wrap(children: [
+                  Container(
+                      width: MediaQuery.of(context).size.width / 1.5,
+                      child: Text(i["Question"],
+                          style: GoogleFonts.libreBaskerville(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          )))
+                ]),
               ],
             ),
             Row(

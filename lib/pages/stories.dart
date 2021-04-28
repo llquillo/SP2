@@ -14,11 +14,11 @@ class Stories extends StatefulWidget {
 
 class _StoriesState extends State<Stories> {
   final List<List<String>> storyList = [
-    ['Introduction', 'u', "1"],
-    ['Story2', 'l', "2"],
-    ['Story3', 'l', "3"],
-    ['Story4', 'l', "4"],
-    ['Story5', 'l', "5"]
+    ['Basics', 'u', "0"],
+    ['Shopping', 'l', "1"],
+    ['Travel', 'l', "2"],
+    ['School', 'l', "3"],
+    ['Family', 'l', "4"]
   ];
   @override
   Widget build(BuildContext context) {
@@ -29,6 +29,7 @@ class _StoriesState extends State<Stories> {
   }
 
   Widget _pageContent(context) {
+    print(widget.stories[1]);
     return Column(
       children: [
         Container(
@@ -49,7 +50,10 @@ class _StoriesState extends State<Stories> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => StoryTemplate(
-                                  story: widget.stories[int.parse(i.last)])),
+                                    story: widget.stories[int.parse(i.last)],
+                                    storyNum: int.parse(i.last),
+                                    category: i.first,
+                                  )),
                         );
                       },
                       imgH: 40,
