@@ -42,11 +42,35 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
   List<Map> sentenceList = List<Map>();
 
   List<Map> verbList = List<Map>();
+  List<Map> adjectiveList = List<Map>();
   List<Map> nounList = List<Map>();
   List<Map> pronList = List<Map>();
   List<Map> nameList = List<Map>();
   List<Map> foodList = List<Map>();
   List<Map> drinkList = List<Map>();
+  List<Map> houseList = List<Map>();
+  List<Map> talkList = List<Map>();
+  List<Map> studyList = List<Map>();
+  List<Map> readList = List<Map>();
+  List<Map> writeList = List<Map>();
+  List<Map> seeList = List<Map>();
+  List<Map> askList = List<Map>();
+  List<Map> lookList = List<Map>();
+  List<Map> bringList = List<Map>();
+  List<Map> callList = List<Map>();
+  List<Map> haveList = List<Map>();
+  List<Map> wantList = List<Map>();
+  List<Map> getList = List<Map>();
+  List<Map> buyList = List<Map>();
+  List<Map> payList = List<Map>();
+  List<Map> clothesList = List<Map>();
+  List<Map> placeList = List<Map>();
+  List<Map> roomList = List<Map>();
+  List<Map> thingsList = List<Map>();
+  List<Map> subjectsList = List<Map>();
+  List<Map> adverbsList = List<Map>();
+  List<Map> verbsPresList = List<Map>();
+  List<Map> verbsContList = List<Map>();
 
   String finalSentence = "";
   final databaseReference = FirebaseDatabase.instance.reference();
@@ -64,21 +88,87 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
 
   _initDatabase() {
     var db = widget.databaseTemp;
+    switch (widget.category) {
+      case 'basics1':
+        foodList = fetchWords(db, widget.category, 'Food');
+        drinkList = fetchWords(db, widget.category, 'Drink');
+        break;
+      case 'family':
+        foodList = fetchWords(db, widget.category, 'Food');
+        houseList = fetchWords(db, widget.category, 'House');
+        talkList = fetchWords(db, widget.category, 'Talk');
+        adjectiveList = fetchWords(db, widget.category, 'Adjectives');
+        roomList = fetchWords(db, widget.category, 'Room');
+        thingsList = fetchWords(db, widget.category, 'Things');
+        adverbsList = fetchWords(db, widget.category, 'Adverb');
+        verbsPresList = fetchWords(db, widget.category, 'VerbsPresent');
+        verbsContList = fetchWords(db, widget.category, 'VerbsCont');
 
-    // print(db['basics1']['Names']);
-
-    verbList = fetchWords(db, 'basics1', 'Verbs');
-    pronList = fetchWords(db, 'basics1', 'Pronouns');
-    nameList = fetchWords(db, 'basics1', 'Names');
-    foodList = fetchWords(db, 'basics1', 'Food');
-    drinkList = fetchWords(db, 'basics1', 'Drink');
+        break;
+      case 'school':
+        studyList = fetchWords(db, widget.category, 'Study');
+        writeList = fetchWords(db, widget.category, 'Write');
+        readList = fetchWords(db, widget.category, 'Read');
+        adjectiveList = fetchWords(db, widget.category, 'Adjectives');
+        subjectsList = fetchWords(db, widget.category, 'Subjects');
+        adverbsList = fetchWords(db, widget.category, 'Adverb');
+        verbsPresList = fetchWords(db, widget.category, 'VerbsPresent');
+        verbsContList = fetchWords(db, widget.category, 'VerbsCont');
+        break;
+      case 'travel':
+        seeList = fetchWords(db, widget.category, 'See');
+        askList = fetchWords(db, widget.category, 'Ask');
+        lookList = fetchWords(db, widget.category, 'Look');
+        bringList = fetchWords(db, widget.category, 'Bring');
+        callList = fetchWords(db, widget.category, 'Call');
+        adjectiveList = fetchWords(db, widget.category, 'Adjectives');
+        placeList = fetchWords(db, widget.category, 'Place');
+        break;
+      case 'shopping':
+        haveList = fetchWords(db, widget.category, 'Have');
+        wantList = fetchWords(db, widget.category, 'Want');
+        getList = fetchWords(db, widget.category, 'Get');
+        buyList = fetchWords(db, widget.category, 'Buy');
+        payList = fetchWords(db, widget.category, 'Pay');
+        adjectiveList = fetchWords(db, widget.category, 'Adjectives');
+        clothesList = fetchWords(db, widget.category, 'Clothes');
+        break;
+    }
+    verbList = fetchWords(db, widget.category, 'Verbs');
+    pronList = fetchWords(db, widget.category, 'Pronouns');
+    nameList = fetchWords(db, widget.category, 'Names');
 
     // nounList = fetchWords(db, 'basics1', '')
     verbList.shuffle();
+    adjectiveList.shuffle();
     pronList.shuffle();
     nameList.shuffle();
     foodList.shuffle();
     drinkList.shuffle();
+    houseList.shuffle();
+    talkList.shuffle();
+    studyList.shuffle();
+    writeList.shuffle();
+    readList.shuffle();
+    seeList.shuffle();
+    askList.shuffle();
+    lookList.shuffle();
+    bringList.shuffle();
+    callList.shuffle();
+    haveList.shuffle();
+    wantList.shuffle();
+    getList.shuffle();
+    buyList.shuffle();
+    payList.shuffle();
+    clothesList.shuffle();
+    placeList.shuffle();
+    roomList.shuffle();
+    thingsList.shuffle();
+    subjectsList.shuffle();
+    adverbsList.shuffle();
+    verbsPresList.shuffle();
+    verbsContList.shuffle();
+
     formSentence();
   }
 
@@ -102,6 +192,12 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
     var rand = new Random();
     int r = 1 + rand.nextInt(verbList.length - 1);
     return verbList[r];
+  }
+
+  Map getAdjective() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(adjectiveList.length - 1);
+    return adjectiveList[r];
   }
 
   Map getPron() {
@@ -128,10 +224,165 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
     return drinkList[r];
   }
 
+  Map getHouse() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(houseList.length - 1);
+    return houseList[r];
+  }
+
+  Map getTalk() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(talkList.length - 1);
+    return talkList[r];
+  }
+
+  Map getStudy() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(studyList.length - 1);
+    return studyList[r];
+  }
+
+  Map getWrite() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(writeList.length - 1);
+    return writeList[r];
+  }
+
+  Map getRead() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(readList.length - 1);
+    return readList[r];
+  }
+
+  Map getSee() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(seeList.length - 1);
+    return seeList[r];
+  }
+
+  Map getAsk() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(askList.length - 1);
+    return askList[r];
+  }
+
+  Map getLook() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(lookList.length - 1);
+    return lookList[r];
+  }
+
+  Map getBring() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(bringList.length - 1);
+    return bringList[r];
+  }
+
+  Map getCall() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(callList.length - 1);
+    return callList[r];
+  }
+
+  Map getHave() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(haveList.length - 1);
+    return haveList[r];
+  }
+
+  Map getWant() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(wantList.length - 1);
+    return wantList[r];
+  }
+
+  Map getGet() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(getList.length - 1);
+    return getList[r];
+  }
+
+  Map getBuy() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(buyList.length - 1);
+    return buyList[r];
+  }
+
+  Map getPay() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(payList.length - 1);
+    return payList[r];
+  }
+
+  Map getClothes() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(clothesList.length - 1);
+    return clothesList[r];
+  }
+
+  Map getPlace() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(placeList.length - 1);
+    return placeList[r];
+  }
+
+  Map getRoom() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(roomList.length - 1);
+    return roomList[r];
+  }
+
+  Map getThings() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(thingsList.length - 1);
+    return thingsList[r];
+  }
+
+  Map getSubjects() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(subjectsList.length - 1);
+    return subjectsList[r];
+  }
+
+  Map getAdverb() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(adverbsList.length - 1);
+    return adverbsList[r];
+  }
+
+  Map getVerbsPres() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(verbsPresList.length - 1);
+    return verbsPresList[r];
+  }
+
+  Map getVerbsCont() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(verbsContList.length - 1);
+    return verbsContList[r];
+  }
+
+  var seeFlag = false,
+      bringFlag = false,
+      lookFlag = false,
+      callFlag = false,
+      writeFlag = false,
+      readFlag = false,
+      cleanFlag = false,
+      payFlag = false,
+      buyFlag = false,
+      getFlag = false,
+      haveFlag = false,
+      wantFlag = false,
+      talkFlag = false,
+      askFlag = false;
+  var askHolder;
+  var adverbFlag = false, adjectiveFlag = false;
+
   String formSentence() {
     var rand = new Random();
     int r = 1 + rand.nextInt(3 - 1);
-    r = 1;
+    r = 4;
     List<Map> translatedWords = new List<Map>();
     String sentence;
     String tense;
@@ -145,6 +396,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
         tense = holder['Tense'];
         verbType = holder['Category'];
         translatedWords.add(holder);
+        choice = 3;
         switch (choice) {
           case 1:
             var holder = getPron();
@@ -154,17 +406,111 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
             break;
           case 2:
             var holder = getPron();
-            sentence += " " + holder['Word'].toLowerCase() + " " + "kan" + " ";
+            sentence += " " + holder['Word'].toLowerCase();
             translatedWords.add(holder);
             switch (verbType) {
               case 'Food':
                 var holder = getFood();
-                sentence += holder['Word'];
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
                 translatedWords.add(holder);
                 break;
               case 'Drink':
                 var holder = getDrink();
-                sentence += holder['Word'];
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'House':
+                var holder = getHouse();
+                cleanFlag = true;
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Talk':
+                var holder = getTalk();
+                talkFlag = true;
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Study':
+                var holder = getStudy();
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Write':
+                var holder = getWrite();
+                writeFlag = true;
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Read':
+                var holder = getRead();
+                readFlag = true;
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'See':
+                var holder = getSee();
+                seeFlag = true;
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Ask':
+                var holder = getAsk();
+                askFlag = true;
+                holder['POS'] == 'Pronoun'
+                    ? sentence += " " + holder['Word'].toLowerCase()
+                    : sentence +=
+                        " " + "kay" + " " + holder['Word'].toLowerCase();
+                askHolder = holder['POS'];
+                holder['POS'] = 'Noun';
+                translatedWords.add(holder);
+                break;
+              case 'Look':
+                var holder = getLook();
+                lookFlag = true;
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Bring':
+                var holder = getBring();
+                bringFlag = true;
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Call':
+                var holder = getCall();
+                callFlag = true;
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Have':
+                var holder = getHave();
+                haveFlag = true;
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Want':
+                var holder = getWant();
+                wantFlag = true;
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Get':
+                var holder = getGet();
+                getFlag = true;
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Buy':
+                var holder = getBuy();
+                buyFlag = true;
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Pay':
+                var holder = getPay();
+                payFlag = true;
+                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
                 translatedWords.add(holder);
                 break;
             }
@@ -178,17 +524,110 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
             break;
           case 4:
             var holder = getPropName();
-            sentence += " " + "si" + " " + holder['Name'] + " " + "kan" + " ";
+            sentence += " " + "si" + " " + holder['Name'] + " ";
             translatedWords.add(holder);
             switch (verbType) {
               case 'Food':
                 var holder = getFood();
-                sentence += holder['Word'];
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
                 translatedWords.add(holder);
                 break;
               case 'Drink':
                 var holder = getDrink();
-                sentence += holder['Word'];
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'House':
+                var holder = getHouse();
+                cleanFlag = true;
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Talk':
+                var holder = getTalk();
+                talkFlag = true;
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Study':
+                var holder = getStudy();
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Write':
+                var holder = getWrite();
+                writeFlag = true;
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Read':
+                var holder = getRead();
+                readFlag = true;
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'See':
+                var holder = getSee();
+                seeFlag = true;
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Ask':
+                var holder = getAsk();
+                askFlag = true;
+                holder['POS'] == 'Pronoun'
+                    ? sentence += holder['Word'].toLowerCase()
+                    : sentence += "kay" + " " + holder['Word'];
+                askHolder = holder['POS'];
+                holder['POS'] = 'Noun';
+                translatedWords.add(holder);
+                break;
+              case 'Look':
+                var holder = getLook();
+                lookFlag = true;
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Bring':
+                var holder = getBring();
+                bringFlag = true;
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Call':
+                var holder = getCall();
+                callFlag = true;
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Have':
+                var holder = getHave();
+                haveFlag = true;
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Want':
+                var holder = getWant();
+                wantFlag = true;
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Get':
+                var holder = getGet();
+                getFlag = true;
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Buy':
+                var holder = getBuy();
+                buyFlag = true;
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 'Pay':
+                var holder = getPay();
+                payFlag = true;
+                sentence += "kan" + " " + holder['Word'].toLowerCase();
                 translatedWords.add(holder);
                 break;
             }
@@ -206,44 +645,206 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
         print(sentence);
         break;
       case 3:
-        // print(getVerb());
+        adjectiveFlag = true;
+        var holder = getAdjective();
+        var category = holder["Category"];
+        sentence = holder['Word'];
+        translatedWords.add(holder);
+        switch (category) {
+          case 'Clothes':
+            var holder = getClothes();
+            sentence += " an" + " " + holder['Word'].toLowerCase();
+            translatedWords.add(holder);
+            break;
+          case 'Place':
+            var holder = getPlace();
+            sentence += " an" + " " + holder['Word'].toLowerCase();
+            translatedWords.add(holder);
+            break;
+          case 'Room':
+            var holder = getRoom();
+            sentence += " an" + " " + holder['Word'].toLowerCase();
+            translatedWords.add(holder);
+            break;
+          case 'Things':
+            var holder = getThings();
+            sentence += " an" + " " + holder['Word'].toLowerCase();
+            translatedWords.add(holder);
+            break;
+          case 'Subjects':
+            var holder = getSubjects();
+            sentence += " an" + " " + holder['Word'].toLowerCase();
+            translatedWords.add(holder);
+            break;
+          case 'Person':
+            var r = new Random();
+            int choice = 1 + r.nextInt(2 - 1);
+            switch (choice) {
+              case 1:
+                var holder = getPron();
+                sentence += " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case 2:
+                var holder = getSubjects();
+                sentence += " si" + " " + holder['Word'].toLowerCase();
+                translatedWords.add(holder);
+                break;
+            }
+        }
+        print(sentence);
         break;
+      case 4:
+        adverbFlag = true;
+        var holder = getAdverb();
+        var category = holder["Category"];
+        sentence = holder['Word'];
+        translatedWords.add(holder);
+        print(widget.category);
+        switch (widget.category) {
+          case "school":
+            var holder = getPron();
+            sentence += " " + holder['Word'].toLowerCase() + "ng ";
+            translatedWords.add(holder);
+            switch (category) {
+              case "Present":
+                holder = getVerbsPres();
+                sentence += holder["Word"].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case "Continuous":
+                holder = getVerbsCont();
+                sentence += holder["Word"].toLowerCase();
+                translatedWords.add(holder);
+                break;
+            }
+            break;
+          case "family":
+            var holder = getPron();
+            sentence += " " + holder["Word"].toLowerCase() + "ng ";
+            translatedWords.add(holder);
+            switch (category) {
+              case "Present":
+                holder = getVerbsPres();
+                sentence += holder["Word"].toLowerCase();
+                translatedWords.add(holder);
+                break;
+              case "Continuous":
+                holder = getVerbsCont();
+                sentence += holder["Word"].toLowerCase();
+                translatedWords.add(holder);
+                break;
+            }
+            break;
+        }
+        break;
+
       default:
         break;
     }
+    print(sentence);
+
     finalSentence = sentence;
-    // print(translatedWords);
     translateSentence(translatedWords, sentence, tense);
   }
 
   void translateSentence(List<Map> words, String sentence, String tense) {
+    bool sFlag = false;
+    int sIndex;
     String translatedSentence = "";
 
-    List<Map> reversedSent = new List<Map>();
+    List<Map> copySent = new List<Map>();
 
-    reversedSent = new List.from(words.reversed);
+    List<Map> reversedSent = new List<Map>();
+    List<Map> unreversedSent = new List<Map>();
+
+    copySent = List.from(words);
+    reversedSent = List.from(copySent.reversed);
     var temp, flag = false;
     buttons = [];
-    for (var i = 0; i < reversedSent.length; i++) {
-      if (reversedSent[i]['POS'] == 'Noun') {
-        temp = reversedSent[i];
-        print(temp);
-        reversedSent.remove(reversedSent[i]);
-        flag = true;
+    if (tense != null) {
+      for (var i = 0; i < reversedSent.length; i++) {
+        if (reversedSent[i]['POS'] == 'Noun') {
+          temp = reversedSent[i];
+          print(temp);
+          reversedSent.remove(reversedSent[i]);
+          flag = true;
+        }
       }
     }
-    if (flag) {
+    if (flag && tense != null) {
       print(temp);
       reversedSent.add(temp);
     }
-
     if (tense != null) {
       switch (tense) {
         case 'Present':
           for (var i = 0; i < reversedSent.length - 1; i++) {
+            print("see: $seeFlag");
+            print("bring: $bringFlag");
+            print("look: $lookFlag");
             if (reversedSent[i + 1]['POS'] == 'Verb') {
               if (reversedSent[i]['Translation'] != null) {
-                buttons.add(reversedSent[i]['Translation']);
+                if (reversedSent[i]['POS'] == 'Noun') {
+                  if (bringFlag ||
+                      buyFlag ||
+                      getFlag ||
+                      wantFlag ||
+                      haveFlag ||
+                      seeFlag ||
+                      callFlag ||
+                      readFlag ||
+                      writeFlag) {
+                    translatedSentence +=
+                        " a " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("a");
+                  }
+
+                  if (cleanFlag || payFlag) {
+                    translatedSentence +=
+                        " the " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("the");
+                  }
+                  if (talkFlag) {
+                    translatedSentence +=
+                        " to the " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("the");
+                    buttons.add("to");
+                  }
+                  if (lookFlag) {
+                    translatedSentence +=
+                        " for a " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("for");
+                    buttons.add("a");
+                  }
+                  if (askFlag) {
+                    reversedSent[i]['POS'] = askHolder;
+                  }
+
+                  if (!lookFlag &&
+                      !callFlag &&
+                      !bringFlag &&
+                      !seeFlag &&
+                      !writeFlag &&
+                      !readFlag &&
+                      !cleanFlag &&
+                      !payFlag &&
+                      !buyFlag &&
+                      !getFlag &&
+                      !wantFlag &&
+                      !haveFlag &&
+                      !talkFlag) {
+                    translatedSentence += " " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                  }
+                } else {
+                  // translatedSentence += reversedSent[i]['Translation'];
+                  buttons.add(reversedSent[i]['Translation']);
+                }
                 if (reversedSent[i]['Translation'] == "You") {
                   translatedSentence +=
                       reversedSent[i]['Translation'] + " are ";
@@ -266,84 +867,591 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
               }
             } else {
               if (reversedSent[i]['Translation'] != null) {
-                translatedSentence += reversedSent[i]['Translation'] + " ";
-                buttons.add(reversedSent[i]['Translation']);
+                if (reversedSent[i]['POS'] == 'Noun') {
+                  if (bringFlag ||
+                      buyFlag ||
+                      getFlag ||
+                      wantFlag ||
+                      haveFlag ||
+                      seeFlag ||
+                      callFlag ||
+                      readFlag ||
+                      writeFlag) {
+                    translatedSentence +=
+                        " a " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("a");
+                  }
+                  if (cleanFlag || payFlag) {
+                    translatedSentence +=
+                        " the " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("the");
+                  }
+                  if (talkFlag) {
+                    translatedSentence +=
+                        " to the " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("the");
+                    buttons.add("to");
+                  }
+                  if (lookFlag) {
+                    translatedSentence +=
+                        " for a " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("for");
+                    buttons.add("a");
+                  }
+                  if (askFlag) {
+                    reversedSent[i]['POS'] = askHolder;
+                  }
+
+                  if (!lookFlag &&
+                      !callFlag &&
+                      !bringFlag &&
+                      !seeFlag &&
+                      !writeFlag &&
+                      !readFlag &&
+                      !cleanFlag &&
+                      !payFlag &&
+                      !buyFlag &&
+                      !getFlag &&
+                      !wantFlag &&
+                      !haveFlag &&
+                      !talkFlag) {
+                    translatedSentence += " " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                  }
+                } else {
+                  translatedSentence += reversedSent[i]['Translation'];
+                  buttons.add(reversedSent[i]['Translation']);
+                }
               } else {
                 translatedSentence += reversedSent[i]['Name'] + " ";
                 buttons.add(reversedSent[i]['Name']);
               }
             }
           }
-          translatedSentence +=
-              reversedSent[reversedSent.length - 1]['Translation'];
-          buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
+          if (reversedSent[reversedSent.length - 1]['POS'] == 'Noun') {
+            if (bringFlag ||
+                buyFlag ||
+                getFlag ||
+                wantFlag ||
+                haveFlag ||
+                seeFlag ||
+                callFlag ||
+                readFlag ||
+                writeFlag) {
+              translatedSentence +=
+                  " a " + reversedSent[reversedSent.length - 1]['Translation'];
+              buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
+              buttons.add("a");
+            }
+
+            if (cleanFlag || payFlag) {
+              translatedSentence += " the " +
+                  reversedSent[reversedSent.length - 1]['Translation'];
+              buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
+              buttons.add("the");
+            }
+            if (talkFlag) {
+              translatedSentence += " to the " +
+                  reversedSent[reversedSent.length - 1]['Translation'];
+              buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
+              buttons.add("the");
+              buttons.add("to");
+            }
+            if (lookFlag) {
+              translatedSentence += " for a " +
+                  reversedSent[reversedSent.length - 1]['Translation'];
+              buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
+              buttons.add("for");
+              buttons.add("a");
+            }
+            if (askFlag) {
+              reversedSent[reversedSent.length - 1]['POS'] = askHolder;
+            }
+
+            if (!lookFlag &&
+                !callFlag &&
+                !bringFlag &&
+                !seeFlag &&
+                !writeFlag &&
+                !readFlag &&
+                !cleanFlag &&
+                !payFlag &&
+                !buyFlag &&
+                !getFlag &&
+                !wantFlag &&
+                !haveFlag &&
+                !talkFlag) {
+              translatedSentence +=
+                  " " + reversedSent[reversedSent.length - 1]['Translation'];
+              buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
+            }
+          } else {
+            translatedSentence +=
+                (reversedSent[reversedSent.length - 1]['Translation']);
+            buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
+          }
+
           break;
         case 'Past':
           for (var i = 0; i < reversedSent.length; i++) {
+            print("see: $seeFlag");
+            print("bring: $bringFlag");
+            print("look: $lookFlag");
+
             if (reversedSent[i]['Translation'] != null) {
-              translatedSentence += reversedSent[i]['Translation'];
-              buttons.add(reversedSent[i]['Translation']);
+              if (reversedSent[i]['POS'] == 'Noun') {
+                if (bringFlag ||
+                    buyFlag ||
+                    getFlag ||
+                    wantFlag ||
+                    haveFlag ||
+                    seeFlag ||
+                    callFlag ||
+                    readFlag ||
+                    writeFlag) {
+                  translatedSentence += "a " + reversedSent[i]['Translation'];
+                  buttons.add(reversedSent[i]['Translation']);
+                  buttons.add("a");
+                }
+                if (cleanFlag || payFlag) {
+                  translatedSentence += "the " + reversedSent[i]['Translation'];
+                  buttons.add(reversedSent[i]['Translation']);
+                  buttons.add("the");
+                }
+                if (talkFlag) {
+                  translatedSentence +=
+                      " to the " + reversedSent[i]['Translation'];
+                  buttons.add(reversedSent[i]['Translation']);
+                  buttons.add("the");
+                  buttons.add("to");
+                }
+                if (lookFlag) {
+                  translatedSentence +=
+                      "for a " + reversedSent[i]['Translation'];
+                  buttons.add(reversedSent[i]['Translation']);
+                  buttons.add("for");
+                  buttons.add("a");
+                }
+                if (askFlag) {
+                  reversedSent[i]['POS'] = askHolder;
+                }
+
+                if (!lookFlag &&
+                    !callFlag &&
+                    !bringFlag &&
+                    !seeFlag &&
+                    !writeFlag &&
+                    !readFlag &&
+                    !cleanFlag &&
+                    !payFlag &&
+                    !buyFlag &&
+                    !getFlag &&
+                    !wantFlag &&
+                    !haveFlag &&
+                    !talkFlag) {
+                  translatedSentence += reversedSent[i]['Translation'];
+                  buttons.add(reversedSent[i]['Translation']);
+                }
+              } else {
+                translatedSentence += reversedSent[i]['Translation'];
+                buttons.add(reversedSent[i]['Translation']);
+              }
             } else {
               translatedSentence += reversedSent[i]['Name'];
               buttons.add(reversedSent[i]['Name']);
             }
             translatedSentence += " ";
           }
+
           break;
         case 'Future':
           for (var i = 0; i < reversedSent.length; i++) {
+            print("see: $seeFlag");
+            print("bring: $bringFlag");
+            print("look: $lookFlag");
+
             if (reversedSent[i]['Translation'] != null) {
-              translatedSentence += reversedSent[i]['Translation'];
-              buttons.add(reversedSent[i]['Translation']);
+              if (reversedSent[i]['POS'] == 'Noun') {
+                if (bringFlag ||
+                    buyFlag ||
+                    getFlag ||
+                    wantFlag ||
+                    haveFlag ||
+                    seeFlag ||
+                    callFlag ||
+                    readFlag ||
+                    writeFlag) {
+                  translatedSentence += "a " + reversedSent[i]['Translation'];
+                  buttons.add(reversedSent[i]['Translation']);
+                  buttons.add("a");
+                }
+
+                if (cleanFlag || payFlag) {
+                  translatedSentence += "the " + reversedSent[i]['Translation'];
+                  buttons.add(reversedSent[i]['Translation']);
+                  buttons.add("the");
+                }
+                if (talkFlag) {
+                  translatedSentence +=
+                      " to the " + reversedSent[i]['Translation'];
+                  buttons.add(reversedSent[i]['Translation']);
+                  buttons.add("the");
+                  buttons.add("to");
+                }
+                if (lookFlag) {
+                  translatedSentence +=
+                      "for a " + reversedSent[i]['Translation'];
+                  buttons.add(reversedSent[i]['Translation']);
+                  buttons.add("for");
+                  buttons.add("a");
+                }
+                if (askFlag) {
+                  reversedSent[i]['POS'] = askHolder;
+                }
+
+                if (!lookFlag &&
+                    !callFlag &&
+                    !bringFlag &&
+                    !seeFlag &&
+                    !writeFlag &&
+                    !readFlag &&
+                    !cleanFlag &&
+                    !payFlag &&
+                    !buyFlag &&
+                    !getFlag &&
+                    !wantFlag &&
+                    !haveFlag &&
+                    !talkFlag) {
+                  translatedSentence += " " + reversedSent[i]['Translation'];
+                  buttons.add(reversedSent[i]['Translation']);
+                }
+              } else {
+                translatedSentence += reversedSent[i]['Translation'];
+                buttons.add(reversedSent[i]['Translation']);
+              }
             } else {
               translatedSentence += reversedSent[i]['Name'];
               buttons.add(reversedSent[i]['Name']);
             }
             translatedSentence += " ";
           }
+
           break;
         case 'Continuous':
           for (var i = 0; i < reversedSent.length - 1; i++) {
+            print("see: $seeFlag");
+            print("bring: $bringFlag");
+            print("look: $lookFlag");
+
             if (reversedSent[i + 1]['POS'] == 'Verb') {
               if (reversedSent[i]['Translation'] != null) {
-                translatedSentence += reversedSent[i]['Translation'] + " ";
-                buttons.add(reversedSent[i]['Translation']);
+                if (reversedSent[i]['POS'] == 'Noun') {
+                  if (bringFlag ||
+                      buyFlag ||
+                      getFlag ||
+                      wantFlag ||
+                      haveFlag ||
+                      seeFlag ||
+                      callFlag ||
+                      readFlag ||
+                      writeFlag) {
+                    translatedSentence +=
+                        " a " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("a");
+                  }
+
+                  if (cleanFlag || payFlag) {
+                    translatedSentence +=
+                        " the " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("the");
+                  }
+                  if (talkFlag) {
+                    translatedSentence +=
+                        " to the " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("the");
+                    buttons.add("to");
+                  }
+                  if (lookFlag) {
+                    translatedSentence +=
+                        " for a " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("for");
+                    buttons.add("a");
+                  }
+                  if (askFlag) {
+                    reversedSent[i]['POS'] = askHolder;
+                  }
+
+                  if (!lookFlag &&
+                      !callFlag &&
+                      !bringFlag &&
+                      !seeFlag &&
+                      !writeFlag &&
+                      !readFlag &&
+                      !cleanFlag &&
+                      !payFlag &&
+                      !buyFlag &&
+                      !getFlag &&
+                      !wantFlag &&
+                      !haveFlag &&
+                      !talkFlag) {
+                    translatedSentence += " " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                  }
+                } else {
+                  translatedSentence += reversedSent[i]['Translation'];
+                  buttons.add(reversedSent[i]['Translation']);
+                }
+
                 if (reversedSent[i]['Number'] == 'Singular') {
                   reversedSent[i + 1]['Translation'] += 's';
+                  sFlag = true;
+                  sIndex = i + 1;
                 }
               } else {
                 translatedSentence += reversedSent[i]['Name'] + " ";
                 buttons.add(reversedSent[i]['Name']);
                 reversedSent[i + 1]['Translation'] += 's';
+                sFlag = true;
+                sIndex = i + 1;
               }
             } else {
               if (reversedSent[i]['Translation'] != null) {
-                translatedSentence += reversedSent[i]['Translation'] + " ";
-                buttons.add(reversedSent[i]['Translation']);
+                if (reversedSent[i]['POS'] == 'Noun') {
+                  if (bringFlag ||
+                      buyFlag ||
+                      getFlag ||
+                      wantFlag ||
+                      haveFlag ||
+                      seeFlag ||
+                      callFlag ||
+                      readFlag ||
+                      writeFlag) {
+                    translatedSentence +=
+                        " a " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("a");
+                  }
+
+                  if (cleanFlag || payFlag) {
+                    translatedSentence +=
+                        " the " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("the");
+                  }
+                  if (talkFlag) {
+                    translatedSentence +=
+                        " to the " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("to");
+                    buttons.add("the");
+                  }
+                  if (lookFlag) {
+                    translatedSentence +=
+                        " for a " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                    buttons.add("for");
+                    buttons.add("a");
+                  }
+                  if (askFlag) {
+                    reversedSent[i]['POS'] = askHolder;
+                  }
+
+                  if (!lookFlag &&
+                      !callFlag &&
+                      !bringFlag &&
+                      !seeFlag &&
+                      !writeFlag &&
+                      !readFlag &&
+                      !cleanFlag &&
+                      !payFlag &&
+                      !buyFlag &&
+                      !getFlag &&
+                      !wantFlag &&
+                      !haveFlag &&
+                      !talkFlag) {
+                    translatedSentence += " " + reversedSent[i]['Translation'];
+                    buttons.add(reversedSent[i]['Translation']);
+                  }
+                } else {
+                  translatedSentence += " " + reversedSent[i]['Translation'];
+                  buttons.add(reversedSent[i]['Translation']);
+                }
               } else {
                 translatedSentence += reversedSent[i]['Name'] + " ";
                 buttons.add(reversedSent[i]['Name']);
               }
             }
           }
-          translatedSentence +=
-              reversedSent[reversedSent.length - 1]['Translation'];
-          buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
+          if (reversedSent[reversedSent.length - 1]['POS'] == 'Noun') {
+            if (bringFlag ||
+                buyFlag ||
+                getFlag ||
+                wantFlag ||
+                haveFlag ||
+                seeFlag ||
+                callFlag ||
+                readFlag ||
+                writeFlag) {
+              translatedSentence +=
+                  " a " + reversedSent[reversedSent.length - 1]['Translation'];
+              buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
+              buttons.add("a");
+            }
+
+            if (cleanFlag || payFlag) {
+              translatedSentence += " the " +
+                  reversedSent[reversedSent.length - 1]['Translation'];
+              buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
+              buttons.add("the");
+            }
+            if (talkFlag) {
+              translatedSentence += " to the " +
+                  reversedSent[reversedSent.length - 1]['Translation'];
+              buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
+              buttons.add("the");
+              buttons.add("to");
+            }
+            if (lookFlag) {
+              translatedSentence += " for a " +
+                  reversedSent[reversedSent.length - 1]['Translation'];
+              buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
+              buttons.add("for");
+              buttons.add("a");
+            }
+            if (askFlag) {
+              reversedSent[reversedSent.length - 1]['POS'] = askHolder;
+            }
+
+            if (!lookFlag &&
+                !callFlag &&
+                !bringFlag &&
+                !seeFlag &&
+                !writeFlag &&
+                !readFlag &&
+                !cleanFlag &&
+                !payFlag &&
+                !buyFlag &&
+                !getFlag &&
+                !wantFlag &&
+                !haveFlag &&
+                !talkFlag) {
+              translatedSentence +=
+                  " " + reversedSent[reversedSent.length - 1]['Translation'];
+              buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
+            }
+          } else {
+            translatedSentence +=
+                (reversedSent[reversedSent.length - 1]['Translation']);
+            buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
+          }
 
           break;
         default:
           break;
+      }
+    } else {
+      if (adjectiveFlag) {
+        var nounNum;
+        for (var i = 0; i < reversedSent.length; i++) {
+          if (reversedSent[i]['POS'] == "Noun") {
+            nounNum = reversedSent[i]["Number"];
+            buttons.add("the");
+            if (nounNum == "Plural") {
+              translatedSentence +=
+                  "The " + reversedSent[i]['Translation'] + " are ";
+              buttons.add("are");
+              buttons.add(reversedSent[i]['Translation']);
+            } else {
+              translatedSentence +=
+                  "The " + reversedSent[i]['Translation'] + " is ";
+              buttons.add("is");
+              buttons.add(reversedSent[i]['Translation']);
+            }
+          }
+          if (reversedSent[i]['POS'] == "Adjective") {
+            translatedSentence += reversedSent[i]['Translation'];
+            buttons.add(reversedSent[i]['Translation']);
+          }
+          if (reversedSent[i]['Translation'] == null) {
+            translatedSentence += reversedSent[i]['Name'] + " is ";
+            buttons.add(reversedSent[i]['Name']);
+          }
+          if (reversedSent[i]['POS'] == "Pronoun") {
+            if (nounNum == "Plural") {
+              translatedSentence += reversedSent[i]['Translation'] + " are ";
+              buttons.add(reversedSent[i]['Translation']);
+              buttons.add("are");
+            } else {
+              if (reversedSent[i]['Translation'] == "I") {
+                translatedSentence += reversedSent[i]['Translation'] + " am ";
+                buttons.add(reversedSent[i]['Translation']);
+                buttons.add("am");
+              } else {
+                translatedSentence += reversedSent[i]['Translation'] + " is ";
+                buttons.add(reversedSent[i]['Translation']);
+                buttons.add("is");
+              }
+            }
+          }
+        }
+      }
+      if (adverbFlag) {
+        unreversedSent = List.from(reversedSent.reversed);
+        var lastAdverb, nounNum;
+        for (var i = 0; i < unreversedSent.length; i++) {
+          print(unreversedSent[i]["Translation"]);
+          if (unreversedSent[i]['POS'] != "Adverb") {
+            if (unreversedSent[i]['POS'] == 'Pronoun') {
+              nounNum = unreversedSent[i]['Number'];
+              print(nounNum);
+              if (nounNum == "Singular") {
+                unreversedSent[i + 1]['Translation'] += 's';
+                sFlag = true;
+                sIndex = i + 1;
+              }
+              translatedSentence += unreversedSent[i]['Translation'] + " ";
+              buttons.add(unreversedSent[i]['Translation']);
+            } else {
+              translatedSentence += unreversedSent[i]['Translation'] + " ";
+              buttons.add(unreversedSent[i]['Translation']);
+            }
+          } else {
+            lastAdverb = unreversedSent[i];
+            buttons.add(unreversedSent[i]['Translation']);
+          }
+        }
+        translatedSentence += lastAdverb['Translation'];
       }
     }
     for (var i = 0; i < buttons.length; i++) {
       buttons[i] = buttons[i].toLowerCase();
     }
     correctAnswer = translatedSentence;
-    correctAnswer.toLowerCase();
+    correctAnswer = correctAnswer.toLowerCase();
+    correctAnswer = correctAnswer[0].toUpperCase() + correctAnswer.substring(1);
     buttons.shuffle();
     print(buttons);
     print(translatedSentence);
     print(correctAnswer);
+    if (sFlag) {
+      if (adverbFlag) {
+        unreversedSent[sIndex]['Translation'] = unreversedSent[sIndex]
+                ['Translation']
+            .substring(0, (unreversedSent[sIndex]['Translation']).length - 1);
+      } else {
+        reversedSent[sIndex]['Translation'] = reversedSent[sIndex]
+                ['Translation']
+            .substring(0, (reversedSent[sIndex]['Translation']).length - 1);
+      }
+    }
   }
 
   Widget buildAnswerBox() {
@@ -353,7 +1461,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
         ...buttons.map(
           (i) => Container(
             margin: EdgeInsets.all(4),
-            width: MediaQuery.of(context).size.width / 4,
+            width: MediaQuery.of(context).size.width / 3.5,
             child: MaterialButton(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -364,8 +1472,8 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
               ),
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               height: 12.0,
-              minWidth: 5.0,
-              padding: EdgeInsets.fromLTRB(15, 6, 15, 6),
+              minWidth: 1.0,
+              padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
               color: Color(0xffBDE0FE),
               onPressed: () {
                 addWord(i);
@@ -373,6 +1481,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
               child: Center(
                 child: Text(
                   i,
+                  textAlign: TextAlign.center,
                   style: GoogleFonts.fredokaOne(
                     fontSize: 14,
                     color: Colors.black,
@@ -553,11 +1662,13 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
             )),
         Container(
           padding: EdgeInsets.all(20),
+          // padding: EdgeInsets.fromLTRB(18, 15, 20, 15),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height / 5,
           child: Center(
             child: Text(
               finalSentence,
+              textAlign: TextAlign.center,
               style: GoogleFonts.fredokaOne(
                 textStyle: TextStyle(
                   color: Colors.black,
@@ -579,7 +1690,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
         children: [
           Container(
             margin: EdgeInsets.all(0),
-            width: MediaQuery.of(context).size.width / 1.8,
+            width: MediaQuery.of(context).size.width / 1.4,
             height: MediaQuery.of(context).size.height / 10,
             child: TextFormField(
               enabled: false,
@@ -607,13 +1718,13 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
       Container(
         padding: EdgeInsets.all(8),
         width: MediaQuery.of(context).size.width - 30,
-        height: MediaQuery.of(context).size.height / 3 - 110,
+        height: MediaQuery.of(context).size.height / 5,
         child: Center(
           child: buildAnswerBox(),
         ),
       ),
       Container(
-        width: MediaQuery.of(context).size.width / 3 - 20,
+        width: MediaQuery.of(context).size.width / 3.5,
         child: RaisedButton(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
