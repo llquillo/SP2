@@ -10,5 +10,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 
+    <uses-permission android:name="android.premission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
