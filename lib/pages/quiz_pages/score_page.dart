@@ -7,11 +7,13 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ScorePage extends StatelessWidget {
   final int score;
   final String category;
   final String level;
+  var corpus;
   ScorePage({@required this.score, this.category, this.level});
   final databaseReference = FirebaseDatabase.instance.reference();
   @override
@@ -27,7 +29,7 @@ class ScorePage extends StatelessWidget {
     databaseReference.reference().child(category).child(level).child("Words");
   }
 
-  void assignPoint() {
+  Future<DataSnapshot> assignPoint(BuildContext context) async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     User user = auth.currentUser;
     final databaseReference = FirebaseDatabase.instance.reference();
@@ -39,7 +41,56 @@ class ScorePage extends StatelessWidget {
     String dateString = DateFormat('d MMM').format(date);
     print("Points: $points \n Date: $dateString");
     Timestamp timestamp = new Timestamp(dateString, points);
-    userDB.reference().child('Points').push().set(timestamp.toJSON());
+    await userDB.reference().child('Points').push().set(timestamp.toJSON());
+    var pushedXP;
+    await FirebaseDatabase.instance
+        .reference()
+        .child('users')
+        .child(user.uid)
+        .reference()
+        .once()
+        .then((DataSnapshot snapshot) {
+      print(snapshot.value);
+      pushedXP = snapshot;
+      return snapshot.value;
+    });
+
+    return pushedXP;
+  }
+
+  void checkStreak() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    final databaseReference = FirebaseDatabase.instance.reference();
+    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
+    userDB.once().then((DataSnapshot snapshot) {
+      corpus = snapshot.value;
+    });
+    DateTime now = DateTime.now();
+    DateTime yesterday = DateTime.now().subtract(Duration(days: 1));
+    DateTime date = DateTime(now.year, now.month, now.day);
+    DateTime dateYesterday =
+        DateTime(yesterday.year, yesterday.month, yesterday.day);
+    String dateString = DateFormat('d MMM').format(date);
+    String yesterdayString = DateFormat('d MMM').format(dateYesterday);
+    print("yesterday: ${corpus["Streak"]["Date"]} : $yesterdayString");
+    if (corpus["Streak"]["Date"] == yesterdayString) {
+      int currentStreak = corpus["Streak"]["Value"];
+      currentStreak++;
+      print("currentsstreak: $currentStreak");
+      userDB.reference().child("Streak").child("Date").set(dateString);
+      userDB.reference().child("Streak").child("Value").set(currentStreak);
+      print("TROPHIES: ${corpus["Trophies"]["Streak"]}");
+      print("STREAK: $currentStreak");
+      if (corpus["Trophies"]["Streak"] < currentStreak) {
+        userDB.reference().child("Trophies").child("Streak").set(currentStreak);
+      }
+    } else {
+      if (corpus["Streak"]["Date"] != dateString) {
+        userDB.reference().child("Streak").child("Date").set(dateString);
+        userDB.reference().child("Streak").child("Value").set(1);
+      }
+    }
   }
 
   Widget _pageContent(context) {
@@ -108,10 +159,57 @@ class ScorePage extends StatelessWidget {
                     bottomRight: Radius.circular(20)),
               ),
               color: Colors.grey[200],
+              //  assignPoint();
+              //   checkStreak();
+              //   Navigator.pushReplacement(context,
+              //       MaterialPageRoute(builder: (context) => HomePage()));
               onPressed: () {
-                assignPoint();
+                checkStreak();
+
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => HomePage()));
+                FutureBuilder(
+                    future: assignPoint(context),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage()));
+                        checkStreak();
+                        return Container();
+                      } else {
+                        return Dialog(
+                          backgroundColor: Colors.white,
+                          child: Container(
+                            color: Colors.black,
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SpinKitChasingDots(
+                                  size: 40,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  'Loading',
+                                  style: GoogleFonts.roboto(
+                                    color: Colors.white,
+                                    fontSize: 23,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                    });
               },
             )
           ],
