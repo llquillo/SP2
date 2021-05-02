@@ -59,6 +59,12 @@ class UserData {
         "Date": "26 Jan",
         "Value": 0,
       },
+      "Trophies": {
+        "Words": 0,
+        "Streak": 0,
+        "Story": 0,
+        "XP": 0,
+      },
       "Name": name,
       "Points": {
         "-MS-4Pt02EJzmU9_mXoK": {"Date": "26 Jan", "XP": 0},
@@ -73,6 +79,9 @@ class UserData {
         },
         "Date": " "
       },
+      "TOTD": [
+        "Use 'tabi' to show respect.",
+      ],
       //=======================================================================
       //===============================STORIES=================================
       //=======================================================================
@@ -1737,84 +1746,84 @@ class UserData {
             },
           ],
         },
-        "Level5": {
-          "LevelID": 5,
-          "LevelStatus": 0,
-          "Words": [
-            {
-              "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
-            },
-            {
-              "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
-            },
-            {
-              "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
-            },
-            {
-              "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
-            },
-            {
-              "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
-            },
-            {
-              "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
-            },
-            {
-              "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
-            },
-            {
-              "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
-            },
-            {
-              "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
-            },
-            {
-              "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
-            },
-            {
-              "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
-            },
-            {
-              "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
-            },
-          ],
-        },
+        // "Level5": {
+        //   "LevelID": 5,
+        //   "LevelStatus": 0,
+        //   "Words": [
+        //     {
+        //       "Deck": 1,
+        //       "POS": "",
+        //       "Translation": "",
+        //       "Word": "",
+        //     },
+        //     {
+        //       "Deck": 1,
+        //       "POS": "",
+        //       "Translation": "",
+        //       "Word": "",
+        //     },
+        //     {
+        //       "Deck": 1,
+        //       "POS": "",
+        //       "Translation": "",
+        //       "Word": "",
+        //     },
+        //     {
+        //       "Deck": 1,
+        //       "POS": "",
+        //       "Translation": "",
+        //       "Word": "",
+        //     },
+        //     {
+        //       "Deck": 1,
+        //       "POS": "",
+        //       "Translation": "",
+        //       "Word": "",
+        //     },
+        //     {
+        //       "Deck": 1,
+        //       "POS": "",
+        //       "Translation": "",
+        //       "Word": "",
+        //     },
+        //     {
+        //       "Deck": 1,
+        //       "POS": "",
+        //       "Translation": "",
+        //       "Word": "",
+        //     },
+        //     {
+        //       "Deck": 1,
+        //       "POS": "",
+        //       "Translation": "",
+        //       "Word": "",
+        //     },
+        //     {
+        //       "Deck": 1,
+        //       "POS": "",
+        //       "Translation": "",
+        //       "Word": "",
+        //     },
+        //     {
+        //       "Deck": 1,
+        //       "POS": "",
+        //       "Translation": "",
+        //       "Word": "",
+        //     },
+        //     {
+        //       "Deck": 1,
+        //       "POS": "",
+        //       "Translation": "",
+        //       "Word": "",
+        //     },
+        //     {
+        //       "Deck": 1,
+        //       "POS": "",
+        //       "Translation": "",
+        //       "Word": "",
+        //     },
+        //   ],
+        // },
       },
       //=======================================================================
       //===============================FAMILY==================================
@@ -3536,45 +3545,69 @@ class UserData {
             },
             {
               "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
+              "POS": "Adjective",
+              "Translation": "Easy",
+              "Word": "Madali",
             },
             {
               "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
+              "POS": "Adjective",
+              "Translation": "Tired",
+              "Word": "Mapagal",
             },
             {
               "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
+              "POS": "Adjective",
+              "Translation": "Quiet",
+              "Word": "Matuninong",
             },
             {
               "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
+              "POS": "Adjective",
+              "Translation": "Angry",
+              "Word": "Maanggot",
             },
             {
               "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
+              "POS": "Adjective",
+              "Translation": "Comfortable",
+              "Word": "Maginhawa",
             },
             {
               "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
+              "POS": "Adjective",
+              "Translation": "Happy",
+              "Word": "Maugma",
             },
             {
               "Deck": 1,
-              "POS": "",
-              "Translation": "",
-              "Word": "",
+              "POS": "Adjective",
+              "Translation": "Excited",
+              "Word": "Magana",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Friendly",
+              "Word": "Maamigo",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Helpful",
+              "Word": "Matinabang",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Serious",
+              "Word": "Serioso",
+            },
+            {
+              "Deck": 1,
+              "POS": "Adjective",
+              "Translation": "Diligent",
+              "Word": "Matali",
             },
           ]
         },
@@ -3584,28 +3617,28 @@ class UserData {
       //=======================================================================
       "shopping": {
         "Have": [
-          {"POS": "Noun", "Translation": "Clothes", "Word": "Bado"},
+          {"POS": "Noun", "Translation": "Pair of shoes", "Word": "Sapatos"},
           {"POS": "Noun", "Translation": "Sickness", "Word": "Mati"},
-          {"POS": "Noun", "Translation": "Pants", "Word": "Pantalon"},
+          {"POS": "Noun", "Translation": "Watch", "Word": "Relo"},
           {"POS": "Noun", "Translation": "Money", "Word": "Kuarta"},
         ],
         "Want": [
-          {"POS": "Noun", "Translation": "Food", "Word": "Pagkaon"},
+          {"POS": "Noun", "Translation": "Mango", "Word": "Mangga"},
           {"POS": "Noun", "Translation": "Coffee", "Word": "Kape"},
-          {"POS": "Verb", "Translation": "Go out", "Word": "Magluwas"},
-          {"POS": "Verb", "Translation": "Eat", "Word": "Magkaon"},
+          {"POS": "Noun", "Translation": "To go out", "Word": "Magluwas"},
+          {"POS": "Noun", "Translation": "To eat", "Word": "Magkaon"},
         ],
         "Get": [
           {"POS": "Noun", "Translation": "Passport", "Word": "Pasaporte"},
-          {"POS": "Noun", "Translation": "Food", "Word": "Pagkaon"},
+          {"POS": "Noun", "Translation": "Fruit", "Word": "Prutas"},
           {"POS": "Noun", "Translation": "Guide", "Word": "Giya"},
-          {"POS": "Noun", "Translation": "Money", "Word": "Kuarta"},
+          {"POS": "Noun", "Translation": "Bread", "Word": "Tinapay"},
           {"POS": "Noun", "Translation": "Telephone", "Word": "Telepono"},
         ],
         "Buy": [
           {"POS": "Noun", "Translation": "Dress", "Word": "Bestida"},
           {"POS": "Noun", "Translation": "Wallet", "Word": "Pitaka"},
-          {"POS": "Noun", "Translation": "Shoes", "Word": "Sapatos"},
+          {"POS": "Noun", "Translation": "Pair of shoes", "Word": "Sapatos"},
           {"POS": "Noun", "Translation": "Pen", "Word": "Pluma"},
           {"POS": "Noun", "Translation": "Book", "Word": "Libro"},
         ],
@@ -3679,13 +3712,22 @@ class UserData {
           },
         ],
         "Verbs": [
-          {
-            "Category": "Have",
-            "POS": "Verb",
-            "Tense": "Continuous",
-            "Translation": "Have",
-            "Word": "Igwa"
-          },
+          // {
+          //   "Category": "Have",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Have",
+          //   "Word": "Igwa",
+          //   "Number": "Plural"
+          // },
+          // {
+          //   "Category": "Have",
+          //   "POS": "Verb",
+          //   "Tense": "Continuous",
+          //   "Translation": "Has",
+          //   "Word": "Igwa",
+          //   "Number": "Singular"
+          // },
           {
             "Category": "Want",
             "POS": "Verb",
@@ -3718,7 +3760,7 @@ class UserData {
             "Category": "Get",
             "POS": "Verb",
             "Tense": "Past",
-            "Translation": "Got",
+            "Translation": "Took",
             "Word": "Nakua"
           },
           // {
@@ -3835,6 +3877,45 @@ class UserData {
             "POV": "Third",
             "Translation": "He",
             "Word": "Siya"
+          }
+        ],
+        "IndirectPronouns": [
+          {
+            "Number": "Plural",
+            "POS": "Pronoun",
+            "POV": "Second",
+            "Translation": "You",
+            "Word": "Mo"
+          },
+          {
+            "Number": "Plural",
+            "POS": "Pronoun",
+            "POV": "Second",
+            "Translation": "You",
+            "Word": "Nindo"
+          },
+          {
+            "Number": "Plural",
+            "POS": "Pronoun",
+            "POV": "First",
+            "Translation": "I",
+            "Word": "Ko"
+          },
+          {
+            "Gender": "Female",
+            "Number": "Singular",
+            "POS": "Pronoun",
+            "POV": "Third",
+            "Translation": "She",
+            "Word": "Niya"
+          },
+          {
+            "Gender": "Male",
+            "Number": "Singular",
+            "POS": "Pronoun",
+            "POV": "Third",
+            "Translation": "He",
+            "Word": "Niya"
           }
         ],
         "Level1": {
