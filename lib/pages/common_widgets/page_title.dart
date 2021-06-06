@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class PageTitle extends StatelessWidget {
   PageTitle({
@@ -19,9 +20,9 @@ class PageTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(
-          title: new Text(pageTitle),
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(pageTitle),
         ),
         resizeToAvoidBottomInset: true,
         resizeToAvoidBottomPadding: false,
@@ -29,19 +30,18 @@ class PageTitle extends StatelessWidget {
           child: Container(
             color: bgColor,
             width: MediaQuery.of(context).size.width,
-            // height: MediaQuery.of(context).size.height,
-            child: new Column(
+            child: Column(
               children: <Widget>[
                 SizedBox(height: 30),
-                new Container(
+                Container(
                   alignment: Alignment(-0.8, -0.7),
                   child: Text(
                     pageGreeting,
-                    style: GoogleFonts.montserrat(
+                    style: GoogleFonts.fredokaOne(
                       textStyle: TextStyle(
                         color: titleColor,
                         fontSize: 28.0,
-                        fontWeight: FontWeight.w300,
+                        letterSpacing: 1,
                       ),
                     ),
                   ),

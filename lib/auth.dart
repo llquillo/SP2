@@ -55,6 +55,8 @@ class UserData {
   // UserData.fromSnapshot(DataSnapshot snapshot) : uid = snapshot.value;
   toJSON() {
     return {
+      "Requests": false,
+      "Friends": false,
       "Streak": {
         "Date": "26 Jan",
         "Value": 0,
@@ -1167,7 +1169,7 @@ class UserData {
             "POS": "Verb",
             "Tense": "Future",
             "Translation": "will Call",
-            "Word": "Mag-aapod"
+            "Word": "Maapod"
           },
           {
             "Category": "Call",
@@ -1916,7 +1918,7 @@ class UserData {
             "POS": "Verb",
             "Tense": "Present",
             "Translation": "Talk",
-            "Word": "Naghuhuron"
+            "Word": "Nagtataram"
           },
         ],
         "Room": [

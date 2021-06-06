@@ -69,8 +69,6 @@ class _AchievementsState extends State<Achievements> {
   //   Color(0xfffef1be),
   // ];
 
-  List<List<String>> currentAchievements = [];
-
   Widget _lockedLevel(i) {
     return Center(
         child: Stack(
@@ -114,6 +112,8 @@ class _AchievementsState extends State<Achievements> {
 
   @override
   Widget build(BuildContext context) {
+    List<List<String>> currentAchievements = [];
+
     print(widget.currentStatus);
     if (widget.currentStatus["Words"] >= 10 &&
         widget.currentStatus["Words"] < 50) {
@@ -243,7 +243,12 @@ class _AchievementsState extends State<Achievements> {
                                         width: 2,
                                         color: Colors.black,
                                       ),
-                                      color: Color(0xfffff6cc),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20),
+                                          bottomLeft: Radius.circular(20),
+                                          bottomRight: Radius.circular(20)),
+                                      // color: Color(0xfffff6cc),
                                     ),
                                     padding: EdgeInsets.all(
                                         MediaQuery.of(context).size.width / 12),
@@ -256,7 +261,7 @@ class _AchievementsState extends State<Achievements> {
                                         _unlockedLevel(i.first),
                                         Text(
                                           i.last,
-                                          style: GoogleFonts.libreBaskerville(
+                                          style: GoogleFonts.robotoMono(
                                             textStyle: TextStyle(
                                               color: Colors.black,
                                               fontSize: 14.0,

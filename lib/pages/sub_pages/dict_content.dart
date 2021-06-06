@@ -134,12 +134,15 @@ class _DictContentState extends State<DictContent> {
                       margin: EdgeInsets.fromLTRB(10, 5, 10, 0),
                       padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                       decoration: new BoxDecoration(
-                        border: Border.all(width: 1),
+                        border: Border.all(
+                          width: 2,
+                          color: Colors.black,
+                        ),
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                            bottomLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20)),
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25),
+                            bottomLeft: Radius.circular(25),
+                            bottomRight: Radius.circular(25)),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.stretch,

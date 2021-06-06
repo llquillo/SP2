@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './auth.dart';
 import './root_page.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(new MyApp());
@@ -61,6 +62,8 @@ class GreyColor {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
     return OverlaySupport(
         child: MaterialApp(
       title: 'App Name',
