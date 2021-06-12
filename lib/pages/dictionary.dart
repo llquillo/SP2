@@ -40,7 +40,9 @@ class Dictionary extends StatelessWidget {
             width: MediaQuery.of(context).size.width - 30,
             child: DictButton(
               buttonName: "Basic Expressions",
-              buttonImage: 'images/basic.png',
+              buttonImage: 'images/basics_icon.png',
+              imgH: MediaQuery.of(context).size.height / 7,
+              imgW: MediaQuery.of(context).size.width / 4,
               onPressed: () {
                 _openDict(context, "Basic Expressions", "basics1");
               },
@@ -51,7 +53,9 @@ class Dictionary extends StatelessWidget {
             width: MediaQuery.of(context).size.width - 30,
             child: DictButton(
               buttonName: "Shopping",
-              buttonImage: 'images/shopping.png',
+              buttonImage: 'images/shopping_icon.png',
+              imgH: MediaQuery.of(context).size.height / 7,
+              imgW: MediaQuery.of(context).size.width / 4,
               onPressed: () {
                 _openDict(context, "Shopping", "shopping");
               },
@@ -62,7 +66,9 @@ class Dictionary extends StatelessWidget {
             width: MediaQuery.of(context).size.width - 30,
             child: DictButton(
               buttonName: "Travel",
-              buttonImage: 'images/travel.png',
+              buttonImage: 'images/travel_icon.png',
+              imgH: MediaQuery.of(context).size.height / 7,
+              imgW: MediaQuery.of(context).size.width / 4,
               onPressed: () {
                 _openDict(context, "Travel", "travel");
               },
@@ -73,7 +79,9 @@ class Dictionary extends StatelessWidget {
             width: MediaQuery.of(context).size.width - 30,
             child: DictButton(
               buttonName: "School",
-              buttonImage: 'images/school.png',
+              buttonImage: 'images/school_icon.png',
+              imgH: MediaQuery.of(context).size.height / 7,
+              imgW: MediaQuery.of(context).size.width / 4,
               onPressed: () {
                 _openDict(context, "School", "school");
               },
@@ -84,7 +92,9 @@ class Dictionary extends StatelessWidget {
             width: MediaQuery.of(context).size.width - 30,
             child: DictButton(
               buttonName: "Family",
-              buttonImage: 'images/family.png',
+              buttonImage: 'images/family_icon.png',
+              imgH: MediaQuery.of(context).size.height / 7,
+              imgW: MediaQuery.of(context).size.width / 4,
               onPressed: () {
                 _openDict(context, "Family", "family");
               },

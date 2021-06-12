@@ -248,7 +248,7 @@ class _AchievementsState extends State<Achievements> {
                                           topRight: Radius.circular(20),
                                           bottomLeft: Radius.circular(20),
                                           bottomRight: Radius.circular(20)),
-                                      // color: Color(0xfffff6cc),
+                                      color: Color(0xfffff6cc),
                                     ),
                                     padding: EdgeInsets.all(
                                         MediaQuery.of(context).size.width / 12),

@@ -20,20 +20,21 @@ class DictButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        border: Border.all(width: 2),
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
             bottomLeft: Radius.circular(20),
             bottomRight: Radius.circular(20)),
         // color: Color(0xffa2d2ff),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0xffbde0fe).withOpacity(0.8),
-            spreadRadius: 3,
-            blurRadius: 5,
-            // offset: Offset(0, 4),
-          )
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //     // color: Color(0xffbde0fe).withOpacity(0.8),
+        //     spreadRadius: 3,
+        //     blurRadius: 5,
+        //     // offset: Offset(0, 4),
+        //   )
+        // ],
       ),
       margin: EdgeInsets.fromLTRB(11, 5, 11, 5),
       // padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -47,7 +48,7 @@ class DictButton extends StatelessWidget {
               bottomLeft: Radius.circular(20),
               bottomRight: Radius.circular(20)),
         ),
-        color: Color(0xffa2d2ff),
+        color: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

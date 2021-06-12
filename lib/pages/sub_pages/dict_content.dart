@@ -62,7 +62,12 @@ class _DictContentState extends State<DictContent> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      title: new Text('Dictionary'),
+      title: new Text('Dictionary',
+          style: GoogleFonts.robotoMono(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+          )),
       actions: [
         searchBar.getSearchAction(context),
       ],

@@ -22,7 +22,12 @@ class PageTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(pageTitle),
+          title: Text(pageTitle,
+              style: GoogleFonts.robotoMono(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              )),
         ),
         resizeToAvoidBottomInset: true,
         resizeToAvoidBottomPadding: false,
