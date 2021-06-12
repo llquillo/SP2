@@ -9,6 +9,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/services.dart';
+import 'package:overlay_support/overlay_support.dart';
+import 'package:popup_menu/popup_menu.dart';
 
 class Profile extends StatefulWidget {
   final corpus;
@@ -34,12 +37,17 @@ class _ProfileState extends State<Profile> {
   final databaseReference = FirebaseDatabase.instance.reference();
   String _password;
   final formKey = new GlobalKey<FormState>();
-
+  PopupMenu picSelect = new PopupMenu();
+  GlobalKey picChangeKey = new GlobalKey();
   @override
   void initState() {
     super.initState();
     nameController = TextEditingController(text: widget.corpus["Name"]);
     emailController = TextEditingController(text: widget.userEmail);
+    if (widget.corpus["ProfilePic"] != false) {
+      profilePic =
+          Image.asset(widget.corpus["ProfilePic"], width: 100, height: 100);
+    }
   }
 
   @override
@@ -47,6 +55,9 @@ class _ProfileState extends State<Profile> {
     final pickedFile = await picker.getImage(
       source: ImageSource.gallery,
       preferredCameraDevice: CameraDevice.front,
+      imageQuality: 20,
+      maxHeight: 500,
+      maxWidth: 500,
     );
 
     setState(() {
@@ -109,10 +120,41 @@ class _ProfileState extends State<Profile> {
       );
     });
     //login-demo-70531.appspot.com/uploads/6nghawKnRSUYv3HyvEspNgbM1Cf2/profilePic.jpg
-    // print(FirebaseStorage.instance.ref().child(image).getDownloadURL());
 
     print('m: $m');
     return m;
+  }
+
+  void notification(String notif) {
+    showSimpleNotification(
+      Text(notif,
+          textAlign: TextAlign.left,
+          style: GoogleFonts.robotoMono(
+              textStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 14.0,
+            fontWeight: FontWeight.w800,
+          ))),
+      background: Color(0xffFFAFCC),
+      autoDismiss: false,
+      trailing: Builder(builder: (context) {
+        return FlatButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            textColor: Colors.black,
+            onPressed: () {
+              OverlaySupportEntry.of(context).dismiss();
+            },
+            child: Text('Dismiss',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.robotoMono(
+                    textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.w800,
+                ))));
+      }),
+    );
   }
 
   Widget picChange(BuildContext context) {
@@ -120,7 +162,7 @@ class _ProfileState extends State<Profile> {
       backgroundColor: Colors.white,
       title: Text(
         "Change profile picture?",
-        style: GoogleFonts.libreBaskerville(
+        style: GoogleFonts.robotoMono(
           textStyle: TextStyle(
             color: Colors.black,
             letterSpacing: 0,
@@ -131,16 +173,20 @@ class _ProfileState extends State<Profile> {
       ),
       actions: [
         RaisedButton(
+            color: Color(0xffF4F7FA),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20))),
-            onPressed: pickImage,
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10))),
+            onPressed: () {
+              picPopUp();
+              Navigator.pop(context);
+            },
             child: Text(
               'Yes',
-              style: GoogleFonts.libreBaskerville(
+              style: GoogleFonts.robotoMono(
                 textStyle: TextStyle(
                   color: Colors.black,
                   fontSize: 11.0,
@@ -149,18 +195,19 @@ class _ProfileState extends State<Profile> {
               ),
             )),
         RaisedButton(
+            color: Color(0xffF4F7FA),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20))),
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10))),
             onPressed: () {
               Navigator.pop(context);
             },
             child: Text(
               'Cancel',
-              style: GoogleFonts.libreBaskerville(
+              style: GoogleFonts.robotoMono(
                 textStyle: TextStyle(
                   color: Colors.black,
                   fontSize: 11.0,
@@ -177,7 +224,7 @@ class _ProfileState extends State<Profile> {
       backgroundColor: Colors.white,
       title: Text(
         "Save changes?",
-        style: GoogleFonts.libreBaskerville(
+        style: GoogleFonts.robotoMono(
           textStyle: TextStyle(
             color: Colors.black,
             letterSpacing: 0,
@@ -188,18 +235,19 @@ class _ProfileState extends State<Profile> {
       ),
       actions: [
         RaisedButton(
+            color: Color(0xffF4F7FA),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20))),
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10))),
             onPressed: () {
               _dialog(context, "pass");
             },
             child: Text(
               'Yes',
-              style: GoogleFonts.libreBaskerville(
+              style: GoogleFonts.robotoMono(
                 textStyle: TextStyle(
                   color: Colors.black,
                   fontSize: 11.0,
@@ -208,18 +256,19 @@ class _ProfileState extends State<Profile> {
               ),
             )),
         RaisedButton(
+            color: Color(0xffF4F7FA),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20))),
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10))),
             onPressed: () {
               Navigator.pop(context);
             },
             child: Text(
               'Cancel',
-              style: GoogleFonts.libreBaskerville(
+              style: GoogleFonts.robotoMono(
                 textStyle: TextStyle(
                   color: Colors.black,
                   fontSize: 11.0,
@@ -245,7 +294,7 @@ class _ProfileState extends State<Profile> {
       backgroundColor: Colors.white,
       content: Text(
         "Enter password to save changes:",
-        style: GoogleFonts.libreBaskerville(
+        style: GoogleFonts.robotoMono(
           textStyle: TextStyle(
             color: Colors.black,
             fontSize: 15.0,
@@ -278,13 +327,14 @@ class _ProfileState extends State<Profile> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             RaisedButton(
+                color: Color(0xffF4F7FA),
                 padding: EdgeInsets.all(5),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20))),
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10))),
                 onPressed: () {
                   if (formKey.currentState.validate()) {
                     formKey.currentState.save();
@@ -305,7 +355,7 @@ class _ProfileState extends State<Profile> {
                 },
                 child: Text(
                   'Confirm',
-                  style: GoogleFonts.libreBaskerville(
+                  style: GoogleFonts.robotoMono(
                     textStyle: TextStyle(
                       color: Colors.black,
                       fontSize: 12.0,
@@ -314,19 +364,20 @@ class _ProfileState extends State<Profile> {
                   ),
                 )),
             RaisedButton(
+                color: Color(0xffF4F7FA),
                 padding: EdgeInsets.all(5),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20))),
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10))),
                 onPressed: () {
                   Navigator.pop(context);
                 },
                 child: Text(
                   'Cancel',
-                  style: GoogleFonts.libreBaskerville(
+                  style: GoogleFonts.robotoMono(
                     textStyle: TextStyle(
                       color: Colors.black,
                       fontSize: 12.0,
@@ -367,70 +418,293 @@ class _ProfileState extends State<Profile> {
         });
   }
 
+  void picPopUp() {
+    picSelect = PopupMenu(
+        backgroundColor: Colors.white,
+        maxColumn: 3,
+        items: [
+          MenuItem(title: "Pic 1", image: Image.asset("images/girl.jpg")),
+          MenuItem(title: "Pic 2", image: Image.asset("images/boy.jpg")),
+          MenuItem(title: "Pic 3", image: Image.asset("images/girl2.jpg")),
+          MenuItem(title: "Pic 4", image: Image.asset("images/boy2.jpg")),
+          MenuItem(title: "Pic 5", image: Image.asset("images/girl3.jpg")),
+          MenuItem(title: "Pic 6", image: Image.asset("images/boy3.jpg")),
+        ],
+        onClickMenu: onClickMenu,
+        stateChanged: stateChanged,
+        onDismiss: onDismiss);
+    picSelect.show(widgetKey: picChangeKey);
+  }
+
+  void stateChanged(bool isShow) {}
+
+  void onClickMenu(MenuItemProvider item) {
+    switch (item.menuTitle) {
+      case "Pic 1":
+        profilePic = Image.asset("images/girl.jpg", width: 100, height: 100);
+        uploadPic("images/girl.jpg");
+        break;
+      case "Pic 2":
+        profilePic = Image.asset("images/boy.jpg", width: 100, height: 100);
+        uploadPic("images/boy.jpg");
+        break;
+      case "Pic 3":
+        profilePic = Image.asset("images/girl2.jpg", width: 100, height: 100);
+        uploadPic("images/girl2.jpg");
+        break;
+      case "Pic 4":
+        profilePic = Image.asset("images/boy2.jpg", width: 100, height: 100);
+        uploadPic("images/boy2.jpg");
+        break;
+      case "Pic 5":
+        profilePic = Image.asset("images/girl3.jpg", width: 100, height: 100);
+        uploadPic("images/girl3.jpg");
+        break;
+      case "Pic 6":
+        profilePic = Image.asset("images/boy3.jpg", width: 100, height: 100);
+        uploadPic("images/boy3.jpg");
+        break;
+    }
+    setState(() {});
+  }
+
+  void onDismiss() {}
+
+  Future<void> uploadPic(String pic) async {
+    User user = auth.currentUser;
+    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
+
+    await userDB.reference().child("ProfilePic").set(pic);
+    // Navigator.pop(context);
+    setState(() {
+      userDB.once().then((DataSnapshot snapshot) {
+        setState(() {
+          profilePic = Image.asset(snapshot.value["ProfilePic"],
+              width: 100, height: 100);
+        });
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: _getImage(context, "uploads/${widget.userID}/profilePic.jpg"),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            print(snapshot.data);
-            // finalPic = snapshot.data;
-            profilePic = snapshot.data;
-            return PageTitle(
-                pageTitle: "Profile",
-                pageGreeting: " ",
-                pageChild: _pageContent(context));
-          } else {
-            return Dialog(
-              backgroundColor: Colors.white,
-              child: Container(
-                color: Colors.black,
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SpinKitChasingDots(
-                      size: 40,
-                      color: Colors.white,
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      'Loading',
-                      style: GoogleFonts.roboto(
-                        color: Colors.white,
-                        fontSize: 23,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                  ],
-                ),
-              ),
-            );
-          }
-          return Container(
-            color: Colors.white,
+    // return FutureBuilder(
+    //     future: _getImage(context, "uploads/${widget.userID}/profilePic.jpg"),
+    //     builder: (context, snapshot) {
+    //       if (snapshot.connectionState == ConnectionState.done) {
+    //         print(snapshot.data);
+    //         // finalPic = snapshot.data;
+    //         // profilePic = snapshot.data;
+    // return PageTitle(
+    //     pageTitle: "Profile",
+    //     pageGreeting: " ",
+    //     pageChild: _pageContent(context));
+    return new Scaffold(
+      // backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('Profile',
+            style: GoogleFonts.robotoMono(
+              color: Colors.black,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+            )),
+      ),
+      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomPadding: false,
+      body: DecoratedBox(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage("images/background.jpg"),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.9), BlendMode.dstATop),
+          )),
+          child: Container(
+            // color: Colors.yellow,
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-          );
-        });
+            child: SingleChildScrollView(
+                child: Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height / 8),
+                MaterialButton(
+                  color: Colors.white,
+                  minWidth: 0,
+                  padding: profilePic == null
+                      ? EdgeInsets.all(
+                          (MediaQuery.of(context).size.width / 5) / 2)
+                      : EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Colors.black,
+                      width: 2,
+                    ),
+                  ),
+                  key: picChangeKey,
+                  // onPressed: pickImage,
+                  onPressed: () {
+                    _dialog(context, "pic");
+                  },
+                  child:
+                      profilePic == null ? Icon(Icons.add_a_photo) : profilePic,
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 14),
+                Container(
+                  margin: EdgeInsets.all(0),
+                  width: MediaQuery.of(context).size.width / 1.8,
+                  height: MediaQuery.of(context).size.height / 16,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Color(0xffF1F8FF),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 2),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 2),
+                      ),
+                    ),
+                    enabled: editEnabled ? true : false,
+                    controller: nameController,
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.robotoMono(
+                      textStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 65),
+                Container(
+                  margin: EdgeInsets.all(0),
+                  width: MediaQuery.of(context).size.width / 1.8,
+                  height: MediaQuery.of(context).size.height / 16,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Color(0xffF1F8FF),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 2),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 2),
+                      ),
+                    ),
+                    enabled: editEnabled ? true : false,
+                    controller: emailController,
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.robotoMono(
+                      textStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 40),
+                buttons(context),
+                SizedBox(height: MediaQuery.of(context).size.height / 26),
+                Container(
+                  padding: EdgeInsets.all(7),
+                  color: Color(0xffFFF0F7),
+                  child: Text(
+                    widget.userID,
+                    style: GoogleFonts.robotoMono(
+                      textStyle: TextStyle(
+                        color: Colors.black,
+                        letterSpacing: 0,
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 50),
+                RaisedButton(
+                    color: Color(0xffF4F7FA),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10))),
+                    child: Text(
+                      "Copy Account ID",
+                      style: GoogleFonts.robotoMono(
+                          textStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 11.0,
+                        fontWeight: FontWeight.w600,
+                      )),
+                    ),
+                    onPressed: () {
+                      Clipboard.setData(ClipboardData(text: widget.userID));
+                      notification("\nAccount ID copied to clipboard! \n");
+                    })
+              ],
+            )),
+          )),
+    );
+    //   } else {
+    //     return Dialog(
+    //       backgroundColor: Colors.white,
+    //       child: Container(
+    //         color: Colors.black,
+    //         height: MediaQuery.of(context).size.height,
+    //         width: MediaQuery.of(context).size.width,
+    //         child: Row(
+    //           mainAxisAlignment: MainAxisAlignment.center,
+    //           crossAxisAlignment: CrossAxisAlignment.center,
+    //           mainAxisSize: MainAxisSize.min,
+    //           children: [
+    //             SpinKitChasingDots(
+    //               size: 40,
+    //               color: Colors.white,
+    //             ),
+    //             SizedBox(width: 10),
+    //             Text(
+    //               'Loading',
+    //               style: GoogleFonts.roboto(
+    //                 color: Colors.white,
+    //                 fontSize: 23,
+    //                 fontWeight: FontWeight.w600,
+    //               ),
+    //             ),
+    //             SizedBox(width: 10),
+    //           ],
+    //         ),
+    //       ),
+    //     );
+    //   }
+    //   return Container(
+    //     color: Colors.white,
+    //     height: MediaQuery.of(context).size.height,
+    //     width: MediaQuery.of(context).size.width,
+    //   );
+    // });
   }
 
   Widget buttons(BuildContext context) {
     if (editEnabled) {
       return RaisedButton(
+        color: Color(0xffF4F7FA),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20))),
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10))),
         child: Text(
           'Confirm',
-          style: TextStyle(fontSize: 12),
+          style: GoogleFonts.robotoMono(
+              textStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 11.0,
+            fontWeight: FontWeight.w600,
+          )),
         ),
         onPressed: () {
           _dialog(context, "save");
@@ -441,15 +715,22 @@ class _ProfileState extends State<Profile> {
       );
     } else {
       return RaisedButton(
+        color: Color(0xffF4F7FA),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20))),
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10))),
         child: Text(
           'Edit profile',
-          style: TextStyle(fontSize: 12),
+          style: GoogleFonts.robotoMono(
+              textStyle: TextStyle(
+            color: Colors.black,
+            letterSpacing: 0,
+            fontSize: 11.0,
+            fontWeight: FontWeight.w600,
+          )),
         ),
         onPressed: () {
           setState(() {
@@ -462,68 +743,103 @@ class _ProfileState extends State<Profile> {
 
   Widget _pageContent(context) {
     return Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
+        // color: Colors.white,
+        // height: MediaQuery.of(context).size.height,
+        // width: MediaQuery.of(context).size.width,
         child: Column(
-          children: [
-            Container(),
-            MaterialButton(
-              minWidth: 0,
-              padding: profilePic == null
-                  ? EdgeInsets.all((MediaQuery.of(context).size.width / 5) / 3)
-                  : EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
+      children: [
+        Container(),
+        MaterialButton(
+          minWidth: 0,
+          padding: profilePic == null
+              ? EdgeInsets.all((MediaQuery.of(context).size.width / 5) / 2)
+              : EdgeInsets.zero,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: Colors.black,
+              width: 2,
+            ),
+          ),
+          key: picChangeKey,
+          // onPressed: pickImage,
+          onPressed: () {
+            _dialog(context, "pic");
+          },
+          child: profilePic == null ? Icon(Icons.add_a_photo) : profilePic,
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height / 14),
+        Container(
+          margin: EdgeInsets.all(0),
+          width: MediaQuery.of(context).size.width / 1.8,
+          height: MediaQuery.of(context).size.height / 16,
+          child: TextFormField(
+            enabled: editEnabled ? true : false,
+            controller: nameController,
+            textAlign: TextAlign.left,
+            style: GoogleFonts.robotoMono(
+              textStyle: TextStyle(
+                color: Colors.black,
+                letterSpacing: 0,
+                fontSize: 12.0,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.all(0),
+          width: MediaQuery.of(context).size.width / 1.8,
+          height: MediaQuery.of(context).size.height / 16,
+          child: TextFormField(
+            enabled: editEnabled ? true : false,
+            controller: emailController,
+            textAlign: TextAlign.left,
+            style: GoogleFonts.robotoMono(
+              textStyle: TextStyle(
+                color: Colors.black,
+                letterSpacing: 0,
+                fontSize: 12.0,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height / 60),
+        buttons(context),
+        SizedBox(height: MediaQuery.of(context).size.height / 26),
+        Container(
+          child: Text(widget.userID,
+              style: GoogleFonts.robotoMono(
+                textStyle: TextStyle(
                   color: Colors.black,
-                  width: 2,
+                  letterSpacing: 0,
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w600,
                 ),
-              ),
-              // onPressed: pickImage,
-              onPressed: () {
-                _dialog(context, "pic");
-              },
-              child: profilePic == null ? Icon(Icons.add_a_photo) : profilePic,
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height / 14),
-            Container(
-              margin: EdgeInsets.all(0),
-              width: MediaQuery.of(context).size.width / 1.8,
-              height: MediaQuery.of(context).size.height / 16,
-              child: TextFormField(
-                enabled: editEnabled ? true : false,
-                controller: nameController,
-                textAlign: TextAlign.left,
-                style: GoogleFonts.libreBaskerville(
+              )),
+        ),
+        RaisedButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20))),
+            child: Text(
+              "Copy Account ID",
+              style: GoogleFonts.robotoMono(
                   textStyle: TextStyle(
-                    color: Colors.black,
-                    letterSpacing: 0,
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
+                color: Colors.black,
+                letterSpacing: 0,
+                fontSize: 12.0,
+                fontWeight: FontWeight.w600,
+              )),
             ),
-            Container(
-              margin: EdgeInsets.all(0),
-              width: MediaQuery.of(context).size.width / 1.8,
-              height: MediaQuery.of(context).size.height / 16,
-              child: TextFormField(
-                enabled: editEnabled ? true : false,
-                controller: emailController,
-                textAlign: TextAlign.left,
-                style: GoogleFonts.libreBaskerville(
-                  textStyle: TextStyle(
-                    color: Colors.black,
-                    letterSpacing: 0,
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height / 26),
-            buttons(context),
-          ],
-        ));
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: widget.userID));
+              notification("\nAccount ID copied to clipboard! \n");
+            })
+      ],
+    ));
   }
 }
