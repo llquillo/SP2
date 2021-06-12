@@ -68,128 +68,216 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      backgroundColor: Color(0xffB7DCFF),
-      appBar: AppBar(
-        title: Text('App Name'),
-      ),
-      resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: false,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 12,
-            ),
-            new Container(
-              alignment: Alignment(-0.5, 0.7),
-              child: new Text(
-                "Kumusta.",
-                style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                    fontSize: 50.0,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),
-            Container(
-              alignment: Alignment(-0.6, 0.9),
-              padding: EdgeInsets.all(14.0),
-              child: new Form(
-                key: formKey,
-                child: new Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: buildInputs() + buildSubmitButtons(),
-                ),
-              ),
-            ),
-          ],
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Text('App Name'),
         ),
-      ),
-    );
+        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomPadding: false,
+        body: DecoratedBox(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+              image: AssetImage("images/background.gif"),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.9), BlendMode.dstATop),
+            )),
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 15,
+                    ),
+                    Container(
+                      alignment: Alignment(-0.5, 0.7),
+                      child: new Text(
+                        "Kumusta?",
+                        style: GoogleFonts.robotoMono(
+                          textStyle: TextStyle(
+                            // decoration: TextDecoration.underline,
+                            fontSize: 40.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                            decoration: TextDecoration.underline,
+                            // decorationStyle: TextDecorationStyle.wavy,
+                            decorationThickness: 1.5,
+                            // fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 30,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20)),
+                        border: Border.all(width: 2),
+                        color: Color(0xffF1F8FF).withOpacity(.85),
+                      ),
+                      width: MediaQuery.of(context).size.width / 1.3,
+                      alignment: Alignment(-0.6, 0.9),
+                      padding: EdgeInsets.all(14.0),
+                      child: new Form(
+                        key: formKey,
+                        child: new Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: buildInputs() + buildSubmitButtons(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )));
   }
 
   List<Widget> buildInputs() {
     if (_formType == FormType.login) {
       return [
-        new Column(
+        Container(
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            new Container(
+            Container(
               padding: EdgeInsets.all(3),
-              width: MediaQuery.of(context).size.width / 1.2,
-              child: new TextFormField(
-                decoration: new InputDecoration(
+              width: MediaQuery.of(context).size.width / 1.4,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 2),
+                  ),
                   labelText: 'Email',
+                  // border: OutlineInputBorder(),
+                  labelStyle: GoogleFonts.robotoMono(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.black,
+                  ),
                 ),
                 validator: (value) =>
                     value.isEmpty ? 'Email can\'t be empty' : null,
                 onSaved: (value) => _email = value,
-                style: new TextStyle(
-                  fontSize: 18.0,
+                style: GoogleFonts.robotoMono(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w900,
                   color: Colors.black,
                 ),
               ),
             ),
-            new Container(
+            Container(
               padding: EdgeInsets.all(3),
-              width: MediaQuery.of(context).size.width / 1.2,
-              child: new TextFormField(
-                decoration: new InputDecoration(labelText: 'Password'),
+              width: MediaQuery.of(context).size.width / 1.4,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 2),
+                  ),
+                  labelText: 'Password',
+                  // border: OutlineInputBorder(),
+                  labelStyle: GoogleFonts.robotoMono(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.black,
+                  ),
+                ),
                 obscureText: true,
                 validator: (value) =>
                     value.isEmpty ? 'Password can\'t be empty' : null,
                 onSaved: (value) => _password = value,
-                style: new TextStyle(
-                  fontSize: 18.0,
+                style: GoogleFonts.robotoMono(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w900,
                   color: Colors.black,
                 ),
               ),
             )
           ],
-        )
+        ))
       ];
     } else {
       return [
         Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             new Container(
               padding: EdgeInsets.all(3),
-              width: MediaQuery.of(context).size.width / 1.2,
+              width: MediaQuery.of(context).size.width / 1.4,
               child: new TextFormField(
-                decoration: new InputDecoration(labelText: 'Name'),
+                decoration: new InputDecoration(
+                  // border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 2),
+                  ),
+                  labelText: 'Name',
+                  labelStyle: GoogleFonts.robotoMono(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.black,
+                  ),
+                ),
                 validator: (value) =>
                     value.isEmpty ? 'Name can\'t be empty' : null,
                 onSaved: (value) => _name = value,
-                style: new TextStyle(
-                  fontSize: 18.0,
+                style: GoogleFonts.robotoMono(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w900,
                   color: Colors.black,
                 ),
               ),
             ),
             new Container(
               padding: EdgeInsets.all(3),
-              width: MediaQuery.of(context).size.width / 1.2,
+              width: MediaQuery.of(context).size.width / 1.4,
               child: new TextFormField(
-                decoration: new InputDecoration(labelText: 'Email'),
+                decoration: new InputDecoration(
+                  // border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 2),
+                  ),
+                  labelText: 'Email',
+                  labelStyle: GoogleFonts.robotoMono(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.black,
+                  ),
+                ),
                 validator: (value) =>
                     value.isEmpty ? 'Email can\'t be empty' : null,
                 onSaved: (value) => _email = value,
-                style: new TextStyle(
-                  fontSize: 18.0,
+                style: GoogleFonts.robotoMono(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w900,
                   color: Colors.black,
                 ),
               ),
             ),
             new Container(
               padding: EdgeInsets.all(3),
-              width: MediaQuery.of(context).size.width / 1.2,
+              width: MediaQuery.of(context).size.width / 1.4,
               child: new TextFormField(
-                decoration: new InputDecoration(labelText: 'Password'),
+                decoration: new InputDecoration(
+                  // border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 2),
+                  ),
+                  labelText: 'Password',
+                  labelStyle: GoogleFonts.robotoMono(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.black,
+                  ),
+                ),
                 obscureText: true,
                 validator: (value) => value.isEmpty
                     ? 'Password can\'t be empty'
@@ -197,17 +285,29 @@ class _LoginPageState extends State<LoginPage> {
                         ? null
                         : 'Passwords don\'t match',
                 onSaved: (value) => _password = value,
-                style: new TextStyle(
-                  fontSize: 18.0,
+                style: GoogleFonts.robotoMono(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w900,
                   color: Colors.black,
                 ),
               ),
             ),
             new Container(
               padding: EdgeInsets.all(3),
-              width: MediaQuery.of(context).size.width / 1.2,
+              width: MediaQuery.of(context).size.width / 1.4,
               child: new TextFormField(
-                decoration: new InputDecoration(labelText: 'Confirm Password'),
+                decoration: new InputDecoration(
+                  // border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 2),
+                  ),
+                  labelText: 'Confirm Password',
+                  labelStyle: GoogleFonts.robotoMono(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.black,
+                  ),
+                ),
                 obscureText: true,
                 validator: (value) => value.isEmpty
                     ? 'Confirm your password'
@@ -215,8 +315,9 @@ class _LoginPageState extends State<LoginPage> {
                         ? null
                         : 'Passwords don\'t match',
                 onSaved: (value) => _confirmPassword = value,
-                style: new TextStyle(
-                  fontSize: 18.0,
+                style: GoogleFonts.robotoMono(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w900,
                   color: Colors.black,
                 ),
               ),
@@ -230,9 +331,7 @@ class _LoginPageState extends State<LoginPage> {
   List<Widget> buildSubmitButtons() {
     if (_formType == FormType.login) {
       return [
-        SizedBox(
-          height: 10.0,
-        ),
+        SizedBox(height: 10.0),
         new MaterialButton(
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           padding: EdgeInsets.all(10.0),
@@ -240,8 +339,9 @@ class _LoginPageState extends State<LoginPage> {
           minWidth: 2.0,
           child: new Text(
             'Login',
-            style: new TextStyle(
-              fontSize: 16.0,
+            style: GoogleFonts.robotoMono(
+              fontSize: 14.0,
+              fontWeight: FontWeight.w800,
               color: Colors.black,
             ),
           ),
@@ -254,8 +354,9 @@ class _LoginPageState extends State<LoginPage> {
           minWidth: 2.0,
           child: new Text(
             'Create an Account',
-            style: new TextStyle(
-              fontSize: 16.0,
+            style: GoogleFonts.robotoMono(
+              fontSize: 14.0,
+              fontWeight: FontWeight.w800,
               color: Colors.black,
             ),
           ),
@@ -274,8 +375,9 @@ class _LoginPageState extends State<LoginPage> {
           minWidth: 2.0,
           child: new Text(
             'Create an Account',
-            style: new TextStyle(
-              fontSize: 16.0,
+            style: GoogleFonts.robotoMono(
+              fontSize: 14.0,
+              fontWeight: FontWeight.w800,
               color: Colors.black,
             ),
           ),
@@ -292,8 +394,10 @@ class _LoginPageState extends State<LoginPage> {
           minWidth: 2.0,
           child: new Text(
             'Already have an account? Login.',
-            style: new TextStyle(
-              fontSize: 16.0,
+            style: GoogleFonts.robotoMono(
+              fontWeight: FontWeight.w800,
+              fontSize: 14.0,
+              color: Colors.black,
             ),
           ),
           onPressed: moveToLogin,
