@@ -212,7 +212,12 @@ class _FriendPageState extends State<FriendPage> {
     getAchievements();
     return Scaffold(
       appBar: AppBar(
-        title: Text("${widget.name}'s Progress"),
+        title: Text("${widget.name}'s Progress",
+            style: GoogleFonts.robotoMono(
+              color: Colors.black,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+            )),
       ),
       resizeToAvoidBottomInset: true,
       resizeToAvoidBottomPadding: false,

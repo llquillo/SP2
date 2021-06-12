@@ -55,6 +55,8 @@ class _FriendsState extends State<Friends> {
             Map<dynamic, dynamic>.from(widget.pendingRequest);
         databaseTemp.forEach((key, value) =>
             {requestList.add(FriendRequest(value["UID"], value["Name"]))});
+      } else {
+        requestList = [];
       }
     }
     if (updatedFriendList != null) {
@@ -125,7 +127,7 @@ class _FriendsState extends State<Friends> {
     bool flag = false;
     final databaseReference = FirebaseDatabase.instance.reference();
     DatabaseReference userDB = databaseReference.child('users').child(uid);
-    FriendRequest friendRequest = new FriendRequest(user, 'Name');
+    FriendRequest friendRequest = new FriendRequest(user, uidName);
     if (widget.pendingRequest == false) {
       flag = true;
     } else {
@@ -165,6 +167,51 @@ class _FriendsState extends State<Friends> {
     // deleteQuery.remove()
   }
 
+  Future<DataSnapshot> deleteRequest(String uid, String user) async {
+    int count;
+    await FirebaseDatabase.instance
+        .reference()
+        .child('users')
+        .child(user)
+        .child('Requests')
+        .once()
+        .then((DataSnapshot snapshot) {
+      count = snapshot.value.length;
+    });
+    FirebaseDatabase.instance
+        .reference()
+        .child('users')
+        .child(user)
+        .child('Requests')
+        .orderByChild('UID')
+        .equalTo(uid)
+        .once()
+        .then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> children = snapshot.value;
+      children.forEach((key, value) {
+        if (count > 1) {
+          FirebaseDatabase.instance
+              .reference()
+              .child('users')
+              .child(user)
+              .child('Requests')
+              .child(key)
+              .remove();
+        } else {
+          FirebaseDatabase.instance
+              .reference()
+              .child('users')
+              .child(user)
+              .child('Requests')
+              .set(false);
+        }
+      });
+    });
+    DatabaseReference userDB =
+        FirebaseDatabase.instance.reference().child('users').child(user);
+    getUpdate(userDB);
+  }
+
   Future<DataSnapshot> pushFriend(
       String uid,
       Friend friend,
@@ -173,18 +220,35 @@ class _FriendsState extends State<Friends> {
       DatabaseReference userDB,
       DatabaseReference databaseReference) async {
     friend = new Friend(
-      user,
+      uid,
       snapshot.value["Name"],
       snapshot.value["Trophies"]["XP"],
       snapshot.value["Streak"]["Value"],
-      snapshot.value["ProfilePic"],
+      snapshot.value["ProfilePic"] == false ? "" : snapshot.value["ProfilePic"],
     );
+    Friend friend2;
+    await databaseReference
+        .child('users')
+        .child(user)
+        .once()
+        .then((DataSnapshot snapshot) {
+      friend2 = new Friend(
+        user,
+        snapshot.value['Name'],
+        snapshot.value["Trophies"]["XP"],
+        snapshot.value["Streak"]["Value"],
+        snapshot.value["ProfilePic"] == false
+            ? ""
+            : snapshot.value["ProfilePic"],
+      );
+    });
+
     int count;
 
     await userDB.reference().child('Friends').push().set(friend.toJSON());
     await databaseReference
         .child('users')
-        .child(uid)
+        .child(user)
         .child('Requests')
         .once()
         .then((DataSnapshot snapshot) {
@@ -215,6 +279,14 @@ class _FriendsState extends State<Friends> {
             .set(false);
       }
     });
+
+    await FirebaseDatabase.instance
+        .reference()
+        .child('users')
+        .child(uid)
+        .child('Friends')
+        .push()
+        .set(friend2.toJSON());
 
     getUpdate(userDB);
   }
@@ -247,7 +319,7 @@ class _FriendsState extends State<Friends> {
 
     await databaseReference
         .child('users')
-        .child(friend)
+        .child(widget.userID)
         .child('Friends')
         .once()
         .then((DataSnapshot snapshot) {
@@ -270,14 +342,14 @@ class _FriendsState extends State<Friends> {
       update.cancel();
     });
 
-    // setState(() {
-    //   userDB.once().then((DataSnapshot snapshot) {
-    //     setState(() {
-    //       updatedFriendList = snapshot.value["Friends"];
-    //       updatedRequestList = snapshot.value["Requests"];
-    //     });
-    //   });
-    // });
+    setState(() {
+      userDB.once().then((DataSnapshot snapshot) {
+        setState(() {
+          updatedFriendList = snapshot.value["Friends"];
+          updatedRequestList = snapshot.value["Requests"];
+        });
+      });
+    });
   }
 
   void remove(key) {
@@ -367,17 +439,14 @@ class _FriendsState extends State<Friends> {
       }
     }
 
-    // for (var i = 0; i < friendList.length; i++) {
-    //   getUpdatedInfo(friendList[i].uid);
-    //   friendList[i].name = tempName;
-    //   friendList[i].profilePic = tempPic;
-    //   friendList[i].streak = tempStreak;
-    //   friendList[i].totalXP = tempTotalXP;
-    // }
-
     return Scaffold(
         appBar: AppBar(
-          title: Text("Social"),
+          title: Text("Social",
+              style: GoogleFonts.robotoMono(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              )),
         ),
         resizeToAvoidBottomInset: true,
         resizeToAvoidBottomPadding: false,
@@ -518,28 +587,44 @@ class _FriendsState extends State<Friends> {
                                       children: [
                                         Row(
                                           children: [
-                                            // Icon(Icons.people),
                                             Image.asset(
                                               i.profilePic,
                                               height: 50,
                                               width: 50,
                                             ),
-                                            // SizedBox(width: 5),
-                                            Text(i.name)
+                                            Text(i.name,
+                                                style: GoogleFonts.robotoMono(
+                                                    textStyle: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.w700,
+                                                )))
                                           ],
                                         ),
                                         Row(
                                           children: [
                                             Icon(Icons.mood),
                                             SizedBox(width: 5),
-                                            Text("${i.totalXP}")
+                                            Text("${i.totalXP}",
+                                                style: GoogleFonts.robotoMono(
+                                                    textStyle: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.w600,
+                                                )))
                                           ],
                                         ),
                                         Row(
                                           children: [
                                             Icon(Icons.local_fire_department),
                                             SizedBox(width: 5),
-                                            Text("${i.streak}")
+                                            Text("${i.streak}",
+                                                style: GoogleFonts.robotoMono(
+                                                    textStyle: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.w600,
+                                                )))
                                           ],
                                         ),
                                       ],
@@ -650,7 +735,17 @@ class _FriendsState extends State<Friends> {
                                                           .spaceEvenly,
                                                   children: [
                                                     Icon(Icons.people),
-                                                    Text(i.name),
+                                                    SizedBox(width: 10),
+                                                    Text(i.name,
+                                                        style: GoogleFonts
+                                                            .robotoMono(
+                                                                textStyle:
+                                                                    TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 12.0,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ))),
                                                   ],
                                                 ),
                                               ],
@@ -683,7 +778,10 @@ class _FriendsState extends State<Friends> {
                                                 Icons.highlight_remove,
                                                 color: Colors.red,
                                               ),
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                deleteRequest(
+                                                    i.uid, widget.userID);
+                                              },
                                             ),
                                           ],
                                         ))
