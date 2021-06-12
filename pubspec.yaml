@@ -37,7 +37,7 @@ dependencies:
   popup_menu: ^1.0.5
   overlay_support: ^1.0.5
   firebase_storage: ^4.0.0
-  firebase_analytics: ^5.0.6
+  # firebase_analytics: ^5.0.6
   image_picker: ^0.6.7+22
   image_cropper: ^1.3.1
 
@@ -126,6 +126,55 @@ flutter:
     - images/500words.png
     - images/600words.png
     - images/700words.png
+    - images/3days.png
+    - images/5days.png
+    - images/7days.png
+    - images/15days.png
+    - images/30days.png
+    - images/medal.png
+    - images/10xp.png
+    - images/100xp.png
+    - images/500xp.png
+    - images/1000xp.png
+    - images/3000xp.png
+    - images/5000xp.png
+    - images/10000xp.png
+    - images/girl.jpg
+    - images/boy.jpg
+    - images/girl2.jpg
+    - images/boy2.jpg
+    - images/girl3.jpg
+    - images/boy3.jpg
+    - images/flash.jpg
+    - images/stories_icon.png
+    - images/trophies_icon.png
+    - images/practice_icon.png
+    - images/dictionary_icon.png
+    - images/basics_icon.png
+    - images/travel_icon.png
+    - images/shopping_icon.png
+    - images/family_icon.png
+    - images/school_icon.png
+    - images/background.jpg
+    - images/background.gif
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
 
 
 
