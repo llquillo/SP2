@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:sample_firebase/auth.dart';
+import 'package:sample_firebase/pages/achievements.dart';
 import './auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import './pages/stories.dart';
@@ -21,6 +22,7 @@ import 'dart:async';
 import 'package:overlay_support/overlay_support.dart';
 import 'pages/sub_pages/profile.dart';
 import 'pages/sub_pages/review_content.dart';
+import 'pages/sub_pages/friends.dart';
 
 class HomePage extends StatefulWidget {
   final BaseAuth auth;
@@ -33,23 +35,46 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isLoading = false;
+  // final buttonsInfo = [
+  //   ['images/drills.png', 'Practice'],
+  //   ['images/stories.png', 'Stories'],
+  //   ['images/dictionary.png', 'Dictionary'],
+  //   ['images/settings.png', 'Trophies']
+  // ];
   final buttonsInfo = [
-    ['images/drills.png', 'Practice'],
-    ['images/stories.png', 'Stories'],
-    ['images/dictionary.png', 'Dictionary'],
-    ['images/settings.png', 'Settings']
+    ['images/practice_icon.png', 'Practice'],
+    ['images/stories_icon.png', 'Stories'],
+    ['images/dictionary_icon.png', 'Dictionary'],
+    ['images/trophies_icon.png', 'Trophies']
   ];
+  // List drillsButtons = [
+  //   ["images/basic.png", "u", "basics1", "Basics 1"],
+  //   ["images/shopping.png", "u", "shopping", "Shopping"],
+  //   ["images/travel.png", "u", "travel", "Travel"],
+  //   ["images/school.png", "u", "school", "School"],
+  //   ["images/family.png", "u", "family", "Family"],
+  //   ["images/basic.png", "u", "basics2", "Basics 2"],
+  // ];
   List drillsButtons = [
-    ["images/basic.png", "u", "basics1", "Basics 1"],
-    ["images/shopping.png", "u", "shopping", "Shopping"],
-    ["images/travel.png", "u", "travel", "Travel"],
-    ["images/school.png", "u", "school", "School"],
-    ["images/family.png", "u", "family", "Family"],
-    ["images/basic.png", "u", "basics2", "Basics 2"],
+    ["images/basics_icon.png", "u", "basics1", "Basics 1"],
+    ["images/shopping_icon.png", "u", "shopping", "Shopping"],
+    ["images/travel_icon.png", "l", "travel", "Travel"],
+    ["images/school_icon.png", "l", "school", "School"],
+    ["images/family_icon.png", "l", "family", "Family"],
+    ["images/basics_icon.png", "l", "basics2", "Basics 2"],
   ];
 
   List levelStatus = ["1", "2", "3", "4", "5"];
 
+  List levelSequence = ["Level1", "Level2", "Level3", "Level4", "Level5"];
+  List categorySequence = [
+    "basics1",
+    "shopping",
+    "travel",
+    "school",
+    "family",
+    "basics2"
+  ];
   String locked = "images/lock.png";
 
   List<String> week = new List<String>();
@@ -101,6 +126,7 @@ class _HomePageState extends State<HomePage> {
         getcurrentXP();
         setGoalStatus("Earn");
         setGoalStatus("Quiz");
+        checkLocks();
       });
     });
     buttonKeys.add(basics1);
@@ -109,6 +135,76 @@ class _HomePageState extends State<HomePage> {
     buttonKeys.add(school);
     buttonKeys.add(shopping);
     buttonKeys.add(travel);
+  }
+
+  void checkLocks() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    final databaseReference = FirebaseDatabase.instance.reference();
+    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
+    for (var i = 0; i < categorySequence.length; i++) {
+      bool flag = true;
+      if (drillsButtons[i][2] == "u") {
+        for (var j = 0; j < categorySequence.length; j++) {
+          if (corpus[categorySequence[i]][levelSequence[j]] != null) {
+            if (getPercentage(levelSequence[j], categorySequence[i]) == 1) {
+              userDB
+                  .reference()
+                  .child(categorySequence[i])
+                  .child(levelSequence[j + 1])
+                  .child("LevelStatus")
+                  .set(1);
+            } else {
+              flag = false;
+            }
+          }
+        }
+      }
+      if (flag) {
+        drillsButtons[i + 1][2] = "u";
+      }
+    }
+  }
+
+  Widget lockedLevel(String level, String category) {
+    return Center(
+        child: Stack(
+      children: [
+        Positioned(
+          child: Opacity(
+            opacity: 0.7,
+            child: CircularPercentIndicator(
+              radius: 25.0,
+              lineWidth: 3.0,
+              percent: getPercentage(level, category),
+              progressColor: Color(0xffffafcc),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 1,
+          left: .001,
+          child: Opacity(
+            opacity: .9,
+            child: Image.asset(
+              locked,
+              height: MediaQuery.of(context).size.height / 30,
+              width: MediaQuery.of(context).size.width / 15,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
+    ));
+  }
+
+  Widget unlockedLevel(String level, String category) {
+    return CircularPercentIndicator(
+      radius: 25.0,
+      lineWidth: 3.0,
+      percent: getPercentage(level, category),
+      progressColor: Color(0xffffafcc),
+    );
   }
 
   void popUpMenu(int i, String category) {
@@ -122,44 +218,29 @@ class _HomePageState extends State<HomePage> {
             items: [
               MenuItem(
                   title: 'Level 1',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level1', 'basics1'),
-                    progressColor: Color(0xffffafcc),
-                  )),
+                  image: corpus["basics1"]["Level1"]["LevelStatus"] == 0
+                      ? lockedLevel('Level1', 'basics1')
+                      : unlockedLevel('Level1', 'basics1')),
               MenuItem(
                   title: 'Level 2',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level2', 'basics1'),
-                    progressColor: Color(0xffffafcc),
-                  )),
+                  image: corpus["basics1"]["Level2"]["LevelStatus"] == 0
+                      ? lockedLevel('Level2', 'basics1')
+                      : unlockedLevel('Level2', 'basics1')),
               MenuItem(
                   title: 'Level 3',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level3', 'basics1'),
-                    progressColor: Color(0xffffafcc),
-                  )),
+                  image: corpus["basics1"]["Level3"]["LevelStatus"] == 0
+                      ? lockedLevel('Level3', 'basics1')
+                      : unlockedLevel('Level3', 'basics1')),
               MenuItem(
                   title: 'Level 4',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level4', 'basics1'),
-                    progressColor: Color(0xffffafcc),
-                  )),
+                  image: corpus["basics1"]["Level4"]["LevelStatus"] == 0
+                      ? lockedLevel('Level4', 'basics1')
+                      : unlockedLevel('Level4', 'basics1')),
               MenuItem(
                   title: 'Level 5',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level5', 'basics1'),
-                    progressColor: Color(0xffffafcc),
-                  )),
+                  image: corpus["basics1"]["Level5"]["LevelStatus"] == 0
+                      ? lockedLevel('Level5', 'basics1')
+                      : unlockedLevel('Level5', 'basics1')),
               MenuItem(
                   title: 'Review',
                   image: Icon(
@@ -180,28 +261,19 @@ class _HomePageState extends State<HomePage> {
             items: [
               MenuItem(
                   title: 'Level 1',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level1', 'shopping'),
-                    progressColor: Color(0xffffafcc),
-                  )),
+                  image: corpus["shopping"]["Level1"]["LevelStatus"] == 0
+                      ? lockedLevel('Level1', 'shopping')
+                      : unlockedLevel('Level1', 'shopping')),
               MenuItem(
                   title: 'Level 2',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level2', 'shopping'),
-                    progressColor: Colors.green,
-                  )),
+                  image: corpus["shopping"]["Level2"]["LevelStatus"] == 0
+                      ? lockedLevel('Level2', 'shopping')
+                      : unlockedLevel('Level2', 'shopping')),
               MenuItem(
                   title: 'Level 3',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level3', 'shopping'),
-                    progressColor: Colors.green,
-                  )),
+                  image: corpus["shopping"]["Level3"]["LevelStatus"] == 0
+                      ? lockedLevel('Level3', 'shopping')
+                      : unlockedLevel('Level3', 'shopping')),
               // MenuItem(
               //     title: 'Level 4',
               //     image: CircularPercentIndicator(
@@ -238,36 +310,24 @@ class _HomePageState extends State<HomePage> {
             items: [
               MenuItem(
                   title: 'Level 1',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level1', 'travel'),
-                    progressColor: Color(0xffffafcc),
-                  )),
+                  image: corpus["travel"]["Level1"]["LevelStatus"] == 0
+                      ? lockedLevel('Level1', 'travel')
+                      : unlockedLevel('Level1', 'travel')),
               MenuItem(
                   title: 'Level 2',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level2', 'travel'),
-                    progressColor: Colors.green,
-                  )),
+                  image: corpus["travel"]["Level2"]["LevelStatus"] == 0
+                      ? lockedLevel('Level2', 'travel')
+                      : unlockedLevel('Level2', 'travel')),
               MenuItem(
                   title: 'Level 3',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level3', 'travel'),
-                    progressColor: Colors.green,
-                  )),
+                  image: corpus["travel"]["Level3"]["LevelStatus"] == 0
+                      ? lockedLevel('Level3', 'travel')
+                      : unlockedLevel('Level3', 'travel')),
               MenuItem(
                   title: 'Level 4',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level4', 'travel'),
-                    progressColor: Colors.green,
-                  )),
+                  image: corpus["travel"]["Level4"]["LevelStatus"] == 0
+                      ? lockedLevel('Level4', 'travel')
+                      : unlockedLevel('Level4', 'travel')),
               // MenuItem(
               //     title: 'Level 5',
               //     image: CircularPercentIndicator(
@@ -296,36 +356,24 @@ class _HomePageState extends State<HomePage> {
             items: [
               MenuItem(
                   title: 'Level 1',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level1', 'school'),
-                    progressColor: Color(0xffffafcc),
-                  )),
+                  image: corpus["school"]["Level1"]["LevelStatus"] == 0
+                      ? lockedLevel('Level1', 'school')
+                      : unlockedLevel('Level1', 'school')),
               MenuItem(
                   title: 'Level 2',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level2', 'school'),
-                    progressColor: Colors.green,
-                  )),
+                  image: corpus["school"]["Level2"]["LevelStatus"] == 0
+                      ? lockedLevel('Level2', 'school')
+                      : unlockedLevel('Level2', 'school')),
               MenuItem(
                   title: 'Level 3',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level3', 'school'),
-                    progressColor: Colors.green,
-                  )),
+                  image: corpus["school"]["Level3"]["LevelStatus"] == 0
+                      ? lockedLevel('Level3', 'school')
+                      : unlockedLevel('Level3', 'school')),
               MenuItem(
                   title: 'Level 4',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level4', 'school'),
-                    progressColor: Colors.green,
-                  )),
+                  image: corpus["school"]["Level4"]["LevelStatus"] == 0
+                      ? lockedLevel('Level4', 'school')
+                      : unlockedLevel('Level4', 'school')),
               // MenuItem(
               //     title: 'Level 5',
               //     image: CircularPercentIndicator(
@@ -354,36 +402,24 @@ class _HomePageState extends State<HomePage> {
             items: [
               MenuItem(
                   title: 'Level 1',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level1', 'family'),
-                    progressColor: Color(0xffffafcc),
-                  )),
+                  image: corpus["family"]["Level1"]["LevelStatus"] == 0
+                      ? lockedLevel('Level1', 'family')
+                      : unlockedLevel('Level1', 'family')),
               MenuItem(
                   title: 'Level 2',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level2', 'family'),
-                    progressColor: Colors.green,
-                  )),
+                  image: corpus["family"]["Level2"]["LevelStatus"] == 0
+                      ? lockedLevel('Level2', 'family')
+                      : unlockedLevel('Level2', 'family')),
               MenuItem(
                   title: 'Level 3',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level3', 'family'),
-                    progressColor: Colors.green,
-                  )),
+                  image: corpus["family"]["Level3"]["LevelStatus"] == 0
+                      ? lockedLevel('Level3', 'family')
+                      : unlockedLevel('Level3', 'family')),
               MenuItem(
                   title: 'Level 4',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: getPercentage('Level4', 'family'),
-                    progressColor: Colors.green,
-                  )),
+                  image: corpus["family"]["Level4"]["LevelStatus"] == 0
+                      ? lockedLevel('Level4', 'family')
+                      : unlockedLevel('Level4', 'family')),
               // MenuItem(
               //     title: 'Level 5',
               //     image: CircularPercentIndicator(
@@ -412,44 +448,29 @@ class _HomePageState extends State<HomePage> {
             items: [
               MenuItem(
                   title: 'Level 1',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: .5,
-                    progressColor: Color(0xffffafcc),
-                  )),
+                  image: corpus["basics2"]["Level1"]["LevelStatus"] == 0
+                      ? lockedLevel('Level1', 'basics2')
+                      : unlockedLevel('Level1', 'basics2')),
               MenuItem(
                   title: 'Level 2',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: .5,
-                    progressColor: Colors.green,
-                  )),
+                  image: corpus["basics2"]["Level2"]["LevelStatus"] == 0
+                      ? lockedLevel('Level2', 'basics2')
+                      : unlockedLevel('Level2', 'basics2')),
               MenuItem(
                   title: 'Level 3',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: .5,
-                    progressColor: Colors.green,
-                  )),
+                  image: corpus["basics2"]["Level3"]["LevelStatus"] == 0
+                      ? lockedLevel('Level3', 'basics2')
+                      : unlockedLevel('Level3', 'basics2')),
               MenuItem(
                   title: 'Level 4',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: .5,
-                    progressColor: Colors.green,
-                  )),
+                  image: corpus["basics2"]["Level4"]["LevelStatus"] == 0
+                      ? lockedLevel('Level4', 'basics2')
+                      : unlockedLevel('Level4', 'basics2')),
               MenuItem(
                   title: 'Level 5',
-                  image: CircularPercentIndicator(
-                    radius: 25.0,
-                    lineWidth: 3.0,
-                    percent: 0,
-                    progressColor: Colors.green,
-                  )),
+                  image: corpus["basics2"]["Level5"]["LevelStatus"] == 0
+                      ? lockedLevel('Level5', 'basics2')
+                      : unlockedLevel('Level5', 'basics2')),
               MenuItem(
                   title: 'Review',
                   image: Icon(
@@ -472,16 +493,20 @@ class _HomePageState extends State<HomePage> {
   void onClickMenu(MenuItemProvider item) {
     setGoalStatus("Earn");
     setGoalStatus("Quiz");
-    if (item.menuTitle == "review") {
+    print(item.menuTitle);
+    if (item.menuTitle.toLowerCase() == "review") {
       reviewContent =
           new ReviewContent(databaseTemp: corpus[category], category: category);
       reviewContent.getWords(
           context, iteration, 0, 0, null, category, corpus[category]);
     } else {
-      levelContent =
-          new LevelContent(databaseTemp: corpus[category], category: category);
-      levelContent.getWords(context, iteration, 0, 0,
-          item.menuTitle.replaceAll(" ", ""), category, corpus[category]);
+      if (corpus[category][item.menuTitle.replaceAll(" ", "")]["LevelStatus"] !=
+          0) {
+        levelContent = new LevelContent(
+            databaseTemp: corpus[category], category: category);
+        levelContent.getWords(context, iteration, 0, 0,
+            item.menuTitle.replaceAll(" ", ""), category, corpus[category]);
+      }
     }
   }
 
@@ -527,6 +552,11 @@ class _HomePageState extends State<HomePage> {
         }
       }
     }
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    final databaseReference = FirebaseDatabase.instance.reference();
+    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
+    userDB.reference().child("Trophies").child("Words").set(wordsCount);
     return wordsCount;
   }
 
@@ -575,8 +605,8 @@ class _HomePageState extends State<HomePage> {
   Widget _unlockedLevel(i) {
     return Image.asset(
       i,
-      height: MediaQuery.of(context).size.height / 8,
-      width: MediaQuery.of(context).size.width / 4,
+      height: MediaQuery.of(context).size.height / 11,
+      width: MediaQuery.of(context).size.width / 6,
     );
   }
 
@@ -670,6 +700,11 @@ class _HomePageState extends State<HomePage> {
     for (var i = 0; i < data.length; i++) {
       print("${data[i].date} : ${data[i].xp}");
     }
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    final databaseReference = FirebaseDatabase.instance.reference();
+    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
+    userDB.reference().child("Trophies").child("XP").set(totalXP);
   }
 
   // Function for fetching the current XP points of the user for the day
@@ -714,6 +749,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void setGoalStatus(String goal) {
+    Timer _timer;
     final FirebaseAuth auth = FirebaseAuth.instance;
     User user = auth.currentUser;
     final databaseReference = FirebaseDatabase.instance.reference();
@@ -732,7 +768,9 @@ class _HomePageState extends State<HomePage> {
             break;
           case "Practice":
             userDB.reference().child("DG").child(goal).set(1);
-            notification("\nGoal complete: \n✓ Practiced once! \n");
+            _timer = new Timer(const Duration(seconds: 10), () {
+              notification("\nGoal complete: \n✓ Practiced once! \n");
+            });
 
             break;
           case "Quiz":
@@ -779,7 +817,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.fromLTRB(15, 10, 2, 2),
               child: Text(
                 title,
-                style: GoogleFonts.libreBaskerville(
+                style: GoogleFonts.robotoMono(
                   textStyle: TextStyle(
                     color: Colors.black,
                     letterSpacing: .3,
@@ -893,7 +931,7 @@ class _HomePageState extends State<HomePage> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   wordDay["Word"],
-                                  style: GoogleFonts.libreBaskerville(
+                                  style: GoogleFonts.robotoMono(
                                     textStyle: TextStyle(
                                       color: Colors.black,
                                       letterSpacing: .5,
@@ -907,7 +945,7 @@ class _HomePageState extends State<HomePage> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   wordDay["POS"],
-                                  style: GoogleFonts.libreBaskerville(
+                                  style: GoogleFonts.robotoMono(
                                     textStyle: TextStyle(
                                       color: Colors.black,
                                       letterSpacing: .5,
@@ -918,12 +956,12 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 10),
+                              SizedBox(height: 5),
                               Align(
                                 alignment: Alignment.center,
                                 child: Text(
                                   "\"${wordDay["Translation"]}\"",
-                                  style: GoogleFonts.libreBaskerville(
+                                  style: GoogleFonts.robotoMono(
                                     textStyle: TextStyle(
                                       color: Colors.black,
                                       letterSpacing: .5,
@@ -960,7 +998,7 @@ class _HomePageState extends State<HomePage> {
                                             color: Colors.black)),
                                     SizedBox(width: 6),
                                     Text("Finish one quiz",
-                                        style: GoogleFonts.libreBaskerville(
+                                        style: GoogleFonts.robotoMono(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 14,
                                           color: Colors.black,
@@ -977,7 +1015,7 @@ class _HomePageState extends State<HomePage> {
                                             color: Colors.black)),
                                     SizedBox(width: 6),
                                     Text("Practice one time",
-                                        style: GoogleFonts.libreBaskerville(
+                                        style: GoogleFonts.robotoMono(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 14,
                                           color: Colors.black,
@@ -994,7 +1032,7 @@ class _HomePageState extends State<HomePage> {
                                             color: Colors.black)),
                                     SizedBox(width: 6),
                                     Text("Earn 10xp",
-                                        style: GoogleFonts.libreBaskerville(
+                                        style: GoogleFonts.robotoMono(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 14,
                                           color: Colors.black,
@@ -1002,7 +1040,32 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                               ])))),
-                  carouselTemplate(context, "Tip of the day:", Container()),
+                  carouselTemplate(
+                      context,
+                      "Tips:",
+                      Container(
+                          child: Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(2, 10, 2, 2),
+                                // color: Colors.white,
+                                height: MediaQuery.of(context).size.height / 8,
+                                width:
+                                    MediaQuery.of(context).size.width / 2 + 55,
+                                padding: EdgeInsets.fromLTRB(6, 12, 6, 6),
+                                child: Text(
+                                  corpus['TOTD'][0],
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.robotoMono(
+                                    textStyle: TextStyle(
+                                      color: Colors.black,
+                                      letterSpacing: .5,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ),
+                              )))),
                 ].map((i) {
                   return Builder(
                     builder: (BuildContext context) {
@@ -1010,20 +1073,21 @@ class _HomePageState extends State<HomePage> {
                         width: MediaQuery.of(context).size.width,
                         margin: EdgeInsets.all(6),
                         decoration: BoxDecoration(
+                          border: Border.all(width: 2),
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(20),
                               topRight: Radius.circular(20),
                               bottomLeft: Radius.circular(20),
                               bottomRight: Radius.circular(20)),
                           color: Color(0xffbde0fe),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color(0xffB7DCFF).withOpacity(0.5),
-                              spreadRadius: 1,
-                              blurRadius: 8,
-                              offset: Offset(8, 8),
-                            )
-                          ],
+                          // boxShadow: [
+                          //   BoxShadow(
+                          //     color: Color(0xffB7DCFF).withOpacity(0.5),
+                          //     spreadRadius: 1,
+                          //     blurRadius: 8,
+                          //     offset: Offset(8, 8),
+                          //   )
+                          // ],
                           // boxShadow: [
                           //   BoxShadow(
                           //     color: Color(0xffB7DCFF).withOpacity(0.7),
@@ -1069,7 +1133,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisCount: 4,
                 childAspectRatio: (MediaQuery.of(context).size.width /
                         MediaQuery.of(context).size.height) /
-                    .68,
+                    .64,
                 children: [
                   ...buttonsInfo.map(
                     (i) => GestureDetector(
@@ -1084,14 +1148,15 @@ class _HomePageState extends State<HomePage> {
                               topRight: Radius.circular(20),
                               bottomLeft: Radius.circular(20),
                               bottomRight: Radius.circular(20)),
-                          color: Color(0xffffc8dd),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color(0xffFFDBE9).withOpacity(0.9),
-                              spreadRadius: 1,
-                              blurRadius: 3,
-                            )
-                          ],
+                          // color: Color(0xfffff6cc),
+                          border: Border.all(width: 2),
+                          // boxShadow: [
+                          //   BoxShadow(
+                          //     color: Color(0xfffff6cc).withOpacity(0.9),
+                          //     spreadRadius: 1,
+                          //     blurRadius: 3,
+                          //   )
+                          // ],
                         ),
                         margin: EdgeInsets.all(
                             MediaQuery.of(context).size.width / 90),
@@ -1103,12 +1168,13 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Image.asset(
                               i.first,
-                              height: MediaQuery.of(context).size.height / 11,
-                              width: MediaQuery.of(context).size.width / 8,
+                              height: MediaQuery.of(context).size.height / 10,
+                              width: MediaQuery.of(context).size.width / 6.5,
                             ),
                             Text(i[1],
                                 style: GoogleFonts.fredokaOne(
-                                  fontSize: 12,
+                                  fontSize: 10,
+                                  // fontWeight: FontWeight.w900,
                                 )),
                           ],
                         ),
@@ -1136,7 +1202,9 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 5.5,
                 decoration: BoxDecoration(
-                  color: Color(0xffbde0fe),
+                  // color: Color(0xffbde0fe),
+                  color: Color(0xffBFB8EA),
+                  border: Border.all(width: 2),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
@@ -1221,20 +1289,58 @@ class _HomePageState extends State<HomePage> {
                           ),
                           // margin: EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            color: Color(0xffBFB8EA),
+                            // gradient: LinearGradient(
+                            //   begin: Alignment.topCenter,
+                            //   end: Alignment.bottomCenter,
+                            //   colors: [
+                            //     Colors.white,
+                            //     Colors.white,
+                            //     Colors.red.withOpacity(.4),
+                            //     Colors.red.withOpacity(.4),
+                            //     Colors.white,
+                            //     Colors.white,
+                            //     Colors.blue.withOpacity(.4),
+                            //     Colors.blue.withOpacity(.4),
+                            //     Colors.white,
+                            //     Colors.white,
+                            //     Colors.red.withOpacity(.4),
+                            //     Colors.red.withOpacity(.4),
+                            //     Colors.white,
+                            //     Colors.white,
+                            //   ],
+                            //   stops: [
+                            //     .2,
+                            //     .21,
+                            //     .23,
+                            //     .25,
+                            //     .26,
+                            //     .42,
+                            //     .45,
+                            //     .46,
+                            //     .47,
+                            //     .61,
+                            //     .63,
+                            //     .65,
+                            //     .66,
+                            //     1,
+                            //   ],
+                            // ),
+                            // color: Color(0xffBFB8EA),
+                            // color: Colors.white,
+                            border: Border.all(width: 2),
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20),
                                 bottomLeft: Radius.circular(20),
                                 bottomRight: Radius.circular(20)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0xffD8D2FF).withOpacity(0.7),
-                                spreadRadius: 2,
-                                blurRadius: 4,
-                                offset: Offset(0, 1),
-                              )
-                            ],
+                            // boxShadow: [
+                            //   BoxShadow(
+                            //     color: Color(0xffD8D2FF).withOpacity(0.7),
+                            //     spreadRadius: 2,
+                            //     blurRadius: 4,
+                            //     offset: Offset(0, 1),
+                            //   )
+                            // ],
                           ),
                           child: Column(
                             children: [
@@ -1295,6 +1401,7 @@ class _HomePageState extends State<HomePage> {
                       padding: EdgeInsets.all(
                           MediaQuery.of(context).size.width / 48),
                       decoration: BoxDecoration(
+                        border: Border.all(width: 2),
                         color: Color(0xffffc8dd),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
@@ -1308,7 +1415,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(Icons.local_fire_department,
-                              color: Color(0xffa2d2ff)),
+                              color: Color(0xfffff6cc)),
                           SizedBox(width: 5),
                           Text(
                             "Streak: ",
@@ -1331,6 +1438,7 @@ class _HomePageState extends State<HomePage> {
                       padding: EdgeInsets.all(
                           MediaQuery.of(context).size.width / 48),
                       decoration: BoxDecoration(
+                        border: Border.all(width: 2),
                         color: Color(0xffffc8dd),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(13),
@@ -1344,7 +1452,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(Icons.spellcheck, color: Color(0xffa2d2ff)),
+                          Icon(Icons.spellcheck, color: Color(0xfffff6cc)),
                           SizedBox(width: 5),
                           Text(
                             "Words: ",
@@ -1373,20 +1481,13 @@ class _HomePageState extends State<HomePage> {
                     MediaQuery.of(context).size.width / 7.5,
                   ),
                   decoration: BoxDecoration(
+                    border: Border.all(width: 2),
                     color: Color(0xffffc8dd),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(14),
                         topRight: Radius.circular(14),
                         bottomLeft: Radius.circular(14),
                         bottomRight: Radius.circular(14)),
-                    // boxShadow: [
-                    //   BoxShadow(
-                    //     color: Color(0xffFFDBE9).withOpacity(0.9),
-                    //     spreadRadius: 2,
-                    //     blurRadius: 7,
-                    //     offset: Offset(0, 3),
-                    //   )
-                    // ],
                   ),
                   width: MediaQuery.of(context).size.width / 2.35,
                   child: Column(
@@ -1394,7 +1495,7 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Row(children: [
-                        Icon(Icons.mood, color: Color(0xffa2d2ff)),
+                        Icon(Icons.mood, color: Color(0xfffff6cc)),
                         SizedBox(width: 5),
                         Text(
                           "Total XP: ",
@@ -1453,8 +1554,8 @@ class _HomePageState extends State<HomePage> {
             // insetPadding: EdgeInsets.all(50),
             backgroundColor: Colors.transparent,
             child: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 5,
+              width: MediaQuery.of(context).size.width / 3,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -1473,7 +1574,6 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(width: 10),
                 ],
               ),
             ));
@@ -1526,6 +1626,15 @@ class _HomePageState extends State<HomePage> {
           );
           break;
         }
+      case "Trophies":
+        {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      Achievements(currentStatus: corpus['Trophies'])));
+          break;
+        }
     }
   }
 
@@ -1571,7 +1680,27 @@ class _HomePageState extends State<HomePage> {
                                             userEmail: getCurUserEmail(),
                                             userID: currentUser(),
                                           )),
-                                );
+                                ).then((value) => {
+                                      setState(() {
+                                        final FirebaseAuth auth =
+                                            FirebaseAuth.instance;
+                                        User user = auth.currentUser;
+                                        final databaseReference =
+                                            FirebaseDatabase.instance
+                                                .reference();
+                                        DatabaseReference userDB =
+                                            databaseReference
+                                                .child('users')
+                                                .child(user.uid);
+                                        userDB
+                                            .once()
+                                            .then((DataSnapshot snapshot) {
+                                          setState(() {
+                                            _initCorpusDatabase(snapshot);
+                                          });
+                                        });
+                                      })
+                                    });
                               },
                               child: Row(
                                 children: [
@@ -1593,13 +1722,44 @@ class _HomePageState extends State<HomePage> {
                               padding: EdgeInsets.all(15),
                               materialTapTargetSize:
                                   MaterialTapTargetSize.shrinkWrap,
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Friends(
+                                              friendList: corpus["Friends"],
+                                              pendingRequest:
+                                                  corpus["Requests"],
+                                              userID: currentUser(),
+                                            )))
+                                  ..then((value) => {
+                                        setState(() {
+                                          final FirebaseAuth auth =
+                                              FirebaseAuth.instance;
+                                          User user = auth.currentUser;
+                                          final databaseReference =
+                                              FirebaseDatabase.instance
+                                                  .reference();
+                                          DatabaseReference userDB =
+                                              databaseReference
+                                                  .child('users')
+                                                  .child(user.uid);
+                                          userDB
+                                              .once()
+                                              .then((DataSnapshot snapshot) {
+                                            setState(() {
+                                              _initCorpusDatabase(snapshot);
+                                            });
+                                          });
+                                        })
+                                      });
+                              },
                               child: Row(
                                 children: [
-                                  Icon(Icons.settings),
+                                  Icon(Icons.people),
                                   SizedBox(width: 10),
                                   Text(
-                                    'Settings',
+                                    'Friends',
                                     style: GoogleFonts.fredokaOne(
                                         letterSpacing: .5,
                                         fontSize: 18,
@@ -1694,7 +1854,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ))),
             appBar: new AppBar(
-              title: new Text('App Name'),
+              title: new Text('App Name',
+                  style: GoogleFonts.robotoMono(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  )),
               elevation: 5,
             ),
             body: Center(
