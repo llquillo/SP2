@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../common_widgets/page_title.dart';
 import '../common_widgets/quiz_template.dart';
@@ -45,6 +46,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
   List<Map> adjectiveList = List<Map>();
   List<Map> nounList = List<Map>();
   List<Map> pronList = List<Map>();
+  List<Map> indirectPronList = List<Map>();
   List<Map> nameList = List<Map>();
   List<Map> foodList = List<Map>();
   List<Map> drinkList = List<Map>();
@@ -103,7 +105,6 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
         adverbsList = fetchWords(db, widget.category, 'Adverb');
         verbsPresList = fetchWords(db, widget.category, 'VerbsPresent');
         verbsContList = fetchWords(db, widget.category, 'VerbsCont');
-
         break;
       case 'school':
         studyList = fetchWords(db, widget.category, 'Study');
@@ -132,17 +133,53 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
         payList = fetchWords(db, widget.category, 'Pay');
         adjectiveList = fetchWords(db, widget.category, 'Adjectives');
         clothesList = fetchWords(db, widget.category, 'Clothes');
+        indirectPronList = fetchWords(db, widget.category, 'IndirectPronouns');
+        break;
+      case 'basics2':
+        foodList = fetchWords(db, widget.category, 'Food');
+        drinkList = fetchWords(db, widget.category, 'Drink');
+        foodList = fetchWords(db, widget.category, 'Food');
+        houseList = fetchWords(db, widget.category, 'House');
+        talkList = fetchWords(db, widget.category, 'Talk');
+        adjectiveList = fetchWords(db, widget.category, 'Adjectives');
+        roomList = fetchWords(db, widget.category, 'Room');
+        thingsList = fetchWords(db, widget.category, 'Things');
+        adverbsList = fetchWords(db, widget.category, 'Adverb');
+        verbsPresList = fetchWords(db, widget.category, 'VerbsPresent');
+        verbsContList = fetchWords(db, widget.category, 'VerbsCont');
+        studyList = fetchWords(db, widget.category, 'Study');
+        writeList = fetchWords(db, widget.category, 'Write');
+        readList = fetchWords(db, widget.category, 'Read');
+        adjectiveList = fetchWords(db, widget.category, 'Adjectives');
+        subjectsList = fetchWords(db, widget.category, 'Subjects');
+        adverbsList = fetchWords(db, widget.category, 'Adverb');
+        verbsPresList = fetchWords(db, widget.category, 'VerbsPresent');
+        verbsContList = fetchWords(db, widget.category, 'VerbsCont');
+        seeList = fetchWords(db, widget.category, 'See');
+        askList = fetchWords(db, widget.category, 'Ask');
+        lookList = fetchWords(db, widget.category, 'Look');
+        bringList = fetchWords(db, widget.category, 'Bring');
+        callList = fetchWords(db, widget.category, 'Call');
+        adjectiveList = fetchWords(db, widget.category, 'Adjectives');
+        placeList = fetchWords(db, widget.category, 'Place');
+        haveList = fetchWords(db, widget.category, 'Have');
+        wantList = fetchWords(db, widget.category, 'Want');
+        getList = fetchWords(db, widget.category, 'Get');
+        buyList = fetchWords(db, widget.category, 'Buy');
+        payList = fetchWords(db, widget.category, 'Pay');
+        adjectiveList = fetchWords(db, widget.category, 'Adjectives');
+        clothesList = fetchWords(db, widget.category, 'Clothes');
+        indirectPronList = fetchWords(db, widget.category, 'IndirectPronouns');
         break;
     }
     verbList = fetchWords(db, widget.category, 'Verbs');
     pronList = fetchWords(db, widget.category, 'Pronouns');
     nameList = fetchWords(db, widget.category, 'Names');
 
-    // nounList = fetchWords(db, 'basics1', '')
     verbList.shuffle();
     adjectiveList.shuffle();
-    pronList.shuffle();
-    nameList.shuffle();
+    // pronList.shuffle();
+    // nameList.shuffle();
     foodList.shuffle();
     drinkList.shuffle();
     houseList.shuffle();
@@ -168,7 +205,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
     adverbsList.shuffle();
     verbsPresList.shuffle();
     verbsContList.shuffle();
-
+    indirectPronList.shuffle();
     formSentence();
   }
 
@@ -204,6 +241,12 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
     var rand = new Random();
     int r = 1 + rand.nextInt(pronList.length - 1);
     return pronList[r];
+  }
+
+  Map getIndirectPron() {
+    var rand = new Random();
+    int r = 1 + rand.nextInt(indirectPronList.length - 1);
+    return indirectPronList[r];
   }
 
   Map getPropName() {
@@ -377,35 +420,88 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
       talkFlag = false,
       askFlag = false;
   var askHolder;
-  var adverbFlag = false, adjectiveFlag = false;
+  var adverbFlag = false, adjectiveFlag = false, introFlag = false;
+  var wrongRandFlag = false;
 
   String formSentence() {
-    var rand = new Random();
-    int r = 1 + rand.nextInt(3 - 1);
-    r = 4;
+    var rand;
+    int r;
+
+    rand = new Random();
+    r = 1 + rand.nextInt(3 - 1);
+    if (r == 3 && widget.category == "basics1") {
+      r = 1;
+    }
+    if (r == 4 && widget.category == "shopping") {
+      r = 1;
+    }
+    if (r == 4 && widget.category == "travel") {
+      r = 1;
+    }
+    if (r == 2 && widget.category == "travel") {
+      r = 3;
+    }
+    if (r == 2 && widget.category == "school") {
+      r = 3;
+    }
+    if (r == 2 && widget.category == "family") {
+      r = 4;
+    }
+    // r = 1;
     List<Map> translatedWords = new List<Map>();
     String sentence;
     String tense;
     String verbType;
+    String verb;
     switch (r) {
       case 1:
         var r = new Random();
         int choice = 1 + r.nextInt(4 - 1);
         var holder = getVerb();
         sentence = holder['Word'];
+        verb = holder['Word'];
         tense = holder['Tense'];
         verbType = holder['Category'];
         translatedWords.add(holder);
-        choice = 3;
+        choice = 2;
         switch (choice) {
           case 1:
-            var holder = getPron();
+            var holder;
+            if (verb == "Want") {
+              holder = getIndirectPron();
+            } else {
+              holder = getPron();
+              if (verb == "Have") {
+                if (holder['Number'] != 'Plural') {
+                  holder = pronList[1];
+                }
+              }
+              if (verb == "Has") {
+                if (holder['Number'] == 'Plural') {
+                  holder = pronList[0];
+                }
+              }
+            }
             sentence += " " + holder['Word'].toLowerCase();
             translatedWords.add(holder);
             print(sentence);
             break;
           case 2:
-            var holder = getPron();
+            if (verb == "Gusto") {
+              holder = getIndirectPron();
+            } else {
+              holder = getPron();
+              if (verb == "Have") {
+                if (holder['Number'] != 'Plural') {
+                  holder = pronList[1];
+                }
+              }
+              if (verb == "Has") {
+                if (holder['Number'] == 'Plural') {
+                  holder = pronList[0];
+                }
+              }
+            }
             sentence += " " + holder['Word'].toLowerCase();
             translatedWords.add(holder);
             switch (verbType) {
@@ -480,7 +576,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
               case 'Call':
                 var holder = getCall();
                 callFlag = true;
-                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                sentence += " " + "sa" + " " + holder['Word'].toLowerCase();
                 translatedWords.add(holder);
                 break;
               case 'Have':
@@ -492,7 +588,11 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
               case 'Want':
                 var holder = getWant();
                 wantFlag = true;
-                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                if (holder['POS'] == 'Verb') {
+                  sentence += " " + holder['Word'].toLowerCase();
+                } else {
+                  sentence += " kan" + " " + holder['Word'].toLowerCase();
+                }
                 translatedWords.add(holder);
                 break;
               case 'Get':
@@ -510,7 +610,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
               case 'Pay':
                 var holder = getPay();
                 payFlag = true;
-                sentence += " " + "kan" + " " + holder['Word'].toLowerCase();
+                sentence += " " + "sa" + " " + holder['Word'].toLowerCase();
                 translatedWords.add(holder);
                 break;
             }
@@ -518,13 +618,21 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
             break;
           case 3:
             var holder = getPropName();
-            sentence += " " + "si" + " " + holder['Name'];
+            if (verb == "Gusto") {
+              sentence += " " + "ni" + " " + holder['Name'];
+            } else {
+              sentence += " " + "si" + " " + holder['Name'];
+            }
             translatedWords.add(holder);
             print(sentence);
             break;
           case 4:
             var holder = getPropName();
-            sentence += " " + "si" + " " + holder['Name'] + " ";
+            if (verb == "Gusto") {
+              sentence += " " + "ni" + " " + holder['Name'];
+            } else {
+              sentence += " " + "si" + " " + holder['Name'];
+            }
             translatedWords.add(holder);
             switch (verbType) {
               case 'Food':
@@ -597,7 +705,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
               case 'Call':
                 var holder = getCall();
                 callFlag = true;
-                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                sentence += "sa" + " " + holder['Word'].toLowerCase();
                 translatedWords.add(holder);
                 break;
               case 'Have':
@@ -609,7 +717,11 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
               case 'Want':
                 var holder = getWant();
                 wantFlag = true;
-                sentence += "kan" + " " + holder['Word'].toLowerCase();
+                if (holder['POS'] == 'Verb') {
+                  sentence += " " + holder['Word'].toLowerCase();
+                } else {
+                  sentence += " kan" + " " + holder['Word'].toLowerCase();
+                }
                 translatedWords.add(holder);
                 break;
               case 'Get':
@@ -636,12 +748,32 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
         }
         break;
       case 2:
-        var r = new Random();
-        int choice = 1 + r.nextInt(4 - 1);
-        var holder = getPropName();
+        introFlag = true;
+        var holder, genderPron, genderName;
+        do {
+          holder = getPron();
+        } while (holder['Number'] == "Plural");
         translatedWords.add(holder);
+        sentence = holder['Word'] + " si ";
+        genderPron = holder['Gender'];
+        print(genderPron);
+        do {
+          holder = getPropName();
+          genderName = holder['Gender'];
 
-        var sentence = "Siya si " + holder['Name'];
+          if (genderName != genderPron) {
+            if (genderPron == "Female") {
+              holder = nameList[0];
+            } else {
+              holder = nameList[2];
+            }
+            genderName = holder['Gender'];
+          }
+
+          print("$genderName == $genderPron");
+        } while (genderName != genderPron);
+        translatedWords.add(holder);
+        sentence += holder['Name'];
         print(sentence);
         break;
       case 3:
@@ -792,7 +924,6 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                       wantFlag ||
                       haveFlag ||
                       seeFlag ||
-                      callFlag ||
                       readFlag ||
                       writeFlag) {
                     translatedSentence +=
@@ -801,7 +932,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                     buttons.add("a");
                   }
 
-                  if (cleanFlag || payFlag) {
+                  if (cleanFlag || payFlag || callFlag) {
                     translatedSentence +=
                         " the " + reversedSent[i]['Translation'];
                     buttons.add(reversedSent[i]['Translation']);
@@ -874,7 +1005,6 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                       wantFlag ||
                       haveFlag ||
                       seeFlag ||
-                      callFlag ||
                       readFlag ||
                       writeFlag) {
                     translatedSentence +=
@@ -882,7 +1012,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                     buttons.add(reversedSent[i]['Translation']);
                     buttons.add("a");
                   }
-                  if (cleanFlag || payFlag) {
+                  if (cleanFlag || payFlag || callFlag) {
                     translatedSentence +=
                         " the " + reversedSent[i]['Translation'];
                     buttons.add(reversedSent[i]['Translation']);
@@ -939,7 +1069,6 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                 wantFlag ||
                 haveFlag ||
                 seeFlag ||
-                callFlag ||
                 readFlag ||
                 writeFlag) {
               translatedSentence +=
@@ -948,7 +1077,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
               buttons.add("a");
             }
 
-            if (cleanFlag || payFlag) {
+            if (cleanFlag || payFlag || callFlag) {
               translatedSentence += " the " +
                   reversedSent[reversedSent.length - 1]['Translation'];
               buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
@@ -1010,14 +1139,13 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                     wantFlag ||
                     haveFlag ||
                     seeFlag ||
-                    callFlag ||
                     readFlag ||
                     writeFlag) {
                   translatedSentence += "a " + reversedSent[i]['Translation'];
                   buttons.add(reversedSent[i]['Translation']);
                   buttons.add("a");
                 }
-                if (cleanFlag || payFlag) {
+                if (cleanFlag || payFlag || callFlag) {
                   translatedSentence += "the " + reversedSent[i]['Translation'];
                   buttons.add(reversedSent[i]['Translation']);
                   buttons.add("the");
@@ -1082,7 +1210,6 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                     wantFlag ||
                     haveFlag ||
                     seeFlag ||
-                    callFlag ||
                     readFlag ||
                     writeFlag) {
                   translatedSentence += "a " + reversedSent[i]['Translation'];
@@ -1090,7 +1217,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                   buttons.add("a");
                 }
 
-                if (cleanFlag || payFlag) {
+                if (cleanFlag || payFlag || callFlag) {
                   translatedSentence += "the " + reversedSent[i]['Translation'];
                   buttons.add(reversedSent[i]['Translation']);
                   buttons.add("the");
@@ -1156,7 +1283,6 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                       wantFlag ||
                       haveFlag ||
                       seeFlag ||
-                      callFlag ||
                       readFlag ||
                       writeFlag) {
                     translatedSentence +=
@@ -1165,7 +1291,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                     buttons.add("a");
                   }
 
-                  if (cleanFlag || payFlag) {
+                  if (cleanFlag || payFlag || callFlag) {
                     translatedSentence +=
                         " the " + reversedSent[i]['Translation'];
                     buttons.add(reversedSent[i]['Translation']);
@@ -1231,7 +1357,6 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                       wantFlag ||
                       haveFlag ||
                       seeFlag ||
-                      callFlag ||
                       readFlag ||
                       writeFlag) {
                     translatedSentence +=
@@ -1240,7 +1365,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                     buttons.add("a");
                   }
 
-                  if (cleanFlag || payFlag) {
+                  if (cleanFlag || payFlag || callFlag) {
                     translatedSentence +=
                         " the " + reversedSent[i]['Translation'];
                     buttons.add(reversedSent[i]['Translation']);
@@ -1297,7 +1422,6 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
                 wantFlag ||
                 haveFlag ||
                 seeFlag ||
-                callFlag ||
                 readFlag ||
                 writeFlag) {
               translatedSentence +=
@@ -1306,7 +1430,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
               buttons.add("a");
             }
 
-            if (cleanFlag || payFlag) {
+            if (cleanFlag || payFlag || callFlag) {
               translatedSentence += " the " +
                   reversedSent[reversedSent.length - 1]['Translation'];
               buttons.add(reversedSent[reversedSent.length - 1]['Translation']);
@@ -1385,10 +1509,16 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
             buttons.add(reversedSent[i]['Name']);
           }
           if (reversedSent[i]['POS'] == "Pronoun") {
-            if (nounNum == "Plural") {
-              translatedSentence += reversedSent[i]['Translation'] + " are ";
-              buttons.add(reversedSent[i]['Translation']);
-              buttons.add("are");
+            if (reversedSent[i]['Number'] == "Plural") {
+              if (reversedSent[i]['Translation'] == "I") {
+                translatedSentence += reversedSent[i]['Translation'] + " am ";
+                buttons.add(reversedSent[i]['Translation']);
+                buttons.add("am");
+              } else {
+                translatedSentence += reversedSent[i]['Translation'] + " are ";
+                buttons.add(reversedSent[i]['Translation']);
+                buttons.add("are");
+              }
             } else {
               if (reversedSent[i]['Translation'] == "I") {
                 translatedSentence += reversedSent[i]['Translation'] + " am ";
@@ -1430,6 +1560,23 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
         }
         translatedSentence += lastAdverb['Translation'];
       }
+      if (introFlag) {
+        unreversedSent = List.from(reversedSent.reversed);
+        for (var i = 0; i < unreversedSent.length; i++) {
+          if (unreversedSent[i]['Translation'] != null) {
+            if (unreversedSent[i]['POS'] == "Pronoun") {
+              translatedSentence += unreversedSent[i]['Translation'] + " is ";
+              buttons.add(unreversedSent[i]['Translation']);
+              buttons.add("is");
+            }
+          } else {
+            translatedSentence += unreversedSent[i]['Name'];
+            buttons.add(unreversedSent[i]['Name']);
+          }
+        }
+      }
+      print(translatedSentence);
+      print(buttons);
     }
     for (var i = 0; i < buttons.length; i++) {
       buttons[i] = buttons[i].toLowerCase();
@@ -1473,7 +1620,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               height: 12.0,
               minWidth: 1.0,
-              padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
+              padding: EdgeInsets.fromLTRB(9, 6, 9, 6),
               color: Color(0xffBDE0FE),
               onPressed: () {
                 addWord(i);
@@ -1576,6 +1723,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
 
   Future<void> _quizValidation() async {
     await showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return Container(
@@ -1718,7 +1866,7 @@ class _SentState extends State<Sent> with SingleTickerProviderStateMixin {
       Container(
         padding: EdgeInsets.all(8),
         width: MediaQuery.of(context).size.width - 30,
-        height: MediaQuery.of(context).size.height / 5,
+        height: MediaQuery.of(context).size.height / 4.3,
         child: Center(
           child: buildAnswerBox(),
         ),
