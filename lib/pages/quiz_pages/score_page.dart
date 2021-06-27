@@ -18,11 +18,22 @@ class ScorePage extends StatelessWidget {
   final databaseReference = FirebaseDatabase.instance.reference();
   @override
   Widget build(BuildContext context) {
-    return PageTitle(
-      pageTitle: 'App Name',
-      pageGreeting: 'Result:',
-      pageChild: _pageContent(context),
-    );
+    // return PageTitle(
+    //   pageTitle: 'App Name',
+    //   pageGreeting: 'Result:',
+    //   pageChild: _pageContent(context),
+    //   bgColor: Colors.white,
+    // );
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Score",
+              style: GoogleFonts.robotoMono(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              )),
+        ),
+        body: _pageContent(context));
   }
 
   void updateDecks() {
@@ -94,126 +105,141 @@ class ScorePage extends StatelessWidget {
   }
 
   Widget _pageContent(context) {
-    return Container(
-        width: MediaQuery.of(context).size.width - 50,
-        height: MediaQuery.of(context).size.height - 200,
-        margin: EdgeInsets.fromLTRB(5, 5, 5, 20),
-        padding: EdgeInsets.all(15),
-        alignment: Alignment.center,
-        child: Column(
-          children: [
-            CircularPercentIndicator(
-              radius: 180.0,
-              lineWidth: 13.0,
-              percent: score / 10,
-              center: score > 4
-                  ? Image.asset(
-                      'images/like.png',
-                      width: 100,
-                      height: 100,
-                    )
-                  : Image.asset(
-                      'images/sad.png',
-                      width: 100,
-                      height: 100,
-                    ),
-              backgroundColor: Colors.grey,
-              progressColor: score > 4 ? Color(0xffE0FEBE) : Color(0xffF4DADA),
-            ),
-            SizedBox(height: 15),
-            Text(
-              score > 4 ? 'Good job!' : 'Study harder! :)',
-              style: GoogleFonts.fredokaOne(
-                color: Colors.black,
-                fontSize: 38,
-              ),
-            ),
-            SizedBox(height: 15),
-            Text(
-              'You got $score/10.',
-              style: GoogleFonts.fredokaOne(
-                color: Colors.black,
-                fontSize: 18,
-              ),
-            ),
-            Text(
-              'You earned ${score > 4 ? 10 : 5} xp points!',
-              style: GoogleFonts.fredokaOne(
-                color: Colors.black,
-                fontSize: 16,
-              ),
-            ),
-            SizedBox(height: 20),
-            MaterialButton(
-              child: Text(
-                'Okay',
-                style: GoogleFonts.fredokaOne(
-                  color: Colors.black,
+    return DecoratedBox(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage("images/stars_background.gif"),
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.9), BlendMode.dstATop),
+        )),
+        child: Container(
+            // color: Colors.white,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            margin: EdgeInsets.fromLTRB(5, 5, 5, 20),
+            padding: EdgeInsets.all(15),
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height / 20),
+                CircularPercentIndicator(
+                  radius: 180.0,
+                  lineWidth: 13.0,
+                  percent: score / 10,
+                  center: score > 4
+                      ? Image.asset(
+                          'images/like.png',
+                          width: 100,
+                          height: 100,
+                        )
+                      : Image.asset(
+                          'images/sad.png',
+                          width: 100,
+                          height: 100,
+                        ),
+                  backgroundColor: Colors.grey,
+                  progressColor:
+                      score > 4 ? Color(0xffE0FEBE) : Color(0xffF4DADA),
                 ),
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20)),
-              ),
-              color: Colors.grey[200],
-              //  assignPoint();
-              //   checkStreak();
-              //   Navigator.pushReplacement(context,
-              //       MaterialPageRoute(builder: (context) => HomePage()));
-              onPressed: () {
-                checkStreak();
+                SizedBox(height: 15),
+                Text(
+                  score > 4 ? 'Good job!' : 'Study harder! :)',
+                  style: GoogleFonts.fredokaOne(
+                    color: Colors.black,
+                    fontSize: 38,
+                  ),
+                ),
+                SizedBox(height: 15),
+                Text(
+                  'You got $score/10.',
+                  style: GoogleFonts.fredokaOne(
+                    color: Colors.black,
+                    fontSize: 18,
+                  ),
+                ),
+                Text(
+                  'You earned ${score > 4 ? 10 : 5} xp points!',
+                  style: GoogleFonts.fredokaOne(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+                ),
+                SizedBox(height: 20),
+                MaterialButton(
+                  child: Text(
+                    'Okay',
+                    style: GoogleFonts.robotoMono(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15),
+                        bottomLeft: Radius.circular(15),
+                        bottomRight: Radius.circular(15)),
+                  ),
+                  color: Color(0xffF4F7FA),
 
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => HomePage()));
-                FutureBuilder(
-                    future: assignPoint(context),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()));
-                        checkStreak();
-                        return Container();
-                      } else {
-                        return Dialog(
-                          backgroundColor: Colors.white,
-                          child: Container(
-                            color: Colors.black,
-                            height: MediaQuery.of(context).size.height,
-                            width: MediaQuery.of(context).size.width,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SpinKitChasingDots(
-                                  size: 40,
-                                  color: Colors.white,
+                  //  assignPoint();
+                  //   checkStreak();
+                  //   Navigator.pushReplacement(context,
+                  //       MaterialPageRoute(builder: (context) => HomePage()));
+                  onPressed: () {
+                    checkStreak();
+
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
+                    FutureBuilder(
+                        future: assignPoint(context),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()));
+                            checkStreak();
+                            return Container();
+                          } else {
+                            return Dialog(
+                              backgroundColor: Colors.white,
+                              child: Container(
+                                color: Colors.black,
+                                height: MediaQuery.of(context).size.height,
+                                width: MediaQuery.of(context).size.width,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SpinKitChasingDots(
+                                      size: 40,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      'Loading',
+                                      style: GoogleFonts.roboto(
+                                        color: Colors.white,
+                                        fontSize: 23,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                  ],
                                 ),
-                                SizedBox(width: 10),
-                                Text(
-                                  'Loading',
-                                  style: GoogleFonts.roboto(
-                                    color: Colors.white,
-                                    fontSize: 23,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                              ],
-                            ),
-                          ),
-                        );
-                      }
-                    });
-              },
-            )
-          ],
-        ));
+                              ),
+                            );
+                          }
+                        });
+                  },
+                )
+              ],
+            )));
   }
 }
 
