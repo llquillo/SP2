@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:sample_firebase/auth.dart';
 import 'package:sample_firebase/pages/achievements.dart';
@@ -8,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import './pages/stories.dart';
 import './pages/dictionary.dart';
 import './pages/practice.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -112,6 +109,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
     final FirebaseAuth auth = FirebaseAuth.instance;
     User user = auth.currentUser;
     final databaseReference = FirebaseDatabase.instance.reference();
@@ -126,7 +124,10 @@ class _HomePageState extends State<HomePage> {
         getcurrentXP();
         setGoalStatus("Earn");
         setGoalStatus("Quiz");
+        setGoalStatus("Practice");
+
         checkLocks();
+        checkStories();
       });
     });
     buttonKeys.add(basics1);
@@ -137,6 +138,87 @@ class _HomePageState extends State<HomePage> {
     buttonKeys.add(travel);
   }
 
+  Future<void> logoutConfirm(BuildContext context) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+              // alignment: Alignment(0, -1),
+              child: Opacity(
+            opacity: 0.95,
+            child: AlertDialog(
+              backgroundColor: Colors.white,
+              actions: [
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage("images/rain_background.gif"),
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(0.9), BlendMode.dstATop),
+                  )),
+                  child: Container(
+                      width: MediaQuery.of(context).size.width / 1.2,
+                      height: MediaQuery.of(context).size.height / 1.6,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(
+                            MediaQuery.of(context).size.width / 10,
+                            MediaQuery.of(context).size.width / 2.8,
+                            MediaQuery.of(context).size.width / 10,
+                            MediaQuery.of(context).size.width / 2.8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20)),
+                          border: Border.all(width: 2),
+                          color: Color(0xffF1F8FF).withOpacity(.85),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(
+                                  MediaQuery.of(context).size.width / 40),
+                              child: Text("Are you sure you want to logout?",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.robotoMono(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w900,
+                                  )),
+                            ),
+                            RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15),
+                                    topRight: Radius.circular(15),
+                                    bottomLeft: Radius.circular(15),
+                                    bottomRight: Radius.circular(15)),
+                              ),
+                              color: Color(0xffFFF0F7),
+                              child: Text("Yes",
+                                  style: GoogleFonts.robotoMono(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w900,
+                                  )),
+                              onPressed: () {
+                                _signOut();
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        ),
+                      )),
+                )
+              ],
+            ),
+          ));
+        });
+  }
+
   void checkLocks() {
     final FirebaseAuth auth = FirebaseAuth.instance;
     User user = auth.currentUser;
@@ -144,24 +226,31 @@ class _HomePageState extends State<HomePage> {
     DatabaseReference userDB = databaseReference.child('users').child(user.uid);
     for (var i = 0; i < categorySequence.length; i++) {
       bool flag = true;
-      if (drillsButtons[i][2] == "u") {
-        for (var j = 0; j < categorySequence.length; j++) {
+      if (drillsButtons[i][1] == "u") {
+        for (var j = 0; j < levelSequence.length; j++) {
           if (corpus[categorySequence[i]][levelSequence[j]] != null) {
-            if (getPercentage(levelSequence[j], categorySequence[i]) == 1) {
-              userDB
-                  .reference()
-                  .child(categorySequence[i])
-                  .child(levelSequence[j + 1])
-                  .child("LevelStatus")
-                  .set(1);
+            if (corpus[categorySequence[i]][levelSequence[j]]["LevelStatus"] ==
+                1) {
+              if (getPercentage(levelSequence[j], categorySequence[i]) == 1) {
+                userDB
+                    .reference()
+                    .child(categorySequence[i])
+                    .child(levelSequence[j + 1])
+                    .child("LevelStatus")
+                    .set(1);
+              }
             } else {
               flag = false;
             }
           }
         }
+      } else {
+        flag = false;
       }
-      if (flag) {
-        drillsButtons[i + 1][2] = "u";
+      if (flag && i < 4) {
+        setState(() {
+          drillsButtons[i + 2][1] = "u";
+        });
       }
     }
   }
@@ -212,7 +301,7 @@ class _HomePageState extends State<HomePage> {
       case 0:
         menu = PopupMenu(
             highlightColor: Color(0xffffafcc),
-            lineColor: Color(0xffa2d2ff),
+            lineColor: Color(0xffb8e3ea),
             backgroundColor: Colors.black,
             // maxColumn: 2,
             items: [
@@ -256,7 +345,7 @@ class _HomePageState extends State<HomePage> {
       case 1:
         menu2 = PopupMenu(
             highlightColor: Color(0xffffafcc),
-            lineColor: Color(0xffa2d2ff),
+            lineColor: Color(0xffb8e3ea),
             backgroundColor: Colors.black,
             items: [
               MenuItem(
@@ -305,7 +394,7 @@ class _HomePageState extends State<HomePage> {
       case 2:
         menu3 = PopupMenu(
             highlightColor: Color(0xffffafcc),
-            lineColor: Color(0xffa2d2ff),
+            lineColor: Color(0xffb8e3ea),
             backgroundColor: Colors.black,
             items: [
               MenuItem(
@@ -351,7 +440,7 @@ class _HomePageState extends State<HomePage> {
       case 3:
         menu4 = PopupMenu(
             highlightColor: Color(0xffffafcc),
-            lineColor: Color(0xffa2d2ff),
+            lineColor: Color(0xffb8e3ea),
             backgroundColor: Colors.black,
             items: [
               MenuItem(
@@ -397,7 +486,7 @@ class _HomePageState extends State<HomePage> {
       case 4:
         menu5 = PopupMenu(
             highlightColor: Color(0xffffafcc),
-            lineColor: Color(0xffa2d2ff),
+            lineColor: Color(0xffb8e3ea),
             backgroundColor: Colors.black,
             items: [
               MenuItem(
@@ -443,7 +532,7 @@ class _HomePageState extends State<HomePage> {
       case 5:
         menu6 = PopupMenu(
             highlightColor: Color(0xffffafcc),
-            lineColor: Color(0xffa2d2ff),
+            lineColor: Color(0xffb8e3ea),
             backgroundColor: Colors.black,
             items: [
               MenuItem(
@@ -486,14 +575,11 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void stateChanged(bool isShow) {
-    print('menu is ${isShow ? 'showing' : 'closed'}');
-  }
+  void stateChanged(bool isShow) {}
 
   void onClickMenu(MenuItemProvider item) {
     setGoalStatus("Earn");
     setGoalStatus("Quiz");
-    print(item.menuTitle);
     if (item.menuTitle.toLowerCase() == "review") {
       reviewContent =
           new ReviewContent(databaseTemp: corpus[category], category: category);
@@ -510,10 +596,9 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void onDismiss() {
-    print('Menu is dismiss');
-  }
+  void onDismiss() {}
 
+  // Function for getting the word of the day
   Map getWord() {
     var combinedCorpus = List<Map>.from(corpus["basics1"]["Level1"]["Words"]) +
         List<Map>.from(corpus["basics1"]["Level2"]["Words"]) +
@@ -544,7 +629,29 @@ class _HomePageState extends State<HomePage> {
         List<Map>.from(corpus["basics1"]["Level2"]["Words"]) +
         List<Map>.from(corpus["basics1"]["Level3"]["Words"]) +
         List<Map>.from(corpus["basics1"]["Level4"]["Words"]) +
-        List<Map>.from(corpus["basics1"]["Level5"]["Words"]);
+        List<Map>.from(corpus["basics1"]["Level5"]["Words"]) +
+        List<Map>.from(corpus["shopping"]["Level1"]["Words"]) +
+        List<Map>.from(corpus["shopping"]["Level2"]["Words"]) +
+        List<Map>.from(corpus["shopping"]["Level3"]["Words"]) +
+        List<Map>.from(corpus["travel"]["Level1"]["Words"]) +
+        List<Map>.from(corpus["travel"]["Level2"]["Words"]) +
+        List<Map>.from(corpus["travel"]["Level3"]["Words"]) +
+        List<Map>.from(corpus["travel"]["Level4"]["Words"]) +
+        List<Map>.from(corpus["school"]["Level1"]["Words"]) +
+        List<Map>.from(corpus["school"]["Level2"]["Words"]) +
+        List<Map>.from(corpus["school"]["Level3"]["Words"]) +
+        List<Map>.from(corpus["school"]["Level4"]["Words"]) +
+        List<Map>.from(corpus["school"]["Level5"]["Words"]) +
+        List<Map>.from(corpus["family"]["Level1"]["Words"]) +
+        List<Map>.from(corpus["family"]["Level2"]["Words"]) +
+        List<Map>.from(corpus["family"]["Level3"]["Words"]) +
+        List<Map>.from(corpus["family"]["Level4"]["Words"]) +
+        List<Map>.from(corpus["basics2"]["Level1"]["Words"]) +
+        List<Map>.from(corpus["basics2"]["Level2"]["Words"]) +
+        List<Map>.from(corpus["basics2"]["Level3"]["Words"]) +
+        List<Map>.from(corpus["basics2"]["Level4"]["Words"]) +
+        List<Map>.from(corpus["basics2"]["Level5"]["Words"]);
+
     for (var i = 0; i < combinedCorpus.length; i++) {
       if (combinedCorpus[i] != null) {
         if (combinedCorpus[i]["Deck"] == 3) {
@@ -558,6 +665,21 @@ class _HomePageState extends State<HomePage> {
     DatabaseReference userDB = databaseReference.child('users').child(user.uid);
     userDB.reference().child("Trophies").child("Words").set(wordsCount);
     return wordsCount;
+  }
+
+  // Function for checking the status of each story
+  void checkStories() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    final databaseReference = FirebaseDatabase.instance.reference();
+    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
+    var max = 0;
+    for (var i = 0; i < 5; i++) {
+      if (corpus["Stories"][i]["QuizStatus"] == 1) {
+        max = i;
+      }
+    }
+    userDB.reference().child("Trophies").child("Story").set(max + 1);
   }
 
   // Function for getting the percentage of each level
@@ -574,6 +696,7 @@ class _HomePageState extends State<HomePage> {
     return i / listTemp.length;
   }
 
+  // Function for displaying the icon of locked levels
   Widget _lockedLevel(i) {
     return Center(
         child: Stack(
@@ -602,6 +725,7 @@ class _HomePageState extends State<HomePage> {
     ));
   }
 
+  // Function for displaying the icon of unlocked levels
   Widget _unlockedLevel(i) {
     return Image.asset(
       i,
@@ -614,6 +738,7 @@ class _HomePageState extends State<HomePage> {
     return dateTime.subtract(Duration(days: dateTime.weekday - 1));
   }
 
+  // Function for generating the week for the Progress Tracker
   List<String> findWeek(DateTime dateTime) {
     return List.generate(7, (index) => index)
         .map((value) => DateFormat(
@@ -628,23 +753,23 @@ class _HomePageState extends State<HomePage> {
     return user.uid;
   }
 
+  // Function for fetching the current user's email
   String getCurUserEmail() {
     User user = FirebaseAuth.instance.currentUser;
     return user.email;
   }
 
+  // Function for initializing the corpus
   Future<void> _initCorpusDatabase(snapshot) async {
     var curUser = currentUser();
     corpus = snapshot.value;
-    print(corpus);
-    // levelContent.getWords(context, iteration, addScore, score, level, category)
   }
 
+  // Function for checking the dates of the pushed points of the user to combine points with the same date
   bool checkDates(var tempData) {
     var count = 1;
     while (count < tempData.length) {
       for (var i = 0; i < tempData.length - count; i++) {
-        print(tempData[i].date);
         if (tempData[i].date == tempData[i + count].date) {
           return true;
         }
@@ -654,6 +779,7 @@ class _HomePageState extends State<HomePage> {
     return false;
   }
 
+  //Function for fetching the user's stats in the progress page
   Future<void> _initDatabase(snapshot) async {
     Map<dynamic, dynamic> databaseTemp =
         Map<dynamic, dynamic>.from(snapshot.value["Points"]);
@@ -665,7 +791,6 @@ class _HomePageState extends State<HomePage> {
       var count = 1;
       while (count < tempData.length) {
         for (var i = 0; i < tempData.length - count; i++) {
-          print(tempData[i].date);
           if (tempData[i].date == tempData[i + count].date) {
             tempData[i].xp += tempData[i + count].xp;
             tempData.remove(tempData[i + count]);
@@ -676,9 +801,9 @@ class _HomePageState extends State<HomePage> {
 
       flag = checkDates(tempData);
     }
-    for (var i = 0; i < tempData.length; i++) {
-      print("${tempData[i].date} : ${tempData[i].xp}");
-    }
+    // for (var i = 0; i < tempData.length; i++) {
+    //   print("${tempData[i].date} : ${tempData[i].xp}");
+    // }
     for (var j = 0; j < tempData.length; j++) {
       totalXP += tempData[j].xp;
     }
@@ -697,9 +822,9 @@ class _HomePageState extends State<HomePage> {
       }
     }
 
-    for (var i = 0; i < data.length; i++) {
-      print("${data[i].date} : ${data[i].xp}");
-    }
+    // for (var i = 0; i < data.length; i++) {
+    //   print("${data[i].date} : ${data[i].xp}");
+    // }
     final FirebaseAuth auth = FirebaseAuth.instance;
     User user = auth.currentUser;
     final databaseReference = FirebaseDatabase.instance.reference();
@@ -710,20 +835,19 @@ class _HomePageState extends State<HomePage> {
   // Function for fetching the current XP points of the user for the day
   int getcurrentXP() {
     currentXP = 0;
-    print('before: $currentXP');
     DateTime now = new DateTime.now();
     DateTime date = new DateTime(now.year, now.month, now.day);
     String dateString = DateFormat('d MMM').format(date);
-    print(dateString);
+    // print(dateString);
 
     for (var j = 0; j < tempData.length; j++) {
-      print('${tempData[j].date} ${tempData[j].xp}');
+      // print('${tempData[j].date} ${tempData[j].xp}');
 
       if (tempData[j].date == dateString) {
         currentXP += tempData[j].xp;
       }
     }
-    print('after: $currentXP');
+    // print('after: $currentXP');
   }
 
   void _openLevel(context, wordList, category) async {
@@ -748,6 +872,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  // Function for checking the status of the user's daily goals
   void setGoalStatus(String goal) {
     Timer _timer;
     final FirebaseAuth auth = FirebaseAuth.instance;
@@ -762,24 +887,25 @@ class _HomePageState extends State<HomePage> {
         switch (goal) {
           case "Earn":
             if (currentXP >= 10) {
+              if (corpus["DG"][goal] != 1) {
+                notification("\nGoal complete: \n✓ Earned 10 XP!\n");
+              }
               userDB.reference().child("DG").child(goal).set(1);
-              notification("\nGoal complete: \n✓ Earned 10 XP!\n");
             }
             break;
-          case "Practice":
-            userDB.reference().child("DG").child(goal).set(1);
-            _timer = new Timer(const Duration(seconds: 10), () {
-              notification("\nGoal complete: \n✓ Practiced once! \n");
-            });
 
-            break;
           case "Quiz":
             if (currentXP >= 5) {
+              if (corpus["DG"][goal] != 1) {
+                notification("\nGoal complete: \n✓ Finished a quiz! \n");
+              }
               userDB.reference().child("DG").child(goal).set(1);
-              notification("\nGoal complete: \n✓ Finished a quiz! \n");
             }
             break;
         }
+      } else if (goal == "Practice" && corpus["DG"]["Practice"] == 1) {
+        notification("\nGoal complete: \n✓ Practiced once! \n");
+        userDB.reference().child("DG").child("Practice").set(2);
       }
     }
     userDB.once().then((DataSnapshot snapshot) {
@@ -873,6 +999,7 @@ class _HomePageState extends State<HomePage> {
 
   getWidgetOptions(context) {
     var height = MediaQuery.of(context).size.height;
+
     getcurrentXP();
     final FirebaseAuth auth = FirebaseAuth.instance;
     User user = auth.currentUser;
@@ -897,11 +1024,14 @@ class _HomePageState extends State<HomePage> {
     List<Widget> _widgetOptions = new List<Widget>();
     return _widgetOptions = <Widget>[
       Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-        ),
-        padding: EdgeInsets.all(2),
+        height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
+
+        // decoration: BoxDecoration(
+        //   color: Colors.white,
+        // ),
+        padding: EdgeInsets.all(2),
+        // width: MediaQuery.of(context).size.width,
         child: new Column(
           children: [
             SizedBox(height: MediaQuery.of(context).size.height / 18),
@@ -1080,22 +1210,6 @@ class _HomePageState extends State<HomePage> {
                               bottomLeft: Radius.circular(20),
                               bottomRight: Radius.circular(20)),
                           color: Color(0xffbde0fe),
-                          // boxShadow: [
-                          //   BoxShadow(
-                          //     color: Color(0xffB7DCFF).withOpacity(0.5),
-                          //     spreadRadius: 1,
-                          //     blurRadius: 8,
-                          //     offset: Offset(8, 8),
-                          //   )
-                          // ],
-                          // boxShadow: [
-                          //   BoxShadow(
-                          //     color: Color(0xffB7DCFF).withOpacity(0.7),
-                          //     spreadRadius: 2,
-                          //     blurRadius: 4,
-                          //     offset: Offset(0, 4),
-                          //   )
-                          // ],
                         ),
                         child: i,
                       );
@@ -1195,12 +1309,12 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                 margin: EdgeInsets.fromLTRB(
                     MediaQuery.of(context).size.width / 10,
-                    MediaQuery.of(context).size.width / 20,
+                    MediaQuery.of(context).size.width / 8,
                     MediaQuery.of(context).size.width / 10,
                     5),
                 padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 5.5,
+                height: MediaQuery.of(context).size.height / 6,
                 decoration: BoxDecoration(
                   // color: Color(0xffbde0fe),
                   color: Color(0xffBFB8EA),
@@ -1257,7 +1371,7 @@ class _HomePageState extends State<HomePage> {
               )),
               Container(
                 // color: Colors.yellow,
-                height: MediaQuery.of(context).size.height * .56,
+                height: MediaQuery.of(context).size.height * .51,
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.fromLTRB(
                     (MediaQuery.of(context).size.width / 14.5),
@@ -1269,7 +1383,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisCount: 2,
                   childAspectRatio: (MediaQuery.of(context).size.width /
                           MediaQuery.of(context).size.height) /
-                      .43,
+                      .40,
                   children: [
                     ...drillsButtons.map(
                       (i) => GestureDetector(
@@ -1289,58 +1403,12 @@ class _HomePageState extends State<HomePage> {
                           ),
                           // margin: EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            // gradient: LinearGradient(
-                            //   begin: Alignment.topCenter,
-                            //   end: Alignment.bottomCenter,
-                            //   colors: [
-                            //     Colors.white,
-                            //     Colors.white,
-                            //     Colors.red.withOpacity(.4),
-                            //     Colors.red.withOpacity(.4),
-                            //     Colors.white,
-                            //     Colors.white,
-                            //     Colors.blue.withOpacity(.4),
-                            //     Colors.blue.withOpacity(.4),
-                            //     Colors.white,
-                            //     Colors.white,
-                            //     Colors.red.withOpacity(.4),
-                            //     Colors.red.withOpacity(.4),
-                            //     Colors.white,
-                            //     Colors.white,
-                            //   ],
-                            //   stops: [
-                            //     .2,
-                            //     .21,
-                            //     .23,
-                            //     .25,
-                            //     .26,
-                            //     .42,
-                            //     .45,
-                            //     .46,
-                            //     .47,
-                            //     .61,
-                            //     .63,
-                            //     .65,
-                            //     .66,
-                            //     1,
-                            //   ],
-                            // ),
-                            // color: Color(0xffBFB8EA),
-                            // color: Colors.white,
                             border: Border.all(width: 2),
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20),
                                 bottomLeft: Radius.circular(20),
                                 bottomRight: Radius.circular(20)),
-                            // boxShadow: [
-                            //   BoxShadow(
-                            //     color: Color(0xffD8D2FF).withOpacity(0.7),
-                            //     spreadRadius: 2,
-                            //     blurRadius: 4,
-                            //     offset: Offset(0, 1),
-                            //   )
-                            // ],
                           ),
                           child: Column(
                             children: [
@@ -1385,6 +1453,7 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          SizedBox(height: MediaQuery.of(context).size.height / 20),
           Container(
             padding: EdgeInsets.all((MediaQuery.of(context).size.width / 20)),
             width: MediaQuery.of(context).size.width - 10,
@@ -1518,20 +1587,22 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          SfCartesianChart(
-              primaryXAxis: CategoryAxis(),
-              title: ChartTitle(
-                  text: "Progress Tracker",
-                  textStyle: GoogleFonts.fredokaOne(fontSize: 14)),
-              legend: Legend(isVisible: false),
-              series: <ChartSeries<_xpData, String>>[
-                LineSeries<_xpData, String>(
-                    dataSource: data,
-                    xValueMapper: (_xpData point, _) => point.date,
-                    yValueMapper: (_xpData point, _) => point.xp,
-                    name: "xp",
-                    dataLabelSettings: DataLabelSettings(isVisible: false))
-              ]),
+          Container(
+              height: MediaQuery.of(context).size.height / 2.5,
+              child: SfCartesianChart(
+                  primaryXAxis: CategoryAxis(),
+                  title: ChartTitle(
+                      text: "Progress Tracker",
+                      textStyle: GoogleFonts.fredokaOne(fontSize: 14)),
+                  legend: Legend(isVisible: false),
+                  series: <ChartSeries<_xpData, String>>[
+                    LineSeries<_xpData, String>(
+                        dataSource: data,
+                        xValueMapper: (_xpData point, _) => point.date,
+                        yValueMapper: (_xpData point, _) => point.xp,
+                        name: "xp",
+                        dataLabelSettings: DataLabelSettings(isVisible: false))
+                  ])),
         ],
       )
     ];
@@ -1552,37 +1623,36 @@ class _HomePageState extends State<HomePage> {
       builder: (BuildContext context) {
         return Dialog(
             // insetPadding: EdgeInsets.all(50),
-            backgroundColor: Colors.transparent,
-            child: Container(
-              height: MediaQuery.of(context).size.height / 5,
-              width: MediaQuery.of(context).size.width / 3,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SpinKitChasingDots(
-                    size: 40,
-                    color: Colors.white,
+            child: DecoratedBox(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                  image: AssetImage("images/loading.gif"),
+                  fit: BoxFit.cover,
+                  // colorFilter: ColorFilter.mode(
+                  //     Colors.black.withOpacity(0.9), BlendMode.dstATop),
+                )),
+                child: Container(
+                  height: MediaQuery.of(context).size.height / 4,
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Loading...',
+                        style: GoogleFonts.fredokaOne(
+                          color: Colors.black,
+                          fontSize: 20,
+                          // fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Loading',
-                    style: GoogleFonts.roboto(
-                      color: Colors.white,
-                      fontSize: 23,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ));
+                )));
       },
     );
-    new Future.delayed(new Duration(seconds: 2), () {
-      if (pagePicked == "Practice") {
-        setGoalStatus("Practice");
-      }
+    new Future.delayed(new Duration(seconds: 3), () {
       Navigator.pop(context);
       _switchPages(pagePicked, context);
     });
@@ -1605,7 +1675,14 @@ class _HomePageState extends State<HomePage> {
         {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Practice(corpus: corpus)),
+            MaterialPageRoute(
+                builder: (context) => Practice(
+                      corpus: corpus,
+                      categorySequence: categorySequence,
+                      levelSequence: levelSequence,
+                      categoryInfo: drillsButtons,
+                      state: true,
+                    )),
           );
           break;
         }
@@ -1614,7 +1691,10 @@ class _HomePageState extends State<HomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => Stories(stories: corpus["Stories"])),
+                builder: (context) => Stories(
+                      stories: corpus["Stories"],
+                      locks: drillsButtons,
+                    )),
           );
           break;
         }
@@ -1774,7 +1854,9 @@ class _HomePageState extends State<HomePage> {
                               padding: EdgeInsets.all(15),
                               materialTapTargetSize:
                                   MaterialTapTargetSize.shrinkWrap,
-                              onPressed: _signOut,
+                              onPressed: () {
+                                logoutConfirm(context);
+                              },
                               child: Row(
                                 children: [
                                   Icon(Icons.logout),
@@ -1803,9 +1885,7 @@ class _HomePageState extends State<HomePage> {
                                   MaterialTapTargetSize.shrinkWrap,
                               minWidth: MediaQuery.of(context).size.width,
                               highlightColor: Colors.grey[200],
-                              onPressed: () {
-                                print("hi");
-                              },
+                              onPressed: () {},
                               child: Row(
                                 children: [
                                   Icon(Icons.share),
@@ -1826,9 +1906,7 @@ class _HomePageState extends State<HomePage> {
                                   MaterialTapTargetSize.shrinkWrap,
                               minWidth: MediaQuery.of(context).size.width,
                               highlightColor: Colors.grey[200],
-                              onPressed: () {
-                                print("hi");
-                              },
+                              onPressed: () {},
                               child: Row(
                                 children: [
                                   Icon(Icons.feedback),
@@ -1854,7 +1932,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ))),
             appBar: new AppBar(
-              title: new Text('App Name',
+              title: new Text('Learn Bicol',
                   style: GoogleFonts.robotoMono(
                     color: Colors.black,
                     fontSize: 16,
@@ -1862,9 +1940,21 @@ class _HomePageState extends State<HomePage> {
                   )),
               elevation: 5,
             ),
-            body: Center(
-              child: getWidgetOptions(context).elementAt(_selectedIndex),
-            ),
+            body: DecoratedBox(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                  image: AssetImage("images/home_background.jpg"),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.9), BlendMode.dstATop),
+                )),
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: getWidgetOptions(context).elementAt(_selectedIndex),
+                  ),
+                )),
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: Colors.black87,
               unselectedItemColor: Colors.white,
@@ -1889,34 +1979,34 @@ class _HomePageState extends State<HomePage> {
           );
         } else {
           return Dialog(
-            backgroundColor: Colors.white,
-            child: Container(
-              color: Colors.black,
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SpinKitChasingDots(
-                    size: 40,
-                    color: Colors.white,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Loading',
-                    style: GoogleFonts.roboto(
-                      color: Colors.white,
-                      fontSize: 23,
-                      fontWeight: FontWeight.w600,
+              backgroundColor: Colors.white,
+              child: DecoratedBox(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage("images/loading.gif"),
+                    fit: BoxFit.cover,
+                    // colorFilter: ColorFilter.mode(
+                    //     Colors.black.withOpacity(0.9), BlendMode.dstATop),
+                  )),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height / 4,
+                    width: MediaQuery.of(context).size.width / 1.5,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Loading...',
+                          style: GoogleFonts.fredokaOne(
+                            color: Colors.black,
+                            fontSize: 20,
+                            // fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  SizedBox(width: 10),
-                ],
-              ),
-            ),
-          );
+                  )));
         }
       },
     );
