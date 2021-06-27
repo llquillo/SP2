@@ -91,7 +91,7 @@ class _AchievementsState extends State<Achievements> {
               opacity: .9,
               child: Image.asset(
                 locked,
-                color: Colors.white,
+                color: Colors.black,
                 height: MediaQuery.of(context).size.height / 12,
                 width: MediaQuery.of(context).size.width / 4,
               ),
@@ -112,6 +112,13 @@ class _AchievementsState extends State<Achievements> {
 
   @override
   Widget build(BuildContext context) {
+    final trophyList = [
+      widget.currentStatus["Words"],
+      widget.currentStatus["Streak"],
+      widget.currentStatus["XP"],
+      widget.currentStatus["Story"],
+    ];
+
     List<List<String>> currentAchievements = [];
 
     print(widget.currentStatus);
@@ -183,100 +190,98 @@ class _AchievementsState extends State<Achievements> {
     } else {
       currentAchievements.add(plaqueXP[0]);
     }
+    if (widget.currentStatus["Story"] >= 1 &&
+        widget.currentStatus["Story"] < 3) {
+      currentAchievements.add(ribbonStory[0]);
+    } else if (widget.currentStatus["Story"] >= 3 &&
+        widget.currentStatus["Story"] < 5) {
+      currentAchievements.add(ribbonStory[1]);
+    } else if (widget.currentStatus["Story"] >= 5) {
+      currentAchievements.add(ribbonStory[2]);
+    } else {
+      currentAchievements.add(ribbonStory[0]);
+    }
 
-    currentAchievements.add(ribbonStory[0]);
-
-    // currentAchievements = [
-    //   wordsTrophy[0],
-    //   streakCertf[0],
-    //   plaqueXP[1],
-    //   ribbonStory[0],
-    // ];
     return Scaffold(
         appBar: AppBar(
-          title: Text("Achievements"),
+          title: Text("Achievements",
+              style: GoogleFonts.robotoMono(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              )),
         ),
-        resizeToAvoidBottomInset: true,
-        resizeToAvoidBottomPadding: false,
-        body: SingleChildScrollView(
-            child: Container(
-                color: Colors.white,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: MediaQuery.of(context).size.height / 20),
-                    Container(
-                      alignment: Alignment(-0.8, -0.7),
-                      child: Text(
-                        "Trophies",
-                        style: GoogleFonts.fredokaOne(
-                          textStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 26.0,
-                            letterSpacing: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                            padding: EdgeInsets.fromLTRB(
-                                MediaQuery.of(context).size.width / 18,
-                                MediaQuery.of(context).size.width / 20,
-                                MediaQuery.of(context).size.width / 18,
-                                MediaQuery.of(context).size.width / 8),
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height,
-                            child: GridView.count(
-                              scrollDirection: Axis.vertical,
-                              crossAxisCount: 2,
-                              childAspectRatio:
-                                  (MediaQuery.of(context).size.width /
-                                          MediaQuery.of(context).size.height) /
-                                      .8,
-                              children: [
-                                ...currentAchievements.map((i) => Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 2,
-                                        color: Colors.black,
-                                      ),
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20),
-                                          bottomLeft: Radius.circular(20),
-                                          bottomRight: Radius.circular(20)),
-                                      color: Color(0xfffff6cc),
-                                    ),
-                                    padding: EdgeInsets.all(
-                                        MediaQuery.of(context).size.width / 12),
-                                    margin: EdgeInsets.all(
-                                        MediaQuery.of(context).size.width / 60),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        _unlockedLevel(i.first),
-                                        Text(
-                                          i.last,
-                                          style: GoogleFonts.robotoMono(
-                                            textStyle: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14.0,
-                                              letterSpacing: .5,
-                                              fontWeight: FontWeight.w700,
+        body: Container(
+            color: Colors.white,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: MediaQuery.of(context).size.height / 30),
+                DecoratedBox(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                      image: AssetImage("images/trophy_background2.jpg"),
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.9), BlendMode.dstATop),
+                    )),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 1.2,
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        children: [
+                          Container(
+                              padding: EdgeInsets.fromLTRB(
+                                  MediaQuery.of(context).size.width / 18,
+                                  MediaQuery.of(context).size.width / 10,
+                                  MediaQuery.of(context).size.width / 18,
+                                  MediaQuery.of(context).size.width / 10),
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height / 1.2,
+                              child: GridView.count(
+                                crossAxisCount: 2,
+                                childAspectRatio: (MediaQuery.of(context)
+                                            .size
+                                            .width /
+                                        MediaQuery.of(context).size.height) /
+                                    .79,
+                                children: [
+                                  ...currentAchievements.map((i) => Container(
+                                      padding: EdgeInsets.all(
+                                          MediaQuery.of(context).size.width /
+                                              12),
+                                      margin: EdgeInsets.all(
+                                          MediaQuery.of(context).size.width /
+                                              60),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          trophyList[currentAchievements
+                                                      .indexOf(i)] ==
+                                                  0
+                                              ? _lockedLevel(i.first)
+                                              : _unlockedLevel(i.first),
+                                          Text(
+                                            i.last,
+                                            style: GoogleFonts.robotoMono(
+                                              textStyle: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14.0,
+                                                letterSpacing: .5,
+                                                fontWeight: FontWeight.w700,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    )))
-                              ],
-                            )),
-                      ],
-                    ),
-                  ],
-                ))));
+                                        ],
+                                      )))
+                                ],
+                              )),
+                        ],
+                      ),
+                    ))
+              ],
+            )));
   }
 }
