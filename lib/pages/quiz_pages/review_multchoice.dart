@@ -177,6 +177,7 @@ class _ReviewMultipleChoiceState extends State<ReviewMultipleChoice> {
 
   Future<void> _quizValidation(String userAnswer) async {
     await showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return Container(

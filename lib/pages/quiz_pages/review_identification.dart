@@ -146,6 +146,7 @@ class _ReviewIdentificationState extends State<ReviewIdentification> {
 
   Future<void> _quizValidation() async {
     await showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return Container(

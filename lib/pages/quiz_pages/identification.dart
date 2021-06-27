@@ -223,6 +223,7 @@ class _IdentificationState extends State<Identification> {
 
   Future<void> _quizValidation() async {
     await showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return Container(
