@@ -40,7 +40,7 @@ class LevelContent {
       var words = new List<Map>();
       words = List<Map>.from(databaseTemp[level]["Words"]);
       listTemp = List<Map>.from(words);
-      print(words);
+      // print(words);
       var i = 0;
       while (i < 11) {
         print(i);
@@ -86,13 +86,13 @@ class LevelContent {
       databaseTemp) async {
     if (iteration < 10) {
       var r = new Random();
-      // int rand = 1 + r.nextInt(4 - 1);
-      // if (wordList[iteration + 1]["POS"] == "Common Phrase") {
-      //   if (rand == 3) {
-      //     rand = 2;
-      //   }
-      // }
-      int rand = 1;
+      int rand = 1 + r.nextInt(4 - 1);
+      if (wordList[iteration + 1]["POS"] == "Common Phrase") {
+        if (rand == 3) {
+          rand = 2;
+        }
+      }
+      // int rand = 1;
       switch (rand) {
         case 1:
           Navigator.pushAndRemoveUntil(
