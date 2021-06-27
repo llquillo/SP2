@@ -7,7 +7,7 @@ import './common_widgets/page_title.dart';
 class Dictionary extends StatelessWidget {
   final corpus;
   Dictionary({this.corpus});
-  void _openDict(context, category, categoryName) async {
+  void _openDict(context, category, categoryName, image) async {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -15,6 +15,7 @@ class Dictionary extends StatelessWidget {
           category: category,
           categoryName: categoryName,
           corpus: corpus,
+          image: image,
         ),
       ),
     );
@@ -44,7 +45,8 @@ class Dictionary extends StatelessWidget {
               imgH: MediaQuery.of(context).size.height / 7,
               imgW: MediaQuery.of(context).size.width / 4,
               onPressed: () {
-                _openDict(context, "Basic Expressions", "basics1");
+                _openDict(context, "Basic Expressions", "basics1",
+                    "images/basics_icon.png");
               },
             ),
           ),
@@ -57,7 +59,8 @@ class Dictionary extends StatelessWidget {
               imgH: MediaQuery.of(context).size.height / 7,
               imgW: MediaQuery.of(context).size.width / 4,
               onPressed: () {
-                _openDict(context, "Shopping", "shopping");
+                _openDict(context, "Shopping", "shopping",
+                    "images/shopping_icon.png");
               },
             ),
           ),
@@ -70,7 +73,8 @@ class Dictionary extends StatelessWidget {
               imgH: MediaQuery.of(context).size.height / 7,
               imgW: MediaQuery.of(context).size.width / 4,
               onPressed: () {
-                _openDict(context, "Travel", "travel");
+                _openDict(
+                    context, "Travel", "travel", "images/travel_icon.png");
               },
             ),
           ),
@@ -83,7 +87,8 @@ class Dictionary extends StatelessWidget {
               imgH: MediaQuery.of(context).size.height / 7,
               imgW: MediaQuery.of(context).size.width / 4,
               onPressed: () {
-                _openDict(context, "School", "school");
+                _openDict(
+                    context, "School", "school", "images/travel_icon.png");
               },
             ),
           ),
@@ -96,7 +101,8 @@ class Dictionary extends StatelessWidget {
               imgH: MediaQuery.of(context).size.height / 7,
               imgW: MediaQuery.of(context).size.width / 4,
               onPressed: () {
-                _openDict(context, "Family", "family");
+                _openDict(
+                    context, "Family", "family", "images/travel_icon.png");
               },
             ),
           ),

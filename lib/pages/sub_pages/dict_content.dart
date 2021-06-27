@@ -7,11 +7,14 @@ class DictContent extends StatefulWidget {
   final String category;
   final String categoryName;
   final corpus;
+  final image;
 
-  DictContent(
-      {@required this.category,
-      @required this.categoryName,
-      @required this.corpus});
+  DictContent({
+    @required this.category,
+    @required this.categoryName,
+    @required this.corpus,
+    this.image,
+  });
   @override
   _DictContentState createState() => _DictContentState();
 }
@@ -53,11 +56,21 @@ class _DictContentState extends State<DictContent> {
 
   _DictContentState() {
     searchBar = new SearchBar(
+      showClearButton: true,
+      clearOnSubmit: false,
+      closeOnSubmit: false,
       inBar: true,
       setState: setState,
       onSubmitted: _testFunc,
       buildDefaultAppBar: buildAppBar,
+      onCleared: clear,
     );
+  }
+
+  void clear() {
+    setState(() {
+      sampleDict = List<Map>.from(finalDict);
+    });
   }
 
   AppBar buildAppBar(BuildContext context) {
@@ -111,85 +124,119 @@ class _DictContentState extends State<DictContent> {
         color: Colors.white,
         child: new Column(
           children: [
-            SizedBox(height: 30),
             Container(
-              alignment: Alignment(-0.8, 1.0),
-              child: Text(
-                widget.category,
-                style: GoogleFonts.fredokaOne(
-                  textStyle: TextStyle(
+                margin: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.width / 60,
+                    0,
+                    MediaQuery.of(context).size.width / 60,
+                    MediaQuery.of(context).size.width / 30),
+                padding: EdgeInsets.fromLTRB(
+                    0,
+                    MediaQuery.of(context).size.width / 8,
+                    0,
+                    MediaQuery.of(context).size.width / 20),
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    width: 2,
                     color: Colors.black,
-                    fontSize: 30.0,
-                    // fontWeight: FontWeight.w300,
                   ),
+                  color: Color(0xffF1F8FF),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(40),
+                      bottomRight: Radius.circular(40)),
                 ),
-              ),
-            ),
-            SizedBox(height: 10),
+                alignment: Alignment(-0.8, 1.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset("images/stars_header.png"),
+                    Container(
+                        padding: EdgeInsets.fromLTRB(
+                            MediaQuery.of(context).size.width / 10, 0, 0, 0),
+                        child: Text(
+                          widget.category,
+                          style: GoogleFonts.fredokaOne(
+                            textStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 22,
+                              // fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        )),
+                  ],
+                )),
+            // SizedBox(height: 10),
             Container(
-              height: MediaQuery.of(context).size.height / 1.5,
+              height: MediaQuery.of(context).size.height / 1.6,
               child: GridView.count(
                 crossAxisCount: 1,
                 mainAxisSpacing: 0,
                 crossAxisSpacing: 0,
-                childAspectRatio: 4.5,
+                childAspectRatio: (MediaQuery.of(context).size.width /
+                        MediaQuery.of(context).size.height) /
+                    .16,
                 children: [
                   ...sampleDict.map(
                     (i) => Container(
-                      margin: EdgeInsets.fromLTRB(10, 5, 10, 0),
-                      padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                      // height: MediaQuery.of(context).size.height / 4,
+                      margin: EdgeInsets.fromLTRB(
+                        MediaQuery.of(context).size.height / 20,
+                        MediaQuery.of(context).size.height / 60,
+                        MediaQuery.of(context).size.height / 20,
+                        MediaQuery.of(context).size.height / 60,
+                      ),
+                      padding: EdgeInsets.fromLTRB(
+                          MediaQuery.of(context).size.width / 30,
+                          0,
+                          MediaQuery.of(context).size.height / 40,
+                          0),
                       decoration: new BoxDecoration(
-                        border: Border.all(
-                          width: 2,
-                          color: Colors.black,
+                        // border: Border.all(
+                        //   width: 2,
+                        //   color: Colors.black,
+                        // ),
+                        border: Border(
+                          bottom: BorderSide(width: 2),
                         ),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(25),
-                            topRight: Radius.circular(25),
-                            bottomLeft: Radius.circular(25),
-                            bottomRight: Radius.circular(25)),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            // mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Flexible(
                                   child: Container(
-                                color: Colors.yellow,
-                                child: Text(
-                                  i['Word'],
-                                  style: GoogleFonts.fredokaOne(
-                                    textStyle: new TextStyle(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 16,
-                                      letterSpacing: 1.2,
-                                    ),
-                                  ),
-                                ),
-                              )),
-                              Flexible(
-                                child: Container(
-                                  padding: EdgeInsets.all(5),
-                                  child: Text(
-                                    i['POS'],
-                                    style: GoogleFonts.fredokaOne(
-                                      textStyle: new TextStyle(
-                                        fontSize: 11,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              5,
+                                      child: Container(
+                                        // color: Color(0xffFFAFCC),
+                                        child: Text(
+                                          i['Word'],
+                                          textAlign: TextAlign.left,
+                                          style: GoogleFonts.fredokaOne(
+                                            textStyle: new TextStyle(
+                                              backgroundColor:
+                                                  Color(0xffFFAFCC),
+                                              fontWeight: FontWeight.w300,
+                                              fontSize: 16,
+                                              letterSpacing: 1.2,
+                                            ),
+                                          ),
+                                        ),
+                                      ))),
                               Flexible(
                                 child: Container(
                                   padding: EdgeInsets.all(0),
                                   child: Text(
                                     i['Translation'],
-                                    textAlign: TextAlign.right,
+                                    textAlign: TextAlign.left,
                                     style: GoogleFonts.fredokaOne(
                                       textStyle: new TextStyle(
                                         fontSize: 14,
@@ -201,33 +248,20 @@ class _DictContentState extends State<DictContent> {
                               ),
                             ],
                           ),
-                          // Column(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   crossAxisAlignment: CrossAxisAlignment.center,
-                          //   children: [
-
-                          //     // Flexible(
-                          //     //   child: Container(
-                          //     //     margin: EdgeInsets.zero,
-                          //     //     padding: EdgeInsets.zero,
-                          //     //     width: MediaQuery.of(context).size.width / 2 -
-                          //     //         20,
-                          //     //     height:
-                          //     //         MediaQuery.of(context).size.height / 6,
-                          //     //     child: Text(
-                          //     //       i['Word'],
-                          //     //       textAlign: TextAlign.right,
-                          //     //       style: GoogleFonts.montserrat(
-                          //     //         textStyle: new TextStyle(
-                          //     //           fontSize: 11,
-                          //     //           fontWeight: FontWeight.w500,
-                          //     //         ),
-                          //     //       ),
-                          //     //     ),
-                          //     //   ),
-                          //     // ),
-                          //   ],
-                          // ),
+                          Flexible(
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              child: Text(
+                                i['POS'],
+                                textAlign: TextAlign.right,
+                                style: GoogleFonts.fredokaOne(
+                                  textStyle: new TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
