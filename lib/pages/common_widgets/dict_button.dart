@@ -40,7 +40,8 @@ class DictButton extends StatelessWidget {
       // padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
       width: 10,
       height: (MediaQuery.of(context).size.height / 5) - 100,
-      child: RaisedButton(
+      child: FlatButton(
+        // color: Color(0xffFFF0F7).withOpacity(.95),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
@@ -48,7 +49,7 @@ class DictButton extends StatelessWidget {
               bottomLeft: Radius.circular(20),
               bottomRight: Radius.circular(20)),
         ),
-        color: Colors.white,
+        // color: Colors.transparent,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
