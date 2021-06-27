@@ -90,6 +90,9 @@ class UserData {
       //=======================================================================
       "Stories": [
         {
+          "QuizStatus": 0,
+          "QuizScore": 0,
+          "Answers": {0: false, 1: false, 2: false, 3: false},
           "Status": 'u',
           "Quiz": [
             {
@@ -117,9 +120,12 @@ class UserData {
             }
           ],
           "Story":
-              "\t\t Matalik na magkaibigan si Pedro at Juan. Inimbitahan ni Pedro si Juan sa kanyang bahay upang kumain ng hapunan. / \t  \t“Maugmay na hapon po.” sabi ni Juan sa Ama at Ina ni Pedro. / \t \t“Maugmay na hapon din. Kumusta ka, Juan?” simbag ng Ina ni Pedro. /  \t“Maray po, salamat.” / \t \tAng apat ay pumunta sa komedor at nagsimula nang magkaon. Unang kinain ni Juan ay ang prutas na inihanda.  /  \t“Karne o sira, Juan?” tanong ng Ama ni Pedro. / \t \t“Karne po, salamat.” sabi ni Juan at iniabot sa kanya ang karne. /  \tNagkaon sila nang madami. Pagkatapos nila magkaon ng banggi, Nag-inom sila kan tubig. /  \t“Salamat po sa kakan. Maduman na ako.” taram ni Juan. /  \t“Daing ano man. Paaram.” simbag ni Pedro. /"
+              "\t\t Matalik na mag-amigo si Pedro at Juan. Pigimbitaran ni Pedro si Juan sa saindang harong para magkaon ki pangpanggihan. / \t  \t“Marhay na hapon po.” taram ni Juan sa Ama at Ina ni Pedro. / \t \t“Marhay na hapon dman saimo Juan. Kumusta?” simbag kan Ina ni Pedro. /  \t“Maray man tabi, salamat.” / \t \tAng apat ay pumunta sa komedor at nagpoon ng magkaon. Enot na pigkakan ni Juan ay an prutas na inihanda.  /  \t“Karne o sira, Juan?” hapot kan Ama ni Pedro. / \t \t“Karne po, salamat.” simbag ni Juan at pigturol saiya an karne. /  \tDakol an pigkakan ninda at kan matapos magkakan ki pamanggihan nag-inom sinda kan tubig. /  \t“Salamat po sa pamanggihan. Maduman na tabi ako.” taram ni Juan. /  \t“Daing ano man. Paaram.” simbag ni Pedro. /"
         },
         {
+          "QuizStatus": 0,
+          "QuizScore": 0,
+          "Answers": {0: false, 1: false, 2: false, 3: false},
           "Status": 'u',
           "Quiz": [
             {
@@ -147,9 +153,12 @@ class UserData {
             }
           ],
           "Story":
-              "\t\tSi Maria at Clara ay nagduman sa Mall para bumakal ki bado para sa piesta kan saindang bayan sa maabot na domingo. Nakakita tulos si Clara ki bestida na muya nya isulot sa piesta. /\t\t“Mamira ini tabi?” hapot ni Clara sa saleslady habang kapot kapot an bestida. /\t\t“250 tabi.” simbag kan saleslady. /\t\t“Husto daw ini sakuya?” hapot ni Clara kay Maria. /\t\t“Garo dakula saimon.” simbag ni Maria. /\t\tNagparahanap pa si Maria dangan si Clara sa tindahan ugaring mga mahalon. Nagbalyo na sana sinda sa ibang tindahan taning makahanap pa nung magayon. / \t\t“Magayon ining bestida, Clara!” taram ni Maria. /\t\t“Bukon ba halipot sako?” simbag ni Clara kay Maria. /\t\t“Dai dangan barato pa, bakalon mo na!” /\t\t“Sige! Ika Maria, dai ka mabakal?” hapot ni Clara sa kaibigan. /\t\t“Dai. Igwa ako bado sa harong.” sagot ni Maria. / \t\tKan matapos sinda magbayad nag-adun sinda sa kaunan. Manok at maluto ki Clara, ensalada naman ki Maria. /\t\t“Magkaon na kita!” taram ni Clara at pigtao ki Maria an saiyang order. /\t\tNagkakan an mag-amiga dangan nag-uli na saindang harong. /"
+              "\t\tSi Maria at Clara ay nagduman sa Mall para bumakal ki bado para sa piesta kan saindang bayan sa maabot na domingo. Nakakita tulos si Clara ki bestida na muya nya isulot sa piesta. /\t\t“Mamira ini tabi?” hapot ni Clara sa saleslady habang kapot kapot an bestida. /\t\t“250 tabi.” simbag kan saleslady. /\t\t“Husto daw ini sakuya?” hapot ni Clara kay Maria. /\t\t“Garo dakula saimo.” simbag ni Maria. /\t\tNagparahanap pa si Maria dangan si Clara sa tindahan ugaring mga mahalon. Nagbalyo na sana sinda sa ibang tindahan taning makahanap pa nung magayon. / \t\t“Magayon ining bestida, Clara!” taram ni Maria. /\t\t“Bukon ba halipot sako?” simbag ni Clara kay Maria. /\t\t“Dai dangan barato pa, bakalon mo na!” /\t\t“Sige! Ika Maria, dai ka mabakal?” hapot ni Clara sa amiga. /\t\t“Dai. Igwa ako bado sa harong.” simbag ni Maria. / \t\tKan matapos sinda magbayad nag-adun sinda sa kaunan. Manok at maluto ki Clara, ensalada naman ki Maria. /\t\t“Magkaon na kita!” taram ni Clara at pigtao ki Maria an saiyang order. /\t\tNagkakan an mag-amiga dangan nag-uli na saindang harong. /"
         },
         {
+          "QuizStatus": 0,
+          "QuizScore": 0,
+          "Answers": {0: false, 1: false, 2: false, 3: false},
           "Status": 'u',
           "Quiz": [
             {"Answer": "Mark", "Question": "Who called Rob?", "Type": "I"},
@@ -173,9 +182,12 @@ class UserData {
             }
           ],
           "Story":
-              "\t\tSarong aldaw sa Manila, igwang estudiante na si Rob ang naimbitahan ng saiyang eskuwelahan na sumama sa sarong fieldtrip kaibahan an saiyang mga amigo ngunit, siya ay nasobrahan sa katurog. /\t\tPingapodan ng saiyang mga amigo si Rob sa telepono para magmata. /\t\t“Rob haen ka?” hapot kan amigo ni Rob na si Mark. / \t\t“Kamamata ko sana, nalabihan ako kan katurog.” simbag ni Rob. /\t\t“Ala! Nasa harong ka pa?” hapot ni Mark. /\t\t“Nagpakarhay kan gamit so Rob at nagdalagan paluwas kn harong at naglunad ki bus paduman sa airport kung saen sinda maghirilingan. /\t\tKan mahiling ni Mark si Rob sa airport, pig-apod niya ito. /\t\t“Rob yaon kami digdi!” suriyaw ni Mark. /\t\tSinda ay naglunad sa eroplano paduman sa Legazpi, Bicol kan saan an saindang field trip. /\t\tPag kalipas kan sarong oras nag-abot na sinda sa Bicol. /\t\t“Mark, haen digdi an banyo?” hapot ni Rob. /\t\t“Dai ko aram. Hapoton mo su gwardiya.” simbag ni Mark. /\t\tHinapot ni Rob and gwardiya para sa direksyon paduman sa banyo. Suminunod si Rob sa pigtao na direksyon kan gwardiya at nagbweltada tulos sa mga kaklase nya. /\t\t“Magduman kita sa kaunan at sa parke!” taram kan sarong kaklase. /\t\t“Atuan na gayod, dumuman muna kita sa hotel ta walaton ta su mga gamit ta. Bumakal din kita kan payo ta garu maruan.” simbag ni Rob. /\t\tSinda ay naduman sa hotel at nagpahingalo. Dangan pagkatapos magpahingalo ay maugma sindang naglibot-libot para mahiling an magagayon na lugar sa Legazpi."
+              "\t\tSarong aldaw sa Manila, igwang estudiante na si Rob an naimbitahan kan saiyang eskuwelahan na sumama sa sarong fieldtrip kaibahan an saiyang mga amigo ngunit, siya ay nasobrahan sa katurog. /\t\tPingapodan kan saiyang mga amigo si Rob sa telepono para magmata. /\t\t“Rob haen ka?” hapot kan amigo ni Rob na si Mark. / \t\t“Kamamata ko sana, nalabihan ako kan katurog.” simbag ni Rob. /\t\t“Ala! Nasa harong ka pa?” hapot ni Mark. /\t\t“Nagpakarhay kan gamit so Rob at nagdalagan paluwas kn harong at naglunad ki bus paduman sa airport kung saen sinda maghirilingan. /\t\tKan mahiling ni Mark si Rob sa airport, pig-apod niya ito. /\t\t“Rob yaon kami digdi!” suriyaw ni Mark. /\t\tSinda ay naglunad sa eroplano paduman sa Legazpi, Bicol kan haen an saindang field trip. /\t\tPag kalipas kan sarong oras nag-abot na sinda sa Bicol. /\t\t“Mark, haen digdi an banyo?” hapot ni Rob. /\t\t“Dai ko aram. Hapoton mo su gwardiya.” simbag ni Mark. /\t\tHinapot ni Rob and gwardiya para sa direksyon paduman sa banyo. Suminunod si Rob sa pigtao na direksyon kan gwardiya at nagbweltada tulos sa mga kaklase nya. /\t\t“Magduman kita sa kaunan at sa parke!” taram kan sarong kaklase. /\t\t“Atyan na gayod, dumuman muna kita sa hotel ta walaton ta su mga gamit ta. Bumakal din kita kan payo ta garu maruan.” simbag ni Rob. /\t\tSinda ay naduman sa hotel at nagpahingalo. Dangan pagkatapos magpahingalo ay maugma sindang naglibot-libot para mahiling an magagayon na lugar sa Legazpi."
         },
         {
+          "QuizStatus": 0,
+          "QuizScore": 0,
+          "Answers": {0: false, 1: false, 2: false, 3: false},
           "Status": 'u',
           "Quiz": [
             {
@@ -203,9 +215,12 @@ class UserData {
             }
           ],
           "Story":
-              "\t\t Inot na aldaw ni Simon sa saiyang bagong eskwelahan. Siya ay nagtukaw dangan pigkaag an saiyang mga libro at kwaderno sa lamesa. /  \t  \t“Kumusta! Ako si Pedro. Ano ngaran mo?” taram kan estudiante na nasa tuo niya. / \t  \t “Ako si Simon. Bago lang ako digdi.” simbag ni Simon. /\t  \t“Ah bago ka palan digdi. Pamidbid taka sa kaibigan ko.” nagtindog si Pedro sa saiyang tukawan at pigapod an saiyang amigo. /\t  \t“Ini si Juan.” itinuro ni Pedro ang kaniyang kaibigan. “Ini naman si Simon. Bago siya sa eskwelahan ta.” / \t  \t“Kumusta ka Simon?” taram ni Juan. “Igwa ka hapot samuya?” / \t  \t“Mapagal ba an eksaminasion at anu an pasadong marka?” hapot ni Simon. /\t  \t“Basta mag-adal ka sana ki marhay mapasa ka sa mga eksam.” simbag ni Pedro. /\t  \t“An pasadong marka ay 75.” simbag ni Juan. “Dai ka magparahadit! Kaya an.” /\t  \t“Sana nga at gusto ko maging abogado. Kaipohan ko halangkaw na grado sa gabos na aralin ko.” taram ni Simon. \"Kamo? Unan kukuon nindo na kurso sa kolehiyo?\" /\t  \t“Ako arkitektura.” simbag ni Pedro. “Si Juan naman ay medisina.” Nagtanog an kampana pagkasimbag ni Pedro. / \t  \t“Magturukaw na kita ta maabot na ang maestro.” taram ni Juan. /\t  \t An mga estudiante ay nagbasa kan saindang mga libro, nakinig sa kaindang mga maestro, at nagsurat kan mga sanaysay. /\t  \tPag-abot ng alas-tres ay hapon, nag-uli na si Simon sa saiyang harong. /\t  \t“Kumusta an eskuela?” hapot kan ina nya. /\t  \t “Maogma man tabi!” simbag ni Simon. /"
+              "\t\t Inot na aldaw ni Simon sa saiyang bagong eskwelahan. Siya ay nagtukaw dangan pigkaag an saiyang mga libro at kwaderno sa lamesa. /  \t  \t“Kumusta! Ako si Pedro. Ano ngaran mo?” taram kan estudiante na nasa tuo niya. / \t  \t “Ako si Simon. Bago lang ako digdi.” simbag ni Simon. /\t  \t“Ah bago ka palan digdi. Pamidbid taka sa amigo ko.” nagtindog si Pedro sa saiyang tukawan at pigapod an saiyang amigo. /\t  \t“Ini si Juan.” itinuro ni Pedro an saiyang amigo. “Ini naman si Simon. Bago siya sa eskwelahan ta.” / \t  \t“Kumusta ka Simon?” taram ni Juan. “Igwa ka hapot samuya?” / \t  \t“Mapagal ba an eksaminasion at anu an pasadong marka?” hapot ni Simon. /\t  \t“Basta mag-adal ka sana ki marhay mapasa ka sa mga eksam.” simbag ni Pedro. /\t  \t“An pasadong marka ay 75.” simbag ni Juan. “Dai ka magparahadit! Kaya an.” /\t  \t“Sana nga at gusto ko maging abogado. Kaipohan ko halangkaw na grado sa gabos na aralin ko.” taram ni Simon. \"Kamo? Unan kukuon nindo na kurso sa kolehiyo?\" /\t  \t“Ako arkitektura.” simbag ni Pedro. “Si Juan naman ay medisina.” Nagtanog an kampana pagkasimbag ni Pedro. / \t  \t“Magturukaw na kita ta maabot na an maestro.” taram ni Juan. /\t  \t An mga estudiante ay nagbasa kan saindang mga libro, nagdangog sa saindang mga maestro, at nagsurat kan mga sanaysay. /\t  \tPag-abot kan alas-tres ay hapon, nag-uli na si Simon sa saiyang harong. /\t  \t“Kumusta an eskuela?” hapot kan ina nya. /\t  \t “Maogma man tabi!” simbag ni Simon. /"
         },
         {
+          "QuizStatus": 0,
+          "QuizScore": 0,
+          "Answers": {0: false, 1: false, 2: false, 3: false},
           "Status": 'u',
           "Quiz": [
             {
@@ -233,7 +248,7 @@ class UserData {
             }
           ],
           "Story":
-              "\t\t Si Ana ay nagduman sa harong ni Clara para mag-”sleepover”. Pag-abot ni Ana ay kumatok siya sa puerta. /\t\t“Yaon ka na palan Ana!” maogmang taram ni Clara. “Maglaog ka!” /\t\tPaglaog ni Ana sa harong ay binati siya ng Ama at Ina ni Clara. /\t\t“Kumusta ka Ana?” hapot ninda. /\t\t“Marhay na hapon tabi. Marhay man po, salamat.” simbag ni Ana. /\t\t“Clara, ipasyar mo si Ana sa satuyang harong.” taram kan Ama ni Clara. /\t\t“Iyo tabi. Ini an samuyang sala, Ana.” taram ni Clara. /\t\tNagduman sinda sa ibang kuarto. “Ini an samuyang komedor.” taram ni Clara sa sarong kuarto na igwa lamesa at tukawan. “Kataning kaini an samuyang kusina.” /\t\tNagpanik sinda sa itaas.”Digdi naman an samuyang kuarto.” /\t\tNaglaog an dua sa kuarto sa wala. “Ini an sako na kuarto at digdi kita makaturog.” taram ni Clara habang pigturo an saiyang kama. /\t\t“Magayon an harong nindo, Clara!” taram ni Ana. /\t\t“Salamat, Ana. Mare na ta matapos na sinda magluro kan pagkaon si ina.” /\t\tAn duwa ay nagduman sa komedor at nagkaon si Ana kaibahan an pamilya ni Clara. /\t\t“Uni palan si manay Isabela at manoy Simon ko.” taram ni Clara kay Ana. /\t\t“Kumusta po kamo manay at manoy.” taram ni Ana sa mga tugang ni Clara. /\t\t“Ika palan an amiga ni Clara.” taram ni Isabela. “Magkaon ka dakol!” pigturo ni Isabela an maluto kay Ana. /\t\t“Mabalos po, taram ni Ana.” / \t\tPagkatapos ninda magkaon dangan mag-huron ay nagduman na sila sa kuarto dangan naturog. /"
+              "\t\t Si Ana ay nagduman sa harong ni Clara para mag-”sleepover”. Pag-abot ni Ana ay kumatok siya sa puerta. /\t\t“Yaon ka na palan Ana!” maogmang taram ni Clara. “Maglaog ka!” /\t\tPaglaog ni Ana sa harong ay binati siya kan Ama at Ina ni Clara. /\t\t“Kumusta ka Ana?” hapot ninda. /\t\t“Marhay na hapon tabi. Marhay man po, salamat.” simbag ni Ana. /\t\t“Clara, ipasyar mo si Ana sa satuyang harong.” taram kan Ama ni Clara. /\t\t“Iyo tabi. Ini an samuyang sala, Ana.” taram ni Clara. /\t\tNagduman sinda sa ibang kuarto. “Ini an samuyang komedor.” taram ni Clara sa sarong kuarto na igwa lamesa at tukawan. “Kataning kaini an samuyang kusina.” /\t\tNagpanik sinda sa itaas.”Digdi naman an samuyang kuarto.” /\t\tNaglaog an dua sa kuarto sa wala. “Ini an sako na kuarto at digdi kita makaturog.” taram ni Clara habang pigturo an saiyang kama. /\t\t“Magayon an harong nindo, Clara!” taram ni Ana. /\t\t“Salamat, Ana. Mare na ta matapos na sinda magluro kan pagkaon si ina.” /\t\tAn duwa ay nagduman sa komedor at nagkaon si Ana kaibahan an pamilya ni Clara. /\t\t“Uni palan si manay Isabela at manoy Simon ko.” taram ni Clara kay Ana. /\t\t“Kumusta po kamo manay at manoy.” taram ni Ana sa mga tugang ni Clara. /\t\t“Ika palan an amiga ni Clara.” taram ni Isabela. “Magkaon ka dakol!” pigturo ni Isabela an maluto kay Ana. /\t\t“Mabalos po, taram ni Ana.” / \t\tPagkatapos ninda magkaon dangan mag-huron ay nagduman na sila sa kuarto dangan naturog. /"
         },
       ],
       //=======================================================================
@@ -254,7 +269,7 @@ class UserData {
         ],
         "Level1": {
           "LevelID": 1,
-          "LevelStatus": 0,
+          "LevelStatus": 1,
           "Words": [
             {
               "Deck": 1,
@@ -1497,12 +1512,12 @@ class UserData {
               "Translation": "Clinic",
               "Word": "Klinika",
             },
-            {
-              "Deck": 1,
-              "POS": "Noun",
-              "Translation": "",
-              "Word": "",
-            },
+            // {
+            //   "Deck": 1,
+            //   "POS": "Noun",
+            //   "Translation": "",
+            //   "Word": "",
+            // },
           ],
         },
         "Level3": {
@@ -2427,17 +2442,17 @@ class UserData {
               "Translation": "Narrow",
               "Word": "Pi'ot",
             },
-            {
-              "Deck": 1,
-              "POS": "Adjective",
-              "Translation": "",
-              "Word": "",
-            },
+            // {
+            //   "Deck": 1,
+            //   "POS": "Adjective",
+            //   "Translation": "",
+            //   "Word": "",
+            // },
             {
               "Deck": 1,
               "POS": "Adjective",
               "Translation": "Important",
-              "Word": "",
+              "Word": "Importante",
             },
             {
               "Deck": 1,
@@ -3266,12 +3281,12 @@ class UserData {
               "Translation": "Interview",
               "Word": "Interbiyu",
             },
-            {
-              "Deck": 1,
-              "POS": "Noun",
-              "Translation": "",
-              "Word": "",
-            },
+            // {
+            //   "Deck": 1,
+            //   "POS": "Noun",
+            //   "Translation": "",
+            //   "Word": "",
+            // },
           ]
         },
         "Level3": {
@@ -3925,7 +3940,7 @@ class UserData {
         ],
         "Level1": {
           "LevelID": 1,
-          "LevelStatus": 0,
+          "LevelStatus": 1,
           "Words": [
             {
               "Deck": 1,
@@ -4137,12 +4152,12 @@ class UserData {
               "Translation": "Expensive",
               "Word": "Mahal",
             },
-            {
-              "Deck": 1,
-              "POS": "Noun",
-              "Translation": "",
-              "Word": "",
-            },
+            // {
+            //   "Deck": 1,
+            //   "POS": "Noun",
+            //   "Translation": "",
+            //   "Word": "",
+            // },
           ]
         }
       },
