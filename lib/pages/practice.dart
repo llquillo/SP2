@@ -1,15 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/index.dart';
-import 'common_widgets/page_title.dart';
 import 'package:flip_card/flip_card.dart';
-import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
-// import 'package:quiver/async.dart';
-import 'package:flutter_countdown_timer/countdown.dart';
-import 'package:overlay_support/overlay_support.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
+import 'package:firebase_database/firebase_database.dart';
 import '../home_page.dart';
 
 class Practice extends StatefulWidget {
@@ -35,11 +32,6 @@ class Practice extends StatefulWidget {
 class _PracticeState extends State<Practice> {
   @override
   Widget build(BuildContext context) {
-    // return PageTitle(
-    //   pageTitle: "Practice",
-    //   pageGreeting: "",
-    //   pageChild: _pageContent(context),
-    // );
     return Scaffold(
       appBar: AppBar(
         title: Text("Practice",
@@ -60,6 +52,9 @@ class _PracticeState extends State<Practice> {
   int endTime;
   bool flag;
   bool start;
+  bool defaultTime;
+  bool minTime;
+  HomePage homepage;
 
   @override
   void initState() {
@@ -67,15 +62,15 @@ class _PracticeState extends State<Practice> {
     start = false;
 
     if (widget.state) {
-      endTime = DateTime.now().millisecondsSinceEpoch + 1001 * 20;
+      endTime = DateTime.now().millisecondsSinceEpoch + 1001 * 300;
       flag = false;
       initWords();
+      defaultTime = true;
+      minTime = false;
     } else {
       flag = true;
       endTime = 0;
       initWords();
-
-      // timerDone(context);
     }
   }
 
@@ -116,8 +111,6 @@ class _PracticeState extends State<Practice> {
   }
 
   Map getWord(int count) {
-    // var rand = new Random();
-    // int r = 0 + rand.nextInt(combinedCorpus.length - 1);
     return combinedCorpus[count];
   }
 
@@ -130,16 +123,19 @@ class _PracticeState extends State<Practice> {
           if (widget.state) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => Practice(
-                            corpus: widget.corpus,
-                            categoryInfo: widget.categoryInfo,
-                            categorySequence: widget.categorySequence,
-                            levelSequence: widget.levelSequence,
-                            state: false,
-                            count: count,
-                          )));
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) => Practice(
+                    corpus: widget.corpus,
+                    categoryInfo: widget.categoryInfo,
+                    categorySequence: widget.categorySequence,
+                    levelSequence: widget.levelSequence,
+                    state: false,
+                    count: count,
+                  ),
+                  transitionDuration: Duration(seconds: 0),
+                ),
+              );
             });
           }
           return Text('0:00',
@@ -148,11 +144,10 @@ class _PracticeState extends State<Practice> {
                 fontSize: 14,
                 fontWeight: FontWeight.w900,
               ));
-
-          // return Container();
         } else {
+          var sec = (time.sec).toString().padLeft(2, '0');
           return Text(
-              '${time.min == null ? 0 : time.min}:${time.sec == 0 ? 00 : time.sec < 10 ? time.sec : time.sec}',
+              '${time.min == null ? 0 : time.min}:${time.sec == 0 ? sec : time.sec < 10 ? sec : time.sec}',
               style: GoogleFonts.robotoMono(
                 color: Colors.black,
                 fontSize: 14,
@@ -245,6 +240,7 @@ class _PracticeState extends State<Practice> {
 
   Future<void> timerDone(BuildContext context) async {
     await showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return Container(
@@ -304,6 +300,29 @@ class _PracticeState extends State<Practice> {
                                 fontWeight: FontWeight.w900,
                               )),
                           onPressed: () {
+                            if (widget.corpus["DG"]["Practice"] != 2) {
+                              final FirebaseAuth auth = FirebaseAuth.instance;
+                              User user = auth.currentUser;
+                              final databaseReference =
+                                  FirebaseDatabase.instance.reference();
+                              DatabaseReference userDB = databaseReference
+                                  .child('users')
+                                  .child(user.uid);
+                              DateTime now = new DateTime.now();
+                              DateTime date =
+                                  new DateTime(now.year, now.month, now.day);
+                              String dateString =
+                                  DateFormat('d MMM').format(date);
+                              if (widget.corpus["DG"]["Date"] == dateString) {
+                                if (widget.corpus["DG"]["Practice"] == 0) {
+                                  userDB
+                                      .reference()
+                                      .child("DG")
+                                      .child("Practice")
+                                      .set(1);
+                                }
+                              }
+                            }
                             Navigator.pop(context);
                             Navigator.pushReplacement(context,
                                 MaterialPageRoute(builder: (_) => HomePage()));
@@ -327,16 +346,14 @@ class _PracticeState extends State<Practice> {
             actions: [
               Container(
                 padding: EdgeInsets.all(MediaQuery.of(context).size.width / 20),
-                width: MediaQuery.of(context).size.width / 1.2,
+                width: MediaQuery.of(context).size.width / 1.5,
                 height: MediaQuery.of(context).size.height / 2.3,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
                       padding: EdgeInsets.all(5),
-                      margin: EdgeInsets.fromLTRB(
-                          0, 0, 0, MediaQuery.of(context).size.width / 18),
                       color: Color(0xffF1F8FF),
                       child: Text("Options:",
                           style: GoogleFonts.robotoMono(
@@ -345,35 +362,136 @@ class _PracticeState extends State<Practice> {
                             fontWeight: FontWeight.w900,
                           )),
                     ),
+                    Divider(
+                      height: 1,
+                      thickness: 3,
+                      color: Colors.black,
+                    ),
                     Container(
-                      child: FlatButton(
-                        child: Row(
+
+                        // color: Colors.red,
+                        height: MediaQuery.of(context).size.height / 5,
+                        width: MediaQuery.of(context).size.width / 1.8,
+                        padding: EdgeInsets.fromLTRB(
+                            MediaQuery.of(context).size.width / 20, 0, 0, 0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(Icons.check_box_rounded),
-                            Text("3 min")
+                            Container(
+                              child: MaterialButton(
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                minWidth: 2,
+                                height: 2,
+                                padding: EdgeInsets.all(5),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    defaultTime == true
+                                        ? Icon(Icons.check_circle_outlined)
+                                        : minTime == true
+                                            ? Icon(Icons.check_circle)
+                                            : Icon(Icons.check_circle_outline),
+                                    SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                30),
+                                    Text("3 min",
+                                        style: GoogleFonts.robotoMono(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w800,
+                                        ))
+                                  ],
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    endTime =
+                                        DateTime.now().millisecondsSinceEpoch +
+                                            1001 * 180;
+                                    defaultTime = false;
+                                    minTime = true;
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ),
+                            Container(
+                              child: MaterialButton(
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                minWidth: 2,
+                                height: 2,
+                                padding: EdgeInsets.all(5),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    defaultTime == true
+                                        ? Icon(Icons.check_circle)
+                                        : Icon(Icons.check_circle_outline),
+                                    SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                30),
+                                    Text("5 min",
+                                        style: GoogleFonts.robotoMono(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w800,
+                                        ))
+                                  ],
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    endTime =
+                                        DateTime.now().millisecondsSinceEpoch +
+                                            1001 * 300;
+                                    defaultTime = true;
+                                    minTime = false;
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ),
+                            MaterialButton(
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              minWidth: 2,
+                              height: 2,
+                              padding: EdgeInsets.all(5),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  defaultTime == true
+                                      ? Icon(Icons.check_circle_outlined)
+                                      : minTime == true
+                                          ? Icon(Icons.check_circle_outline)
+                                          : Icon(Icons.check_circle),
+                                  SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          30),
+                                  Text("10 min",
+                                      style: GoogleFonts.robotoMono(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w800,
+                                      ))
+                                ],
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  endTime =
+                                      DateTime.now().millisecondsSinceEpoch +
+                                          1001 * 600;
+                                  defaultTime = false;
+                                  minTime = false;
+                                });
+                                Navigator.of(context).pop();
+                              },
+                            ),
                           ],
-                        ),
-                        onPressed: () {},
-                      ),
-                    ),
-                    FlatButton(
-                      child: Row(
-                        children: [
-                          Icon(Icons.check_box_rounded),
-                          Text("5 min")
-                        ],
-                      ),
-                      onPressed: () {},
-                    ),
-                    FlatButton(
-                      child: Row(
-                        children: [
-                          Icon(Icons.check_box_rounded),
-                          Text("10 min")
-                        ],
-                      ),
-                      onPressed: () {},
-                    ),
+                        ))
                   ],
                 ),
               ),
@@ -439,12 +557,26 @@ class _PracticeState extends State<Practice> {
                               ))
                           : start != false
                               ? startTimer()
-                              : Text('0:00',
-                                  style: GoogleFonts.robotoMono(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w900,
-                                  ))),
+                              : defaultTime == true
+                                  ? Text('5:00',
+                                      style: GoogleFonts.robotoMono(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w900,
+                                      ))
+                                  : minTime == true
+                                      ? Text('3:00',
+                                          style: GoogleFonts.robotoMono(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w900,
+                                          ))
+                                      : Text('10:00',
+                                          style: GoogleFonts.robotoMono(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w900,
+                                          ))),
                   FlatButton(
                     padding: EdgeInsets.zero,
                     minWidth: 2,
@@ -491,10 +623,6 @@ class _PracticeState extends State<Practice> {
                             ? null
                             : () {
                                 setState(() {
-                                  endTime =
-                                      DateTime.now().millisecondsSinceEpoch +
-                                          1001 * 20;
-
                                   start = true;
                                 });
                               },
