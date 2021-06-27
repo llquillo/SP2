@@ -19,6 +19,7 @@ class _FriendPageState extends State<FriendPage> {
   List<String> week = new List<String>();
   int totalXP;
   List<List<String>> currentAchievements = [];
+  List trophyList;
 
   final wordsTrophy = [
     ["images/10words.png", "10 words"],
@@ -82,6 +83,12 @@ class _FriendPageState extends State<FriendPage> {
   }
 
   void getAchievements() {
+    trophyList = [
+      widget.currentStatus["Words"],
+      widget.currentStatus["Streak"],
+      widget.currentStatus["XP"],
+      widget.currentStatus["Story"],
+    ];
     currentAchievements = [];
 
     print(widget.currentStatus);
@@ -154,7 +161,17 @@ class _FriendPageState extends State<FriendPage> {
       currentAchievements.add(plaqueXP[0]);
     }
 
-    currentAchievements.add(ribbonStory[0]);
+    if (widget.currentStatus["Story"] >= 1 &&
+        widget.currentStatus["Story"] < 3) {
+      currentAchievements.add(ribbonStory[0]);
+    } else if (widget.currentStatus["Story"] >= 3 &&
+        widget.currentStatus["Story"] < 5) {
+      currentAchievements.add(ribbonStory[1]);
+    } else if (widget.currentStatus["Story"] >= 5) {
+      currentAchievements.add(ribbonStory[2]);
+    } else {
+      currentAchievements.add(ribbonStory[0]);
+    }
   }
 
   void getPoints() {
@@ -198,11 +215,44 @@ class _FriendPageState extends State<FriendPage> {
     }
   }
 
+  Widget _lockedLevel(i) {
+    return Center(
+        child: Stack(
+      children: [
+        Positioned(
+          child: Opacity(
+            opacity: 0.7,
+            child: Image.asset(
+              i,
+              height: MediaQuery.of(context).size.height / 7.5,
+              width: MediaQuery.of(context).size.width / 4,
+            ),
+          ),
+        ),
+        Positioned(
+          child: Container(
+            padding: EdgeInsets.fromLTRB(
+                0, MediaQuery.of(context).size.height / 26, 0, 0),
+            child: Opacity(
+              opacity: .9,
+              child: Image.asset(
+                locked,
+                color: Colors.black,
+                height: MediaQuery.of(context).size.height / 12,
+                width: MediaQuery.of(context).size.width / 4,
+              ),
+            ),
+          ),
+        ),
+      ],
+    ));
+  }
+
   Widget _unlockedLevel(i) {
     return Image.asset(
       i,
-      height: MediaQuery.of(context).size.height / 5,
-      width: MediaQuery.of(context).size.width / 3,
+      height: MediaQuery.of(context).size.height / 6,
+      width: MediaQuery.of(context).size.width / 4,
     );
   }
 
@@ -223,7 +273,11 @@ class _FriendPageState extends State<FriendPage> {
       resizeToAvoidBottomPadding: false,
       body: SingleChildScrollView(
         child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: MediaQuery.of(context).size.height / 20),
               Text("${widget.name}'s Achievements",
@@ -236,8 +290,8 @@ class _FriendPageState extends State<FriendPage> {
               // SizedBox(height: MediaQuery.of(context).size.height / 30),
               Container(
                   margin: EdgeInsets.fromLTRB(10, 5, 10, 20),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 3.8,
+                  width: MediaQuery.of(context).size.width / 1.12,
+                  height: MediaQuery.of(context).size.height / 4.2,
                   decoration: BoxDecoration(
                     border: Border.all(
                       width: 2,
@@ -253,14 +307,16 @@ class _FriendPageState extends State<FriendPage> {
                     crossAxisCount: 4,
                     childAspectRatio: (MediaQuery.of(context).size.width /
                             MediaQuery.of(context).size.height) /
-                        .97,
+                        .9,
                     children: [
                       ...currentAchievements.map((i) => Container(
                           margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              _unlockedLevel(i.first),
+                              trophyList[currentAchievements.indexOf(i)] == 0
+                                  ? _lockedLevel(i.first)
+                                  : _unlockedLevel(i.first),
                               Text(
                                 i.last,
                                 style: GoogleFonts.robotoMono(
@@ -285,6 +341,7 @@ class _FriendPageState extends State<FriendPage> {
                   ))),
               Container(
                   height: MediaQuery.of(context).size.height / 2.5,
+                  width: MediaQuery.of(context).size.width / 1.12,
                   margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
                   decoration: BoxDecoration(
                     border: Border.all(

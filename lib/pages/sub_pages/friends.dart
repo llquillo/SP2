@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:overlay_support/overlay_support.dart';
@@ -87,6 +86,10 @@ class _FriendsState extends State<Friends> {
       friendList[i].streak = tempStreak;
       friendList[i].totalXP = tempTotalXP;
     }
+    getUpdate(FirebaseDatabase.instance
+        .reference()
+        .child('users')
+        .child(widget.userID));
   }
 
   void notification(String notif) {
@@ -342,14 +345,14 @@ class _FriendsState extends State<Friends> {
       update.cancel();
     });
 
-    setState(() {
-      userDB.once().then((DataSnapshot snapshot) {
-        setState(() {
-          updatedFriendList = snapshot.value["Friends"];
-          updatedRequestList = snapshot.value["Requests"];
-        });
-      });
-    });
+    // setState(() {
+    //   userDB.once().then((DataSnapshot snapshot) {
+    //     setState(() {
+    //       updatedFriendList = snapshot.value["Friends"];
+    //       updatedRequestList = snapshot.value["Requests"];
+    //     });
+    //   });
+    // });
   }
 
   void remove(key) {
@@ -418,12 +421,16 @@ class _FriendsState extends State<Friends> {
       }
     }
     if (updatedFriendList != null) {
-      Map<dynamic, dynamic> databaseTemp =
-          Map<dynamic, dynamic>.from(updatedFriendList);
-      databaseTemp.forEach((key, value) => {
-            friendList.add(Friend(value["UID"], value["Name"], value["TotalXP"],
-                value["Streak"], value["ProfilePic"]))
-          });
+      if (widget.friendList == false) {
+        requestList = [];
+      } else if (updatedFriendList != false) {
+        Map<dynamic, dynamic> databaseTemp =
+            Map<dynamic, dynamic>.from(updatedFriendList);
+        databaseTemp.forEach((key, value) => {
+              friendList.add(Friend(value["UID"], value["Name"],
+                  value["TotalXP"], value["Streak"], value["ProfilePic"]))
+            });
+      }
     } else {
       if (updatedFriendList == false) {
         friendList = [];
@@ -438,6 +445,8 @@ class _FriendsState extends State<Friends> {
         friendList = [];
       }
     }
+    print(updatedFriendList);
+    print(friendList);
 
     return Scaffold(
         appBar: AppBar(
@@ -467,6 +476,7 @@ class _FriendsState extends State<Friends> {
                     ))),
                 Container(
                   height: MediaQuery.of(context).size.height / 11,
+                  width: MediaQuery.of(context).size.width / 1.16,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -490,8 +500,11 @@ class _FriendsState extends State<Friends> {
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         padding: EdgeInsets.all(4),
                         minWidth: 0,
-                        child: Icon(Icons.search),
+                        child: searchController.text == ""
+                            ? Icon(Icons.search)
+                            : Icon(Icons.person_add),
                         onPressed: () {
+                          print(searchController.text);
                           print(searchController.text);
                           final FirebaseAuth auth = FirebaseAuth.instance;
                           User user = auth.currentUser;
