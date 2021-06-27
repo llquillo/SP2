@@ -92,7 +92,7 @@ class UserData {
         {
           "QuizStatus": 0,
           "QuizScore": 0,
-          "Answers": {0: false, 1: false, 2: false, 3: false},
+          "Answers": {"0": false, "1": false, "2": false, "3": false},
           "Status": 'u',
           "Quiz": [
             {
@@ -125,7 +125,7 @@ class UserData {
         {
           "QuizStatus": 0,
           "QuizScore": 0,
-          "Answers": {0: false, 1: false, 2: false, 3: false},
+          "Answers": {"0": false, "1": false, "2": false, "3": false},
           "Status": 'u',
           "Quiz": [
             {
@@ -158,7 +158,7 @@ class UserData {
         {
           "QuizStatus": 0,
           "QuizScore": 0,
-          "Answers": {0: false, 1: false, 2: false, 3: false},
+          "Answers": {"0": false, "1": false, "2": false, "3": false},
           "Status": 'u',
           "Quiz": [
             {"Answer": "Mark", "Question": "Who called Rob?", "Type": "I"},
@@ -187,7 +187,7 @@ class UserData {
         {
           "QuizStatus": 0,
           "QuizScore": 0,
-          "Answers": {0: false, 1: false, 2: false, 3: false},
+          "Answers": {"0": false, "1": false, "2": false, "3": false},
           "Status": 'u',
           "Quiz": [
             {
@@ -220,7 +220,7 @@ class UserData {
         {
           "QuizStatus": 0,
           "QuizScore": 0,
-          "Answers": {0: false, 1: false, 2: false, 3: false},
+          "Answers": {"0": false, "1": false, "2": false, "3": false},
           "Status": 'u',
           "Quiz": [
             {
