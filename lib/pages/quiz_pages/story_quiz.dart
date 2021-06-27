@@ -6,7 +6,13 @@ import './story_answers.dart';
 
 class StoryQuiz extends StatefulWidget {
   final story;
-  StoryQuiz({@required this.story});
+  final index;
+  final storyStatus;
+  StoryQuiz({
+    @required this.story,
+    @required this.index,
+    @required this.storyStatus,
+  });
   @override
   _StoryQuizState createState() => _StoryQuizState();
 }
@@ -33,6 +39,7 @@ class _StoryQuizState extends State<StoryQuiz> {
 
   @override
   Widget build(BuildContext context) {
+    print("index: ${widget.index}");
     return PageTitle(
       pageTitle: "Reading Comprehension",
       pageGreeting: "Quiz:",
@@ -94,6 +101,7 @@ class _StoryQuizState extends State<StoryQuiz> {
           ),
           Text("\n"),
           RaisedButton(
+              color: Color(0xffF4F7FA),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
@@ -105,9 +113,9 @@ class _StoryQuizState extends State<StoryQuiz> {
                 _dialog(context);
               },
               child: Text("Submit",
-                  style: GoogleFonts.fredokaOne(
-                    fontSize: 12,
-                    // fontWeight: FontWeight.w700,
+                  style: GoogleFonts.robotoMono(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
                   ))),
         ],
       ),
@@ -167,7 +175,7 @@ class _StoryQuizState extends State<StoryQuiz> {
       backgroundColor: Colors.white,
       title: Text(
         "Submit answers?",
-        style: GoogleFonts.libreBaskerville(
+        style: GoogleFonts.robotoMono(
           textStyle: TextStyle(
             color: Colors.black,
             letterSpacing: 0,
@@ -178,20 +186,24 @@ class _StoryQuizState extends State<StoryQuiz> {
       ),
       actions: [
         RaisedButton(
+            color: Color(0xffF4F7FA),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20))),
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15))),
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
                     builder: (context) => StoryAnswers(
-                        story: widget.story,
-                        userAnswers: getUserAnswers(),
-                        correctAnswers: answers)),
+                          story: widget.story,
+                          userAnswers: getUserAnswers(),
+                          correctAnswers: answers,
+                          index: widget.index,
+                          storyStatus: widget.storyStatus,
+                        )),
                 (Route<dynamic> route) => false,
               );
 
@@ -199,7 +211,7 @@ class _StoryQuizState extends State<StoryQuiz> {
             },
             child: Text(
               'Yes',
-              style: GoogleFonts.libreBaskerville(
+              style: GoogleFonts.robotoMono(
                 textStyle: TextStyle(
                   color: Colors.black,
                   fontSize: 11.0,
@@ -208,18 +220,19 @@ class _StoryQuizState extends State<StoryQuiz> {
               ),
             )),
         RaisedButton(
+            color: Color(0xffF4F7FA),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20))),
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15))),
             onPressed: () {
               Navigator.pop(context);
             },
             child: Text(
               'Cancel',
-              style: GoogleFonts.libreBaskerville(
+              style: GoogleFonts.robotoMono(
                 textStyle: TextStyle(
                   color: Colors.black,
                   fontSize: 11.0,

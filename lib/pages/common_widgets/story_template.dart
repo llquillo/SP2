@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sample_firebase/pages/quiz_pages/story_answers.dart';
 import 'page_title.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../quiz_pages/story_quiz.dart';
@@ -7,8 +8,13 @@ class StoryTemplate extends StatefulWidget {
   final category;
   final story;
   final storyNum;
-  StoryTemplate(
-      {@required this.story, @required this.storyNum, @required this.category});
+  final storyStatus;
+  StoryTemplate({
+    @required this.story,
+    @required this.storyNum,
+    @required this.category,
+    this.storyStatus,
+  });
   @override
   _StoryTemplateState createState() => _StoryTemplateState();
 }
@@ -139,24 +145,52 @@ class _StoryTemplateState extends State<StoryTemplate> {
                 fontWeight: FontWeight.w700,
               )),
           RaisedButton(
+              color: Color(0xffF4F7FA),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20)),
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15)),
               ),
               onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => StoryQuiz(story: widget.story)),
-                  (Route<dynamic> route) => false,
-                );
+                if (widget.storyStatus == 0) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => StoryQuiz(
+                              story: widget.story,
+                              index: widget.storyNum,
+                              storyStatus: widget.storyStatus,
+                            )),
+                    (Route<dynamic> route) => false,
+                  );
+                } else {
+                  List<String> userAnswers = [];
+                  List<String> correctAnswers = [];
+
+                  for (var i = 0; i < 4; i++) {
+                    print(widget.story[widget.storyNum]);
+
+                    userAnswers.add(widget.story["Answers"][i]);
+                    correctAnswers.add(widget.story["Quiz"][i]["Answer"]);
+                  }
+                  print(userAnswers);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StoryAnswers(
+                                story: widget.story,
+                                userAnswers: userAnswers,
+                                correctAnswers: correctAnswers,
+                                index: widget.storyNum,
+                                storyStatus: widget.storyStatus,
+                              )));
+                }
               },
               child: Text("Answer quiz",
-                  style: GoogleFonts.libreBaskerville(
-                    fontSize: 12,
+                  style: GoogleFonts.robotoMono(
+                    fontSize: 14,
                     fontWeight: FontWeight.w700,
                   ))),
           Text("\n"),

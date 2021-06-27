@@ -3,16 +3,23 @@ import 'package:sample_firebase/pages/common_widgets/story_template.dart';
 import '../common_widgets/page_title.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class StoryAnswers extends StatefulWidget {
   final story;
   final List<String> userAnswers;
   final List<String> correctAnswers;
+  final index;
+  final storyStatus;
 
-  StoryAnswers(
-      {@required this.story,
-      @required this.userAnswers,
-      @required this.correctAnswers});
+  StoryAnswers({
+    @required this.story,
+    @required this.userAnswers,
+    @required this.correctAnswers,
+    @required this.index,
+    this.storyStatus,
+  });
   @override
   _StoryAnswersState createState() => _StoryAnswersState();
 }
@@ -63,7 +70,31 @@ class _StoryAnswersState extends State<StoryAnswers> {
         questions.remove(questions[i]);
       }
     }
-
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    final databaseReference = FirebaseDatabase.instance.reference();
+    DatabaseReference userDB = databaseReference.child('users').child(user.uid);
+    print(widget.storyStatus);
+    if (widget.storyStatus == 0) {
+      for (var i = 0; i < widget.userAnswers.length; i++) {
+        userDB
+            .child("Stories")
+            .child(widget.index.toString())
+            .child("Answers")
+            .child(i.toString())
+            .set(widget.userAnswers[i]);
+      }
+      userDB
+          .child("Stories")
+          .child(widget.index.toString())
+          .child("QuizStatus")
+          .set(1);
+      userDB
+          .child("Stories")
+          .child(widget.index.toString())
+          .child("QuizScore")
+          .set(score);
+    }
     print(controllerList);
     print(questions);
     return Container(
@@ -82,21 +113,22 @@ class _StoryAnswersState extends State<StoryAnswers> {
           ),
           Text("\n"),
           RaisedButton(
+              color: Color(0xffF4F7FA),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20)),
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15)),
               ),
               onPressed: () {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => HomePage()));
               },
               child: Text("Okay",
-                  style: GoogleFonts.fredokaOne(
+                  style: GoogleFonts.robotoMono(
                     fontSize: 12,
-                    // fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w700,
                   ))),
         ],
       ),
@@ -151,7 +183,7 @@ class _StoryAnswersState extends State<StoryAnswers> {
                           "*The correct answer is ${widget.correctAnswers[count - 1]}",
                           style: GoogleFonts.fredokaOne(
                             fontSize: 14,
-                            color: Colors.black,
+                            color: Colors.red[700],
                           ))),
             )
           ],
@@ -206,7 +238,7 @@ class _StoryAnswersState extends State<StoryAnswers> {
                           "*The correct answer is ${widget.correctAnswers[count - 1]}",
                           style: GoogleFonts.fredokaOne(
                             fontSize: 14,
-                            color: Colors.black,
+                            color: Colors.red[700],
                           ))),
             ),
           ],
