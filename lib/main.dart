@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
         [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
     return OverlaySupport(
         child: MaterialApp(
-      title: 'App Name',
+      title: 'Learn Bicol',
       theme: new ThemeData(
         primarySwatch: MyColors.white,
       ),
