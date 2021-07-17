@@ -9,11 +9,13 @@ class StoryTemplate extends StatefulWidget {
   final story;
   final storyNum;
   final storyStatus;
+  final unlockedStatus;
   StoryTemplate({
     @required this.story,
     @required this.storyNum,
     @required this.category,
-    this.storyStatus,
+    @required this.storyStatus,
+    @required this.unlockedStatus,
   });
   @override
   _StoryTemplateState createState() => _StoryTemplateState();
@@ -155,16 +157,18 @@ class _StoryTemplateState extends State<StoryTemplate> {
               ),
               onPressed: () {
                 if (widget.storyStatus == 0) {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => StoryQuiz(
-                              story: widget.story,
-                              index: widget.storyNum,
-                              storyStatus: widget.storyStatus,
-                            )),
-                    (Route<dynamic> route) => false,
-                  );
+                  if (widget.unlockedStatus == 'u') {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StoryQuiz(
+                                story: widget.story,
+                                index: widget.storyNum,
+                                storyStatus: widget.storyStatus,
+                              )),
+                      (Route<dynamic> route) => false,
+                    );
+                  }
                 } else {
                   List<String> userAnswers = [];
                   List<String> correctAnswers = [];
