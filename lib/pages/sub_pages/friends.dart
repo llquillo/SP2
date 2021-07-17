@@ -126,7 +126,7 @@ class _FriendsState extends State<Friends> {
   }
 
   Future<DataSnapshot> sendRequest(
-      String uid, String user, String uidName) async {
+      String uid, String user, String uidName, String friendName) async {
     bool flag = false;
     final databaseReference = FirebaseDatabase.instance.reference();
     DatabaseReference userDB = databaseReference.child('users').child(uid);
@@ -143,7 +143,7 @@ class _FriendsState extends State<Friends> {
           .once()
           .then((snapshot) => {
                 if (snapshot.value != null)
-                  {notification("\n Already sent a request to $uidName")}
+                  {notification("\n Already sent a request to $friendName")}
                 else
                   {flag = true}
               });
@@ -154,7 +154,7 @@ class _FriendsState extends State<Friends> {
           .child('Requests')
           .push()
           .set(friendRequest.toJSON());
-      notification("\n Sent a request to $uidName\n");
+      notification("\n Sent a request to $friendName\n");
     }
   }
 
@@ -402,14 +402,18 @@ class _FriendsState extends State<Friends> {
     List<Friend> friendList = new List();
 
     if (updatedRequestList != null) {
+      print("hello");
       if (widget.pendingRequest == false) {
+        print("hello2");
         requestList = [];
       } else if (updatedRequestList != false) {
+        print("hello!!!!!!");
         Map<dynamic, dynamic> databaseTemp =
             Map<dynamic, dynamic>.from(updatedRequestList);
         databaseTemp.forEach((key, value) =>
             {requestList.add(FriendRequest(value["UID"], value["Name"]))});
       } else if (updatedRequestList == false) {
+        print("hello3");
         requestList = [];
       }
     } else {
@@ -422,7 +426,7 @@ class _FriendsState extends State<Friends> {
     }
     if (updatedFriendList != null) {
       if (widget.friendList == false) {
-        requestList = [];
+        friendList = [];
       } else if (updatedFriendList != false) {
         Map<dynamic, dynamic> databaseTemp =
             Map<dynamic, dynamic>.from(updatedFriendList);
@@ -445,8 +449,8 @@ class _FriendsState extends State<Friends> {
         friendList = [];
       }
     }
-    print(updatedFriendList);
-    print(friendList);
+    print(updatedRequestList);
+    print(requestList);
 
     return Scaffold(
         appBar: AppBar(
@@ -511,6 +515,13 @@ class _FriendsState extends State<Friends> {
                           final databaseReference =
                               FirebaseDatabase.instance.reference();
                           DataSnapshot snapshot;
+                          String name;
+                          databaseReference
+                              .child('users')
+                              .child(user.uid)
+                              .once()
+                              .then((snapshot) =>
+                                  {name = snapshot.value["Name"]});
                           databaseReference
                               .child('users')
                               .child(searchController.text)
@@ -518,8 +529,11 @@ class _FriendsState extends State<Friends> {
                               .then((snapshot) => {
                                     if (snapshot.value != null)
                                       {
-                                        sendRequest(searchController.text,
-                                            user.uid, snapshot.value["Name"])
+                                        sendRequest(
+                                            searchController.text,
+                                            user.uid,
+                                            name,
+                                            snapshot.value["Name"])
                                       }
                                     else
                                       {notification("\n User does not exist\n")}
