@@ -70,7 +70,12 @@ class _LoginPageState extends State<LoginPage> {
     return new Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('App Name'),
+          title: Text('Learn Bicol',
+              style: GoogleFonts.robotoMono(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              )),
         ),
         resizeToAvoidBottomInset: true,
         resizeToAvoidBottomPadding: false,
