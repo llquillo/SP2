@@ -40,6 +40,7 @@ dependencies:
   # firebase_analytics: ^5.0.6
   image_picker: ^0.6.7+22
   image_cropper: ^1.3.1
+  flutter_countdown_timer: ^3.0.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -49,6 +50,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.7.3"
+  
+flutter_icons:
+  android: "launcher_icon" 
+  ios: true
+  image_path: "images/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -157,6 +164,19 @@ flutter:
     - images/school_icon.png
     - images/background.jpg
     - images/background.gif
+    - images/home_background.jpg
+    - images/trophy_background.jpg
+    - images/rain_background.gif
+    - images/stars_background.gif
+    - images/trophy_background2.jpg
+    - images/stories_background.jpg
+    - images/loading.gif
+    - images/stars_header.png
+
+
+
+
+
 
 
 
